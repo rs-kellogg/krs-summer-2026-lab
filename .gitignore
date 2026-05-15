@@ -1,0 +1,13 @@
+_build/
+_site/
+.quarto/
+__pycache__/
+*.pyc
+.DS_Store
+starter-code/output/*.csv
+*.egg-info/
+.Rhistory
+.RData
+
+/.quarto/
+**/*.quarto_ipynb

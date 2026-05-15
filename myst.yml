@@ -1,0 +1,30 @@
+version: 1
+
+project:
+  title: AI-Assisted Data Analysis Lab
+  authors:
+    - name: Kellogg Research Support
+  github: https://github.com/rs-kellogg/krs-summer-2026-lab
+  toc:
+    - file: index
+    - file: setup
+    - file: part1-intro
+    - title: Part 2 · Improve Python
+      children:
+        - file: part2-python/index
+        - file: part2-python/step1-understand
+        - file: part2-python/step2-logging
+        - file: part2-python/step3-tests
+    - title: Part 3 · Python → R
+      children:
+        - file: part3-r-translation/index
+        - file: part3-r-translation/step1-translate
+        - file: part3-r-translation/step2-tests
+        - file: part3-r-translation/step3-fix-refactor
+    - file: part4-bonus
+    - file: wrap-up
+
+site:
+  template: book-theme
+  options:
+    logo: logo.png
