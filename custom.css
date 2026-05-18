@@ -1,33 +1,50 @@
-/* Remove outer 1fr gutters at ≥1280px so content uses full page width */
-@media (min-width: 1280px) {
-  .article-grid,
-  .xl\:article-grid {
+@media (min-width:1536px) {
+  [class*=article-grid] {
+    /* Widen the interior region by adding new equi-width columns */
     grid-template-columns:
-      [screen-start] 0 [screen-inset-start] 0 [page-start]
-      3rem [page-inset-start] minmax(4rem,9rem) [body-outset-start]
-      3rem [body-start gutter-left-start] 1rem [body-inset-start]
-      minmax(8ch,10ch) [middle-start] minmax(8ch,10ch) [gutter-left-end]
-      minmax(8ch,10ch) minmax(8ch,10ch)
-      [gutter-right-start] minmax(8ch,10ch) [middle-end] minmax(8ch,10ch) [body-inset-end]
-      1rem [body-end gutter-right-end] 3rem [body-outset-end]
-      minmax(5rem,13rem) [page-inset-end] 3rem [page-end]
-      0 [screen-inset-end] 0 [screen-end] !important;
-  }
-}
+      [screen-start]
+      .5rem
+      [screen-inset-start]
+      1fr
+      [page-start]
+      3rem
+      [page-inset-start]
+      minmax(4rem, 9rem)
+      [body-outset-start]
+      3rem
 
-@media (min-width: 1536px) {
-  .article-grid,
-  .xl\:article-grid {
-    grid-template-columns:
-      [screen-start] 0 [screen-inset-start] 0 [page-start]
-      3rem [page-inset-start] minmax(4rem,9rem) [body-outset-start]
-      3rem [body-start gutter-left-start] 1rem [body-inset-start]
-      minmax(8ch,10ch) [middle-start] minmax(8ch,10ch) [gutter-left-end]
-      minmax(8ch,10ch) minmax(8ch,10ch)
-      [gutter-right-start] minmax(8ch,10ch) [middle-end] minmax(8ch,10ch) [body-inset-end]
-      1rem [body-end gutter-right-end] 3rem [body-outset-end]
-      minmax(5rem,13rem) [page-inset-end] 3rem [page-end]
-      0 [screen-inset-end] 0 [screen-end] !important;
+      /* beginning of content window */
+      [body-start gutter-left-start]
+      1rem
+      [body-inset-start]
+      minmax(8ch, 10ch)
+
+      [middle-start]
+      minmax(8ch, 10ch)
+      [gutter-left-end]
+      minmax(8ch, 10ch) minmax(8ch, 10ch) minmax(8ch, 10ch) minmax(8ch, 10ch)
+      [gutter-right-start]
+      minmax(8ch, 10ch)
+      [middle-end]
+
+      minmax(8ch, 10ch)
+      [body-inset-end]
+      1rem
+      [body-end gutter-right-end]
+      /* end of content window */
+
+      3rem
+      [body-outset-end]
+      minmax(5rem, 13rem)
+      [page-inset-end]
+      3rem
+      [page-end]
+      1fr
+      [screen-inset-end]
+      .5rem
+      [screen-end]
+
+      !important
   }
 }
 
