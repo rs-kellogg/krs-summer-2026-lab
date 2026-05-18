@@ -1,12 +1,8 @@
-/* Use full available width for article content */
-article.myst-article,
-div.myst-article {
-  max-width: 100% !important;
+/* Full-width layout: collapse side margins so content spans the full page */
+.article-grid {
+  grid-template-columns: 0 minmax(0, 1fr) 0 !important;
 }
 
-/* Remove the default content max-width cap */
-.content-container,
-.article-container,
-div[class*="article"] {
+.myst-top-nav-bar {
   max-width: 100% !important;
 }
