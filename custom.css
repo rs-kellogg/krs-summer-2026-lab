@@ -1,0 +1,12 @@
+/* Use full available width for article content */
+article.myst-article,
+div.myst-article {
+  max-width: 100% !important;
+}
+
+/* Remove the default content max-width cap */
+.content-container,
+.article-container,
+div[class*="article"] {
+  max-width: 100% !important;
+}
