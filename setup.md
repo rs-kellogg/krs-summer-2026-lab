@@ -101,6 +101,7 @@ gh copilot --version
 :::
 
 :::{tab-item} Claude Code CLI
+:selected:
 
 See the full [Claude Code install instructions (macOS & Linux)](https://code.claude.com/docs/en/setup#install-claude-code) or run:
 

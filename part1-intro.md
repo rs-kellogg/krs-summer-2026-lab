@@ -53,6 +53,7 @@ In interactive mode, you can paste code, ask follow-up questions, and iterate.
 :::
 
 :::{tab-item} Claude Code CLI
+:selected:
 Claude Code works as a full interactive agent. Start it in your project directory:
 
 ```bash
