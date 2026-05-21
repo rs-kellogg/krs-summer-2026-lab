@@ -45,6 +45,7 @@ First, activate the Mamba base environment on KLC:
 
 ```bash
 eval "$('/hpc/software/mamba/24.3.0/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+source "/hpc/software/mamba/24.3.0/etc/profile.d/mamba.sh"
 ```
 
 Then create the environment with both Python and R:
