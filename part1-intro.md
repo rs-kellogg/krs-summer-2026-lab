@@ -38,6 +38,20 @@ Both tools work from your terminal. You give them context (a file, an error mess
 
 ::::{tab-set}
 
+:::{tab-item} Claude Code CLI
+Claude Code works as a full interactive agent. Start it in your project directory:
+
+```bash
+# From the project root
+claude
+
+# Or give it an initial task
+claude "look at starter-code/firm_analysis.py and tell me what it does"
+```
+
+Claude Code can read, edit, and create files directly — ask it to make changes and it will do so.
+:::
+
 :::{tab-item} GitHub Copilot CLI
 The most natural way to use Copilot CLI for this lab is the `suggest` and `explain` commands, or by opening an interactive session:
 
@@ -50,21 +64,6 @@ gh copilot chat
 ```
 
 In interactive mode, you can paste code, ask follow-up questions, and iterate.
-:::
-
-:::{tab-item} Claude Code CLI
-:selected:
-Claude Code works as a full interactive agent. Start it in your project directory:
-
-```bash
-# From the project root
-claude
-
-# Or give it an initial task
-claude "look at starter-code/firm_analysis.py and tell me what it does"
-```
-
-Claude Code can read, edit, and create files directly — ask it to make changes and it will do so.
 :::
 
 ::::

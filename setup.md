@@ -85,6 +85,21 @@ The AI agent runs inside a Singularity container on KLC. The container bind-moun
 
 ::::{tab-set}
 
+:::{tab-item} Claude Code CLI
+
+See the full [Claude Code install instructions (macOS & Linux)](https://code.claude.com/docs/en/setup#install-claude-code) or run:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
+
+Verify the install:
+
+```bash
+claude --version
+```
+:::
+
 :::{tab-item} GitHub Copilot CLI
 
 See the full [Copilot CLI install instructions (macOS & Linux)](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli#installing-with-the-install-script-macos-and-linux) or run:
@@ -97,22 +112,6 @@ Verify the install:
 
 ```bash
 gh copilot --version
-```
-:::
-
-:::{tab-item} Claude Code CLI
-:selected:
-
-See the full [Claude Code install instructions (macOS & Linux)](https://code.claude.com/docs/en/setup#install-claude-code) or run:
-
-```bash
-curl -fsSL https://claude.ai/install.sh | bash
-```
-
-Verify the install:
-
-```bash
-claude --version
 ```
 :::
 
