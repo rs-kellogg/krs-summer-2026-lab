@@ -49,9 +49,10 @@ gh copilot --version
 # Should print something like: 1.x.x
 ```
 
-If not installed:
+If not installed, see the [Copilot CLI install instructions (macOS & Linux)](https://docs.github.com/en/copilot/how-tos/copilot-cli/set-up-copilot-cli/install-copilot-cli#installing-with-the-install-script-macos-and-linux) or run:
+
 ```bash
-gh extension install github/gh-copilot
+curl -fsSL https://gh.io/copilot-install | bash
 ```
 :::
 
@@ -61,7 +62,11 @@ claude --version
 # Should print something like: claude 1.x.x
 ```
 
-If not installed, follow the [Claude Code install guide](https://docs.anthropic.com/en/docs/claude-code).
+If not installed, see the [Claude Code install instructions (macOS & Linux)](https://code.claude.com/docs/en/setup#install-claude-code) or run:
+
+```bash
+curl -fsSL https://claude.ai/install.sh | bash
+```
 :::
 
 ::::
