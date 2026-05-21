@@ -2,18 +2,17 @@
 
 Complete these steps **before the lab starts** if possible. If not, work through them at the beginning of the session.
 
-:::{note}
-These instructions are written for the **Kellogg Linux Cluster (KLC)**. If you are working on your own Mac or Linux machine, the same steps apply but you can skip the `module load` commands and Singularity sections.
-:::
-
 ---
 
-## 1. Clone the Repository
+## 1. Log In to KLC
+
+From your local terminal, SSH into the Kellogg Linux Cluster:
 
 ```bash
-git clone https://github.com/rs-kellogg/krs-summer-2026-lab.git
-cd krs-summer-2026-lab
+ssh <netid>@klc0402.quest.northwestern.edu
 ```
+
+Replace `<netid>` with your Northwestern NetID.
 
 ---
 
@@ -26,16 +25,19 @@ mkdir -p ~/copilot_dir/envs
 mkdir -p ~/copilot_dir/repos
 ```
 
-Move (or clone) the lab repository into the `repos` subfolder:
+---
+
+## 3. Clone the Repository
 
 ```bash
-mv krs-summer-2026-lab ~/copilot_dir/repos/
-cd ~/copilot_dir/repos/krs-summer-2026-lab
+cd ~/copilot_dir/repos
+git clone https://github.com/rs-kellogg/krs-summer-2026-lab.git
+cd krs-summer-2026-lab
 ```
 
 ---
 
-## 3. Create a Mamba Virtual Environment
+## 4. Create a Mamba Virtual Environment
 
 The AI agent needs a virtual environment it can use when running Python and R code. We create it inside the `envs` folder using Mamba.
 
@@ -78,7 +80,7 @@ The AI agent runs inside a Singularity container on KLC. The container bind-moun
 
 ---
 
-## 4. Install Your AI Tool
+## 5. Install Your AI Tool
 
 ::::{tab-set}
 
@@ -116,9 +118,9 @@ claude --version
 
 ---
 
-## 5. Run the AI Tool on KLC via Singularity
+## 6. Run the AI Tool on KLC via Singularity
 
-On the Kellogg Linux Cluster, AI tools are run inside a **Singularity container** using the `ai_agent_container` module. This gives the agent a sandboxed environment with access to cluster SLURM commands and your project files.
+On KLC, AI tools are run inside a **Singularity container** using the `ai_agent_container` module. This gives the agent a sandboxed environment with access to cluster SLURM commands and your project files.
 
 **Load the module:**
 
@@ -155,7 +157,7 @@ ai_agent_container -a claude ~/copilot_dir -A "--model claude-opus-4-5"
 ```
 
 :::{note}
-The module automatically detects your active conda environment (`$CONDA_PREFIX`) and bind-mounts it into the container, so all packages you installed in Step 3 are available to the agent.
+The module automatically detects your active conda environment (`$CONDA_PREFIX`) and bind-mounts it into the container, so all packages you installed in Step 4 are available to the agent.
 :::
 
 :::{admonition} First-time login (Copilot CLI)
@@ -171,7 +173,7 @@ Enter the code shown in your terminal to complete the login.
 
 ---
 
-## 6. Verify the Starter Script Runs
+## 7. Verify the Starter Script Runs
 
 ```bash
 python starter-code/firm_analysis.py
@@ -180,14 +182,11 @@ python starter-code/firm_analysis.py
 
 ---
 
-## 7. Initialize Version Control
+## 8. Confirm Version Control
 
 ```bash
-# If you cloned the lab repo, you already have git history — skip this.
-# If starting fresh in your own directory:
-git init
-git add .
-git commit -m "initial commit: starter code and data"
+# You already have git history from cloning — confirm with:
+git log --oneline
 ```
 
 ---
@@ -195,6 +194,7 @@ git commit -m "initial commit: starter code and data"
 :::{important}
 Before moving on, confirm you have:
 
+- [ ] You are logged in to KLC via SSH
 - [ ] `~/copilot_dir/envs/python-virtual-env` exists and is active
 - [ ] `python --version` shows 3.12.x and `Rscript --version` works
 - [ ] Your AI tool is installed (`gh copilot --version` or `claude --version`)
@@ -205,4 +205,3 @@ Before moving on, confirm you have:
 ---
 
 **Next: [Part 1 · Introduction](part1-intro.md) →**
-
