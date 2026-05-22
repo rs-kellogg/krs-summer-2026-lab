@@ -126,35 +126,31 @@ On KLC, AI tools are run inside a **Singularity container** using the `ai_agent_
 **Load the module:**
 
 ```bash
-module load copilot_container
+module load ai-agent-container
 ```
 
-**Start the agent from inside your project directory:**
+**Start the agent, passing the directories it needs access to:**
 
 ```bash
-# Make sure you are inside your project folder first
-cd ~/copilot_dir/repos/krs-summer-2026-lab
-
-# Provide the root directory (the parent of both envs/ and repos/)
-ai_agent_container -a copilot ~/copilot_dir
+# Claude Code — give it your project directory
+ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab
 ```
 
-For Claude Code:
-
 ```bash
-ai_agent_container -a claude ~/copilot_dir
+# GitHub Copilot CLI
+ai_agent_container -a copilot ~/copilot_dir/repos/krs-summer-2026-lab
 ```
 
-**Mount additional directories read-only** (e.g. a shared data directory):
+**Mount additional directories** (e.g. a shared data directory — append `:ro` for read-only):
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir /path/to/shared/data:ro
+ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab /path/to/shared/data:ro
 ```
 
-**Pass arguments directly to the agent:**
+**Pass arguments directly to the agent** using `--`:
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir -A "--model claude-opus-4-5"
+ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab -- --model claude-opus-4-5
 ```
 
 :::{note}
