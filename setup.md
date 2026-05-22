@@ -157,8 +157,7 @@ ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab -- --model 
 The module automatically detects your active conda environment (`$CONDA_PREFIX`) and bind-mounts it into the container, so all packages you installed in Step 4 are available to the agent.
 :::
 
-### First-Time Login: Claude Code CLI
-
+:::{dropdown} First-Time Login: Claude Code CLI
 The first time you launch Claude Code it will walk you through a browser-based authentication flow. Here is what to expect at each step.
 
 **Step 1 — Claude prompts you to log in**
@@ -202,6 +201,7 @@ Paste the authentication code into the browser prompt. You should see a success 
 Claude Code will ask whether you trust the current working directory. Select **Yes** to allow it to read and edit files in your project.
 
 ![Claude Code asking to trust the folder](images/claude-code-yes-i-trust-this-folder.png)
+:::
 
 :::{admonition} First-time login (GitHub Copilot CLI)
 :class: tip
