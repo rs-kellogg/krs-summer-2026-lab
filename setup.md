@@ -176,7 +176,7 @@ When Claude Code starts for the first time it detects that you have not authenti
 
 Follow the on-screen instruction to run the login command (or simply press Enter if it offers to do so automatically).
 
-![Login directive shown in terminal](images/login-directive.png)
+![Login directive shown in terminal](images/claude-cli-login-directive.png)
 
 **Step 3 — Copy the URL and open it in your local browser**
 
@@ -234,7 +234,7 @@ Copilot CLI will print a URL and a one-time device code. Open the URL in your **
 
 Follow any remaining on-screen instructions to complete the authentication.
 
-![Login directive](images/login-directive.png)
+![Login directive](images/github-copilot-cli-login-directive.png)
 
 **Step 5 — Stay logged in preference**
 
