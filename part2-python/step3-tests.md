@@ -105,6 +105,16 @@ def test_summarize_by_year_row_count(sample_df):
 
 ## Run the Tests
 
+:::{important}
+**Before asking the AI to run the tests**, tell it to use the Python interpreter from the conda environment you created in setup. This is the first time the agent will execute Python code, so it needs to know which interpreter to use.
+
+![Telling Claude to use conda for Python](../images/tell-claude-to-use-conda-with-python.png)
+
+Claude will ask permission before switching interpreters — approve it:
+
+![What Claude asks permission for after being told to use conda for Python](../images/what-claude-asks-permission-for-after-being-told-to-use-conda-python.png)
+:::
+
 From the repo root:
 
 ```bash

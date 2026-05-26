@@ -87,6 +87,10 @@ if __name__ == "__main__":
 ```
 
 Your version may differ in details. What matters is that `logging.basicConfig` is configured with both a `FileHandler` and a `StreamHandler`, and INFO messages report row counts and file paths.
+
+Before applying changes, Claude will show you exactly which lines it intends to modify:
+
+![Example of Claude showing what lines will change](../images/example-of-claude-showing-what-lines-will-change.png)
 :::
 
 ---

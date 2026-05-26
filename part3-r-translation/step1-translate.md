@@ -91,6 +91,18 @@ main()
 
 ## Run It
 
+Before running the R script, tell the agent to use the conda R interpreter — just as you did for Python in Part 2:
+
+![Telling Claude to use conda for R](../images/tell-claude-to-use-conda-with-R.png)
+
+Claude will ask permission before switching interpreters:
+
+![What Claude asks permission for after being told to use conda for R](../images/what-claude-asks-permission-for-after-being-told-to-use-conda-R.png)
+
+The AI may also offer a summary table mapping Python constructs to their R equivalents:
+
+![Summary table providing mappings of Python to R](../images/summary-table-providing-mappings-of-python-to-r.png)
+
 ```bash
 Rscript starter-code/firm_analysis.R
 ```

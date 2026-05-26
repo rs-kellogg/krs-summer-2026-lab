@@ -2,8 +2,6 @@
 
 Complete these steps **before the lab starts** if possible. If not, work through them at the beginning of the session.
 
----
-
 ## Open Two SSH Connections to KLC
 
 You will need **two terminal windows connected to KLC** running simultaneously throughout the lab:
@@ -191,29 +189,33 @@ On KLC, AI tools are run inside a **Singularity container** using the `ai_agent_
 module load ai-agent-container
 ```
 
-**Start the agent, pointing it at your working repository:**
+**Change into your working repository, then start the agent:**
+
+```bash
+cd ~/copilot_dir/repos/firm-analysis
+```
 
 ```bash
 # Claude Code
-ai_agent_container -a claude ~/copilot_dir/repos/firm-analysis ~/copilot_dir/
+ai_agent_container -a claude ~/copilot_dir/
 ```
 
 ```bash
 # GitHub Copilot CLI
-ai_agent_container -a copilot ~/copilot_dir/repos/firm-analysis ~/copilot_dir/
+ai_agent_container -a copilot ~/copilot_dir/
 ```
 
 :::{dropdown} Additional options — mount extra directories or pass agent arguments
 **Mount additional directories** (e.g. a shared data directory — append `:ro` for read-only):
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir/repos/firm-analysis ~/copilot_dir/ /path/to/shared/data:ro
+ai_agent_container -a claude ~/copilot_dir/ /path/to/shared/data:ro
 ```
 
 **Pass arguments directly to the agent** using `--`:
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir/repos/firm-analysis ~/copilot_dir/ -- --model claude-opus-4-5
+ai_agent_container -a claude ~/copilot_dir/ -- --model claude-opus-4-5
 ```
 :::
 
@@ -224,47 +226,47 @@ ai_agent_container -a claude ~/copilot_dir/repos/firm-analysis ~/copilot_dir/ --
 :::{dropdown} First-Time Login: Claude Code CLI
 The first time you launch Claude Code it will walk you through a browser-based authentication flow. Here is what to expect at each step.
 
-**Step 1 — Claude prompts you to log in**
+**Step 1 — Trust the folder**
 
-When Claude Code starts for the first time it detects that you have not authenticated and displays a login prompt.
+Claude Code first asks whether you trust the current working directory. Select **Yes** to allow it to read and edit files in your project.
+
+![Claude Code asking to trust the folder](images/claude-code-yes-i-trust-this-folder.png)
+
+**Step 2 — Claude prompts you to log in**
+
+Claude Code then detects that you have not authenticated and displays a login prompt.
 
 ![Claude Code prompting user to log in](images/claude-code-prompt-requesting-user-to-login.png)
 
-**Step 2 — Run the login directive**
+**Step 3 — Run the login directive**
 
 Follow the on-screen instruction to run the login command (or simply press Enter if it offers to do so automatically).
 
 ![Login directive shown in terminal](images/claude-cli-login-directive.png)
 
-**Step 3 — Copy the URL and open it in your local browser**
+**Step 4 — Copy the URL and open it in your local browser**
 
 Claude Code will print a URL. Copy it and paste it into a browser on your **local machine** (not on the cluster).
 
 ![Copy and paste the URL into a local browser](images/copy-paste-url-into-local-browser.png)
 
-**Step 4 — Copy the authentication code**
+**Step 5 — Copy the authentication code**
 
 The terminal also displays a short one-time code. Copy it — you will paste it into the browser in the next step.
 
 ![Authentication code to copy](images/copy-authentication-code.png)
 
-**Step 5 — Select your Claude account in the browser**
+**Step 6 — Select your Claude account in the browser**
 
 In the browser, choose the Claude account that has an active subscription.
 
 ![Select Claude account with subscription](images/login-select-calude-account-with-subscription.png)
 
-**Step 6 — Paste the code and confirm login success**
+**Step 7 — Paste the code and confirm login success**
 
 Paste the authentication code into the browser prompt. You should see a success confirmation. Return to your terminal — Claude Code will detect the completed login automatically.
 
 ![Login success after pasting authentication code](images/after-pasting-authentication-code-login-success.png)
-
-**Step 7 — Trust the folder**
-
-Claude Code will ask whether you trust the current working directory. Select **Yes** to allow it to read and edit files in your project.
-
-![Claude Code asking to trust the folder](images/claude-code-yes-i-trust-this-folder.png)
 :::
 
 :::{dropdown} First-Time Login: GitHub Copilot CLI
