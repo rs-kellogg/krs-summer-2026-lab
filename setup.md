@@ -47,12 +47,35 @@ mkdir -p ~/copilot_dir/repos
 ```bash
 cd ~/copilot_dir/repos
 git clone https://github.com/rs-kellogg/krs-summer-2026-lab.git
-cd krs-summer-2026-lab
 ```
 
 ---
 
-### 3. Create a Mamba Virtual Environment
+### 3. Create Your Working Repository
+
+The cloned repo is the lab guide — your code lives in a separate repo so your work has its own clean git history.
+
+```bash
+cd ~/copilot_dir/repos
+git init firm-analysis
+cd firm-analysis
+```
+
+Copy the starter code in and make the initial commit:
+
+```bash
+cp -r ~/copilot_dir/repos/krs-summer-2026-lab/starter-code .
+git add starter-code
+git commit -m "chore: initial commit with starter code"
+```
+
+:::{note}
+All subsequent Terminal B commands in this lab are run from `~/copilot_dir/repos/firm-analysis`.
+:::
+
+---
+
+### 4. Create a Mamba Virtual Environment
 
 The AI agent needs a virtual environment it can use when running Python and R code. We create it inside the `envs` folder using Mamba.
 
@@ -96,7 +119,7 @@ The AI agent runs inside a Singularity container on KLC. The container bind-moun
 
 ---
 
-### 4. Verify the Starter Script Runs
+### 5. Verify the Starter Script Runs
 
 ```bash
 python starter-code/firm_analysis.py
@@ -105,10 +128,9 @@ python starter-code/firm_analysis.py
 
 ---
 
-### 5. Confirm Version Control
+### 6. Confirm Version Control
 
 ```bash
-# You already have git history from cloning — confirm with:
 git log --oneline
 ```
 
@@ -118,7 +140,7 @@ git log --oneline
 
 Do the following steps in **Terminal A**.
 
-### 6. Install Your AI Tool
+### 7. Install Your AI Tool
 
 ::::{tab-set}
 
@@ -159,7 +181,7 @@ Verify the install:
 
 ---
 
-### 7. Run the AI Tool on KLC via Singularity
+### 8. Run the AI Tool on KLC via Singularity
 
 On KLC, AI tools are run inside a **Singularity container** using the `ai_agent_container` module. This gives the agent a sandboxed environment with access to cluster SLURM commands and your project files.
 
@@ -169,34 +191,34 @@ On KLC, AI tools are run inside a **Singularity container** using the `ai_agent_
 module load ai-agent-container
 ```
 
-**Start the agent, passing the directories it needs access to:**
+**Start the agent, pointing it at your working repository:**
 
 ```bash
-# Claude Code — give it your project directory
-ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab
+# Claude Code
+ai_agent_container -a claude ~/copilot_dir/repos/firm-analysis ~/copilot_dir/
 ```
 
 ```bash
 # GitHub Copilot CLI
-ai_agent_container -a copilot ~/copilot_dir/repos/krs-summer-2026-lab
+ai_agent_container -a copilot ~/copilot_dir/repos/firm-analysis ~/copilot_dir/
 ```
 
 :::{dropdown} Additional options — mount extra directories or pass agent arguments
 **Mount additional directories** (e.g. a shared data directory — append `:ro` for read-only):
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab /path/to/shared/data:ro
+ai_agent_container -a claude ~/copilot_dir/repos/firm-analysis ~/copilot_dir/ /path/to/shared/data:ro
 ```
 
 **Pass arguments directly to the agent** using `--`:
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab -- --model claude-opus-4-5
+ai_agent_container -a claude ~/copilot_dir/repos/firm-analysis ~/copilot_dir/ -- --model claude-opus-4-5
 ```
 :::
 
 :::{note}
-The module automatically detects your active conda environment (`$CONDA_PREFIX`) and bind-mounts it into the container, so all packages you installed in Step 3 are available to the agent.
+`~/copilot_dir/` is mounted explicitly so the agent can access the virtual environment in `~/copilot_dir/envs/`. This is necessary because Terminal A is a fresh SSH session with no conda activated — the agent cannot auto-detect `$CONDA_PREFIX` here.
 :::
 
 :::{dropdown} First-Time Login: Claude Code CLI
@@ -285,10 +307,11 @@ You may be asked whether to stay logged in. Select the option that suits your wo
 Before moving on, confirm you have:
 
 - [ ] You are logged in to KLC via SSH in both terminals
+- [ ] `~/copilot_dir/repos/firm-analysis` exists with `starter-code/` inside it (Terminal B)
+- [ ] `git log --oneline` in `firm-analysis` shows your initial commit (Terminal B)
 - [ ] `~/copilot_dir/envs/python-virtual-env` exists and is active (Terminal B)
 - [ ] `python --version` shows 3.12.x and `Rscript --version` works (Terminal B)
 - [ ] `starter-code/output/summary.csv` was created when you ran `firm_analysis.py` (Terminal B)
-- [ ] `git log --oneline` shows at least one commit (Terminal B)
 - [ ] Your AI tool is installed and running via `ai_agent_container` (Terminal A)
 :::
 
