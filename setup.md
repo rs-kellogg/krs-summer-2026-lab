@@ -4,9 +4,16 @@ Complete these steps **before the lab starts** if possible. If not, work through
 
 ---
 
-## 1. Log In to KLC
+## Open Two SSH Connections to KLC
 
-From your local terminal, SSH into the Kellogg Linux Cluster:
+You will need **two terminal windows connected to KLC** running simultaneously throughout the lab:
+
+| Terminal | Purpose |
+|----------|---------|
+| **Terminal A — AI session** | Runs the AI CLI (`ai_agent_container`) — this process is long-lived and interactive; you leave it running |
+| **Terminal B — command line** | Runs everything else: `python starter-code/firm_analysis.py`, `pytest`, `git log --oneline`, `cat output/summary.csv`, etc. |
+
+Open **both** terminals now and SSH into KLC from each:
 
 ```bash
 ssh <netid>@klc0402.quest.northwestern.edu
@@ -14,9 +21,17 @@ ssh <netid>@klc0402.quest.northwestern.edu
 
 Replace `<netid>` with your Northwestern NetID.
 
+:::{tip}
+A common workflow pattern: ask the AI in Terminal A to make a change, then switch to Terminal B to run the code and inspect the result — without interrupting the AI session.
+:::
+
 ---
 
-## 2. Create Your Working Directory Structure
+## Terminal B — Command Line Setup
+
+Do the following steps in **Terminal B**.
+
+### 1. Create Your Working Directory Structure
 
 Create a parent folder that will hold both your virtual environment and your code repositories. This structure is required by the `ai_agent_container` module on KLC.
 
@@ -27,7 +42,7 @@ mkdir -p ~/copilot_dir/repos
 
 ---
 
-## 3. Clone the Repository
+### 2. Clone the Repository
 
 ```bash
 cd ~/copilot_dir/repos
@@ -37,7 +52,7 @@ cd krs-summer-2026-lab
 
 ---
 
-## 4. Create a Mamba Virtual Environment
+### 3. Create a Mamba Virtual Environment
 
 The AI agent needs a virtual environment it can use when running Python and R code. We create it inside the `envs` folder using Mamba.
 
@@ -81,7 +96,29 @@ The AI agent runs inside a Singularity container on KLC. The container bind-moun
 
 ---
 
-## 5. Install Your AI Tool
+### 4. Verify the Starter Script Runs
+
+```bash
+python starter-code/firm_analysis.py
+# Expected: "done" printed, and starter-code/output/summary.csv created
+```
+
+---
+
+### 5. Confirm Version Control
+
+```bash
+# You already have git history from cloning — confirm with:
+git log --oneline
+```
+
+---
+
+## Terminal A — AI Session
+
+Do the following steps in **Terminal A**.
+
+### 6. Install Your AI Tool
 
 ::::{tab-set}
 
@@ -94,9 +131,8 @@ curl -fsSL https://claude.ai/install.sh | bash
 ```
 
 Verify the install:
-
 ```bash
-claude --version
+~/.local/bin/claude --version
 ```
 :::
 
@@ -111,7 +147,7 @@ curl -fsSL https://gh.io/copilot-install | bash
 Verify the install:
 
 ```bash
-gh copilot --version
+~/.local/bin/copilot --version
 ```
 
 :::{dropdown} Installing GitHub Copilot CLI — screenshot walkthrough
@@ -123,7 +159,7 @@ gh copilot --version
 
 ---
 
-## 6. Run the AI Tool on KLC via Singularity
+### 7. Run the AI Tool on KLC via Singularity
 
 On KLC, AI tools are run inside a **Singularity container** using the `ai_agent_container` module. This gives the agent a sandboxed environment with access to cluster SLURM commands and your project files.
 
@@ -160,7 +196,7 @@ ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab -- --model 
 :::
 
 :::{note}
-The module automatically detects your active conda environment (`$CONDA_PREFIX`) and bind-mounts it into the container, so all packages you installed in Step 4 are available to the agent.
+The module automatically detects your active conda environment (`$CONDA_PREFIX`) and bind-mounts it into the container, so all packages you installed in Step 3 are available to the agent.
 :::
 
 :::{dropdown} First-Time Login: Claude Code CLI
@@ -245,35 +281,18 @@ You may be asked whether to stay logged in. Select the option that suits your wo
 
 ---
 
-## 7. Verify the Starter Script Runs
-
-```bash
-python starter-code/firm_analysis.py
-# Expected: "done" printed, and starter-code/output/summary.csv created
-```
-
----
-
-## 8. Confirm Version Control
-
-```bash
-# You already have git history from cloning — confirm with:
-git log --oneline
-```
-
----
-
 :::{important}
 Before moving on, confirm you have:
 
-- [ ] You are logged in to KLC via SSH
-- [ ] `~/copilot_dir/envs/python-virtual-env` exists and is active
-- [ ] `python --version` shows 3.12.x and `Rscript --version` works
-- [ ] Your AI tool is installed (`gh copilot --version` or `claude --version`)
-- [ ] `starter-code/output/summary.csv` was created when you ran `firm_analysis.py`
-- [ ] `git log --oneline` shows at least one commit
+- [ ] You are logged in to KLC via SSH in both terminals
+- [ ] `~/copilot_dir/envs/python-virtual-env` exists and is active (Terminal B)
+- [ ] `python --version` shows 3.12.x and `Rscript --version` works (Terminal B)
+- [ ] `starter-code/output/summary.csv` was created when you ran `firm_analysis.py` (Terminal B)
+- [ ] `git log --oneline` shows at least one commit (Terminal B)
+- [ ] Your AI tool is installed and running via `ai_agent_container` (Terminal A)
 :::
 
 ---
 
 **Next: [Part 1 · Introduction](part1-intro.md) →**
+

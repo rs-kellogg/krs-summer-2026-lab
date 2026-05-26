@@ -106,3 +106,7 @@ Python and R tests use **the same inline fixture** (not the CSV) so they can cro
 ## Environment (KLC Context)
 
 The lab runs on the Kellogg Linux Cluster via Singularity. Participants use a single mamba environment (`~/copilot_dir/envs/python-virtual-env`) with Python 3.12, R, pandas, pytest, tidyverse, and testthat. The `ai_agent_container` module wraps AI tool invocations on the cluster.
+
+Participants maintain **two simultaneous SSH connections** to KLC:
+- **Terminal A** — runs the AI CLI session (`ai_agent_container`) and stays open throughout the lab
+- **Terminal B** — runs commands like `python`, `pytest`, `git`, `cat`, etc. without interrupting the AI session
