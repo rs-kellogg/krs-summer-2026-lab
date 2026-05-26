@@ -113,6 +113,10 @@ Verify the install:
 ```bash
 gh copilot --version
 ```
+
+:::{dropdown} Installing GitHub Copilot CLI — screenshot walkthrough
+![Installing GitHub Copilot CLI](images/install-copilot.png)
+:::
 :::
 
 ::::
@@ -141,6 +145,7 @@ ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab
 ai_agent_container -a copilot ~/copilot_dir/repos/krs-summer-2026-lab
 ```
 
+:::{dropdown} Additional options — mount extra directories or pass agent arguments
 **Mount additional directories** (e.g. a shared data directory — append `:ro` for read-only):
 
 ```bash
@@ -152,6 +157,7 @@ ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab /path/to/sh
 ```bash
 ai_agent_container -a claude ~/copilot_dir/repos/krs-summer-2026-lab -- --model claude-opus-4-5
 ```
+:::
 
 :::{note}
 The module automatically detects your active conda environment (`$CONDA_PREFIX`) and bind-mounts it into the container, so all packages you installed in Step 4 are available to the agent.
@@ -203,15 +209,38 @@ Claude Code will ask whether you trust the current working directory. Select **Y
 ![Claude Code asking to trust the folder](images/claude-code-yes-i-trust-this-folder.png)
 :::
 
-:::{admonition} First-time login (GitHub Copilot CLI)
-:class: tip
-The first time you run Copilot CLI it will ask you to authenticate with GitHub. It will print a device code and a URL — open the URL in your **local browser** (not on the cluster):
+:::{dropdown} First-Time Login: GitHub Copilot CLI
+The first time you launch Copilot CLI it will walk you through a browser-based authentication flow. Here is what to expect at each step.
 
-```
-https://github.com/login/device
-```
+**Step 1 — Run Copilot CLI for the first time**
 
-Enter the code shown in your terminal to complete the login.
+When you launch Copilot CLI for the first time it detects that you are not authenticated.
+
+![Running Copilot CLI for the first time](images/run-copilot-first-time.png)
+
+**Step 2 — Select "Login with GitHub"**
+
+Choose the option to log in with your GitHub account.
+
+![Select login with GitHub](images/select-login-with-github.png)
+
+**Step 3 — Go to the URL and copy the one-time code**
+
+Copilot CLI will print a URL and a one-time device code. Open the URL in your **local browser** (not on the cluster) and enter the code shown in your terminal.
+
+![Go to the URL and copy the one-time code](images/go-to-url-copy-onetime-code.png)
+
+**Step 4 — Login directive**
+
+Follow any remaining on-screen instructions to complete the authentication.
+
+![Login directive](images/login-directive.png)
+
+**Step 5 — Stay logged in preference**
+
+You may be asked whether to stay logged in. Select the option that suits your workflow — choosing "No, I will login each time" is the safer option on a shared cluster.
+
+![No, I will login each time](images/no-i-will-login-each-time.png)
 :::
 
 ---
