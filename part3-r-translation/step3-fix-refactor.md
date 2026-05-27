@@ -43,21 +43,7 @@ The typical fix is ensuring that rounding happens after all aggregation is compl
 
 ## Task B: Remove Hardcoded Paths
 
-Both scripts still hardcode their input/output paths. This makes them useless for anyone with a different directory structure — including you six months from now on a different machine.
-
-:::{admonition} 💬 Prompt — Add CLI arguments to Python
-:class: tip
-```
-Add argparse command-line arguments to starter-code/firm_analysis.py so that
-users can specify:
-  --input PATH      Path to the input CSV (default: starter-code/data/firms.csv)
-  --output PATH     Path to the output CSV (default: starter-code/output/summary.csv)
-  --min-revenue N   Revenue threshold for filtering (default: 1000000)
-
-The defaults should match the current hardcoded values so existing behavior is
-unchanged. Log each argument value at the INFO level at startup.
-```
-:::
+The R script still hardcodes its input/output paths. Now that the Python script already accepts CLI arguments, do the same for R.
 
 :::{admonition} 💬 Prompt — Add CLI arguments to R
 :class: tip
@@ -77,15 +63,6 @@ Print each argument value to the console at startup using message().
 ## Test That the Defaults Still Work
 
 ```bash
-# Python — should behave exactly as before
-python starter-code/firm_analysis.py
-
-# With explicit arguments
-python starter-code/firm_analysis.py \
-  --input starter-code/data/firms.csv \
-  --output starter-code/output/summary.csv \
-  --min-revenue 2000000
-
 # R — should behave exactly as before
 Rscript starter-code/firm_analysis.R
 
@@ -108,14 +85,14 @@ Rscript -e "testthat::test_file('starter-code/tests/test_firm_analysis.R')"
 ## Final Commit
 
 ```bash
-git add starter-code/firm_analysis.py starter-code/firm_analysis.R
-git commit -m "feat: add argparse/optparse CLI arguments, fix R rounding"
+git add starter-code/firm_analysis.R
+git commit -m "feat: add optparse CLI arguments to R, fix R rounding"
 ```
 
 :::{important}
 - [ ] All Python tests pass
 - [ ] All R tests pass
-- [ ] Both scripts accept `--input`, `--output`, and `--min-revenue` arguments
+- [ ] `firm_analysis.R` accepts `--input`, `--output`, and `--min-revenue` arguments
 - [ ] Running both scripts with no arguments produces the same output as before
 - [ ] Your git log shows a clear history of incremental improvements
 :::

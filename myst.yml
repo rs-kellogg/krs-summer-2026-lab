@@ -15,6 +15,7 @@ project:
         - file: part2-python/step1-understand
         - file: part2-python/step2-logging
         - file: part2-python/step3-tests
+        - file: part2-python/step4-cli
     - title: Part 3 · Python → R
       children:
         - file: part3-r-translation/index

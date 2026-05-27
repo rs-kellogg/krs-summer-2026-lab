@@ -158,4 +158,4 @@ git commit -m "feat: refactor into functions and add pytest unit tests"
 
 ---
 
-**Next: [Part 3 · Python → R](../part3-r-translation/index.md) →**
+**Next: [Step 4 – Add a CLI](step4-cli.md) →**
