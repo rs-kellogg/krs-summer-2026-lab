@@ -2,6 +2,15 @@
 
 Complete these steps **before the lab starts** if possible. If not, work through them at the beginning of the session.
 
+## Video Walkthrough
+
+:::{iframe} https://kellogg-northwestern.hosted.panopto.com/Panopto/Pages/Embed.aspx?id=914184e8-a672-497d-8431-b45601355701&autoplay=false&offerviewer=true&showtitle=true&showbrand=false&captions=false&interactivity=all
+:width: 75%
+:align: left
+:::
+
+---
+
 ## Open Two SSH Connections to KLC
 
 You will need **two terminal windows connected to KLC** running simultaneously throughout the lab:
