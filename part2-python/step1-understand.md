@@ -1,4 +1,4 @@
-# Part 2, Step 1 – Before You Change Anything, Understand It
+# Part 3, Step 1 – Before You Change Anything, Understand It
 
 ## Slow Down First
 

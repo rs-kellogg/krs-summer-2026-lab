@@ -98,7 +98,9 @@ d4e3b77 feat: add initial R translation of EDGAR pipeline
 e6f5c22 feat: add argparse CLI to EDGAR pipeline
 f8a7d33 feat: refactor EDGAR pipeline and add pytest tests
 g1b2c44 feat: replace print with structured logging
-h0c3d55 chore: add EDGAR starter script before improvements
+h0c3d55 chore: improve EDGAR extractor before quality work
+i9d4e66 feat: build EDGAR extractor pipeline from scratch
+j1b5f77 chore: initial single-file EDGAR reader
 ```
 
 ---

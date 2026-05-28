@@ -1,4 +1,4 @@
-# Part 2, Step 4 – Add a CLI
+# Part 3, Step 4 – Add a CLI
 
 ## Why a CLI Matters
 
@@ -126,4 +126,4 @@ git commit -m "feat: add argparse CLI to EDGAR pipeline"
 
 ---
 
-**Next: [Part 3 · Python → R](../part3-r-translation/index.md) →**
+**Next: [Part 4 · Python → R](../part3-r-translation/index.md) →**

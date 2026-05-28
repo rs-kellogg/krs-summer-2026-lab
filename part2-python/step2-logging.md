@@ -1,4 +1,4 @@
-# Part 2, Step 2 – Add Logging
+# Part 3, Step 2 – Add Logging
 
 ## Why Logging Matters Here
 

@@ -52,10 +52,11 @@ You end up with **two well-tested, well-logged, modular, configurable pipelines 
 |------|---------|
 | 0:00 – 0:10 | [Setup & Orientation](setup.md) |
 | 0:10 – 0:25 | [Part 1 · Introduction](part1-intro.md) |
-| 0:25 – 0:45 | [Part 2 · Improve the Python](part2-python/index.md) |
-| 0:45 – 1:10 | [Part 3 · Python → R](part3-r-translation/index.md) |
-| 1:10 – 1:25 | [Bonus · Parallelization](part4-bonus.md) *(optional)* |
-| 1:25 – 1:30 | [Wrap-Up](wrap-up.md) |
+| 0:25 – 0:55 | [Part 2 · Explore and Extract](part2-explore/index.md) |
+| 0:55 – 1:15 | [Part 3 · Improve the Python](part2-python/index.md) |
+| 1:15 – 1:30 | [Part 4 · Python → R](part3-r-translation/index.md) *(or take-home)* |
+| *(optional)* | [Bonus · Parallelization](part4-bonus.md) |
+| last 5 min | [Wrap-Up](wrap-up.md) |
 
 ---
 

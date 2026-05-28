@@ -1,4 +1,4 @@
-# Part 2 · Improve the Python
+# Part 3 · Improve the Python
 
 ## Goal
 
@@ -6,7 +6,7 @@ In this part, you will iteratively improve `starter-code/edgar_analysis.py` usin
 
 This script processes **real SEC EDGAR Form 4 filings** from 2003, extracts insider buy/sell transactions, and writes a monthly summary. Your job is to make that pipeline easier to understand, test, reuse, and trust.
 
-By the end of Part 2, your script will:
+By the end of Part 3, your script will:
 
 - use Python's `logging` module instead of `print()`
 - have its core XML-parsing and aggregation logic in named, testable functions

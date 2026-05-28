@@ -1,4 +1,4 @@
-# Part 3, Step 3 – Compare Outputs and Fix Divergences
+# Part 4, Step 3 – Compare Outputs and Fix Divergences
 
 ## Now Verify the Translation End-to-End
 

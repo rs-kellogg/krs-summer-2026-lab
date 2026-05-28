@@ -104,4 +104,4 @@ A few habits make AI coding tools much more useful:
 
 ---
 
-**Next: [Part 2 · Improve the Python](part2-python/index.md) →**
+**Next: [Part 2 · Explore and Extract](part2-explore/index.md) →**
