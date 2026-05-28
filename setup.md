@@ -18,7 +18,7 @@ You will need **two terminal windows connected to KLC** running simultaneously t
 | Terminal | Purpose |
 |----------|---------|
 | **Terminal A — AI session** | Runs the AI CLI (`ai_agent_container`) — this process is long-lived and interactive; you leave it running |
-| **Terminal B — command line** | Runs everything else: `python starter-code/firm_analysis.py`, `pytest`, `git log --oneline`, `cat output/summary.csv`, etc. |
+| **Terminal B — command line** | Runs everything else: `python starter-code/edgar_analysis.py`, `pytest`, `git log --oneline`, `cat output/insider_summary.csv`, etc. |
 
 Open **both** terminals now and SSH into KLC from each:
 
@@ -96,11 +96,13 @@ source "/hpc/software/mamba/24.3.0/etc/profile.d/mamba.sh"
 Then create the environment with both Python and R:
 
 ```bash
-mamba create --prefix=~/copilot_dir/envs/python-virtual-env \
+mamba create --prefix=~/copilot_dir/envs/edgar-env \
     python=3.12 \
     r-base \
     r-tidyverse \
     r-testthat \
+    r-xml2 \
+    r-purrr \
     r-optparse \
     pandas pytest \
     --yes
@@ -109,7 +111,7 @@ mamba create --prefix=~/copilot_dir/envs/python-virtual-env \
 Activate it:
 
 ```bash
-conda activate ~/copilot_dir/envs/python-virtual-env
+conda activate ~/copilot_dir/envs/edgar-env
 ```
 
 Confirm both Python and R are available:
@@ -129,8 +131,8 @@ The AI agent runs inside a Singularity container on KLC. The container bind-moun
 ### 5. Verify the Starter Script Runs
 
 ```bash
-python starter-code/firm_analysis.py
-# Expected: "done" printed, and starter-code/output/summary.csv created
+python starter-code/edgar_analysis.py
+# Expected: "done" printed, and starter-code/output/insider_summary.csv created
 ```
 
 ---
@@ -320,9 +322,9 @@ Before moving on, confirm you have:
 - [ ] You are logged in to KLC via SSH in both terminals
 - [ ] `~/copilot_dir/repos/firm-analysis` exists with `starter-code/` inside it (Terminal B)
 - [ ] `git log --oneline` in `firm-analysis` shows your initial commit (Terminal B)
-- [ ] `~/copilot_dir/envs/python-virtual-env` exists and is active (Terminal B)
+- [ ] `~/copilot_dir/envs/edgar-env` exists and is active (Terminal B)
 - [ ] `python --version` shows 3.12.x and `Rscript --version` works (Terminal B)
-- [ ] `starter-code/output/summary.csv` was created when you ran `firm_analysis.py` (Terminal B)
+- [ ] `starter-code/output/insider_summary.csv` was created when you ran `edgar_analysis.py` (Terminal B)
 - [ ] Your AI tool is installed and running via `ai_agent_container` (Terminal A)
 :::
 

@@ -1,7 +1,7 @@
 version: 1
 
 project:
-  title: AI-Assisted Data Analysis Lab
+  title: AI-Assisted Research Data Lab
   authors:
     - name: Kellogg Research Support
   github: https://github.com/rs-kellogg/krs-summer-2026-lab

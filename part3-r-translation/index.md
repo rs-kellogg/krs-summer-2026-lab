@@ -4,51 +4,49 @@
 
 You now have a Python pipeline that is:
 
-- ✅ Logged
-- ✅ Tested
-- ✅ Modular
+- ✅ logged
+- ✅ tested
+- ✅ modular
+- ✅ configurable
 
-Now you'll translate it to R — even if you've never written R before. The AI will do the translation; your job is to use your tests to verify the result is correct.
+Now you'll translate it to R.
 
-This is the core use case: **using AI to cross language boundaries while using tests as a safety net.**
+This is a **Python-to-R translation exercise** using `xml2` for XML parsing, `dplyr` for data manipulation, and `readr` for CSV output. The AI will do most of the translation work; your job is to verify that the R version behaves like the Python version.
 
 ## The Three Steps
 
 | Step | What you ask the AI | What you get |
 |------|-------------------|-------------|
-| [Step 1 – Translate](step1-translate.md) | *Translate to R using tidyverse* | A working R script |
-| [Step 2 – Write R tests](step2-tests.md) | *Write testthat equivalents* | R test suite — with at least one revealing failure |
-| [Step 3 – Fix & refactor](step3-fix-refactor.md) | *Fix discrepancies, add CLI args* | Verified, configurable R + Python pipelines |
-
-## Why One of the R Tests Will Fail
-
-This is not an accident. It's the point.
-
-AI translation is very good but not perfect. There are subtle differences between pandas and tidyverse behavior — in how ties are broken in `median()`, how grouped rounding is applied, default NA handling. A single test failure will demonstrate concretely why you never just accept a translation without validation.
-
----
+| [Step 1 – Translate](step1-translate.md) | *Translate the EDGAR pipeline to R* | A working R script using `xml2`, `dplyr`, and `readr` |
+| [Step 2 – Write R tests](step2-tests.md) | *Mirror the Python tests with testthat* | An R test suite for parsing, filtering, and summarizing |
+| [Step 3 – Compare outputs and fix divergences](step3-fix-refactor.md) | *Find and fix Python/R mismatches* | Matching Python and R monthly summaries |
 
 ## Starting State
 
-```
+```text
 starter-code/
-├── firm_analysis.py     ← Python, refactored and tested
-├── tests/
-│   └── test_firm_analysis.py
-└── ...
+├── edgar_analysis.py
+├── output/
+│   └── insider_summary.csv
+└── tests/
+    └── test_edgar_analysis.py
 ```
 
 ## Ending State
 
-```
+```text
 starter-code/
-├── firm_analysis.py         ← now accepts --input, --output, --min-revenue args
-├── firm_analysis.R          ← R translation, tested and verified
-├── tests/
-│   ├── test_firm_analysis.py
-│   └── test_firm_analysis.R
-└── ...
+├── edgar_analysis.py
+├── edgar_analysis.R
+├── output/
+│   ├── insider_summary.csv
+│   └── insider_summary_r.csv
+└── tests/
+    ├── test_edgar_analysis.py
+    └── test_edgar_analysis.R
 ```
+
+The goal is not just "get an R script that runs." The goal is **make the R script agree with the tested Python behavior**.
 
 ---
 

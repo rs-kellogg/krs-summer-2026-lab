@@ -1,4 +1,4 @@
-# AI-Assisted Data Analysis Lab
+# AI-Assisted Research Data Lab
 
 **Using Copilot CLI & Claude Code to build better research pipelines**
 
@@ -19,31 +19,30 @@ By the end of this lab, you will have practiced using AI to:
 
 ## What You'll Build
 
-You start with this — a working but messy Python script that analyzes firm-level financial data:
+You start with this — a working but messy Python script that parses real SEC EDGAR Form 4 filings:
 
 ```python
-# firm_analysis.py  (your starting point — it works, but...)
+# edgar_analysis.py  (your starting point — it works, but...)
+import os
+import re
+import xml.etree.ElementTree as ET
 import pandas as pd
 
-df = pd.read_csv('starter-code/data/firms.csv')
-df['profit'] = df['revenue'] - df['cost']
-df['profit_margin'] = df['profit'] / df['revenue']
-df['roa'] = df['profit'] / df['assets']
-df['asset_turnover'] = df['revenue'] / df['assets']
-df = df[df['revenue'] > 1000000]
-summary = df.groupby('year').agg(
-    n_firms=('firm_id', 'count'),
-    mean_profit_margin=('profit_margin', 'mean'),
-    median_profit_margin=('profit_margin', 'median'),
-    mean_roa=('roa', 'mean'),
-    mean_asset_turnover=('asset_turnover', 'mean')
-).reset_index()
-summary = summary.round(4)
-summary.to_csv('starter-code/output/summary.csv', index=False)
+DATA_DIR = '/kellogg/data/EDGAR/4/2003'
+OUTPUT_PATH = 'starter-code/output/insider_summary.csv'
+N_FILES = 500
+
+files = sorted(os.listdir(DATA_DIR))[:N_FILES]
+
+records = []
+
+# ... parse filings, extract transactions, summarize by month ...
+
+summary.to_csv(OUTPUT_PATH, index=False)
 print('done')
 ```
 
-You end up with **two well-tested, well-logged, modular, configurable pipelines** — one in Python, one in R — that produce identical output.
+You end up with **two well-tested, well-logged, modular, configurable pipelines — one in Python, one in R — that parse EDGAR insider trading data and summarize buy/sell activity.**
 
 ---
 
@@ -62,24 +61,26 @@ You end up with **two well-tested, well-logged, modular, configurable pipelines*
 
 ## How to Use This Book
 
-Each page has four kinds of blocks:
+Each page uses the same four block types:
 
-:::{admonition} 💬 Your Prompt
+:::{admonition} 💬 Prompt — Try this in your AI tool
 :class: tip
 These are the exact prompts to paste into Copilot CLI or Claude Code.
 :::
 
 :::{note}
-These explain what the AI will produce and what to look for.
+These explain what the AI should produce and what to look for.
 :::
 
 :::{important}
-**✅ Checkpoint** — these tell you what you should have at this point.
+- [ ] These are your checkpoints for each step.
 :::
 
 :::{warning}
-**⚠️ Watch Out** — these flag common mistakes or things that can go wrong.
+These flag common mistakes, gotchas, and things to verify before moving on.
 :::
+
+This lab is designed to be followed **step by step**. Don't skip straight to "make it perfect." Ask the AI to help with one improvement at a time, run the code, inspect the results, and commit each meaningful change.
 
 ---
 

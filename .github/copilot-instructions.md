@@ -2,7 +2,7 @@
 
 ## What This Repository Is
 
-A **MyST Markdown static-site lab** — a 90-minute hands-on workshop where participants use AI coding assistants (GitHub Copilot CLI and Claude Code CLI) to improve a Python data analysis script, translate it to R, and add tests. The "code" participants actually write lives in `starter-code/`; the rest of the repo is documentation.
+A **MyST Markdown static-site lab** — a 90-minute hands-on workshop where participants use AI coding assistants (GitHub Copilot CLI and Claude Code CLI) to build a Python data pipeline from scratch against real SEC EDGAR Form 4 data, then translate it to R and add tests. The "code" participants actually write lives in `starter-code/`; the rest of the repo is documentation.
 
 ## Build
 
@@ -20,11 +20,11 @@ CI (`.github/workflows/publish.yml`) builds and deploys to GitHub Pages on every
 ## Running the Starter Code
 
 ```bash
-# Python pipeline
-python starter-code/firm_analysis.py
+# Python pipeline (run from repo root)
+python starter-code/edgar_analysis.py
 
 # R pipeline (once created by lab participants)
-Rscript starter-code/firm_analysis.R
+Rscript starter-code/edgar_analysis.R
 ```
 
 ## Tests
@@ -34,26 +34,26 @@ Rscript starter-code/firm_analysis.R
 PYTHONPATH=starter-code pytest starter-code/tests/ -v
 
 # Single Python test
-PYTHONPATH=starter-code pytest starter-code/tests/test_firm_analysis.py::test_compute_metrics_profit_margin -v
+PYTHONPATH=starter-code pytest starter-code/tests/test_edgar_analysis.py::test_parse_filing_extracts_sale -v
 
 # R tests
-Rscript -e "testthat::test_file('starter-code/tests/test_firm_analysis.R')"
+Rscript -e "testthat::test_file('starter-code/tests/test_edgar_analysis.R')"
 ```
 
-`PYTHONPATH=starter-code` is required because `firm_analysis.py` is not in a package — tests import it directly by name.
+`PYTHONPATH=starter-code` is required because `edgar_analysis.py` is not in a package — tests import it directly by name.
 
 ## Architecture
 
 ```
 myst.yml                  ← site config and TOC
 index.md / setup.md       ← top-level pages
-part2-python/             ← three-step Python improvement module
+part2-python/             ← four-step Python improvement module
 part3-r-translation/      ← three-step R translation module
 part4-bonus.md            ← optional parallelization exercise
 starter-code/
-  firm_analysis.py        ← the intentionally-messy script participants improve
-  data/firms.csv          ← synthetic firm-level financial data (firm_id, year, revenue, cost, assets)
-  output/summary.csv      ← tracked output; summary_r.csv added by participants
+  edgar_analysis.py       ← the intentionally-messy EDGAR parsing script participants improve
+  data/README.md          ← explains the EDGAR data source (live at /kellogg/data/EDGAR/4/2003/)
+  output/insider_summary.csv  ← tracked reference output (N_FILES=500, 2003 only)
   tests/                  ← created by participants during the lab
 images/                   ← screenshots used in setup.md
 custom.css                ← site styling overrides
@@ -86,27 +86,28 @@ Conventional commits throughout: `feat:`, `test:`, `chore:`. The lab instructs p
 
 ## Starter Code Design Constraints
 
-`starter-code/firm_analysis.py` is **intentionally flat and problematic** (no functions, hardcoded paths, `print('done')`, magic numbers). Do not "fix" it preemptively — the lab exercises are built around participants discovering and correcting these issues with AI assistance.
+`starter-code/edgar_analysis.py` is **intentionally flat and problematic** (no functions, hardcoded paths, `print('done')`, magic numbers). Do not "fix" it preemptively — the lab exercises are built around participants discovering and correcting these issues with AI assistance.
 
 The expected refactored function signatures are:
-- `compute_metrics(df)` → adds `profit`, `profit_margin`, `roa`, `asset_turnover` columns
-- `filter_firms(df, min_revenue=1_000_000)` → filters by revenue threshold
-- `summarize_by_year(df)` → groups by year, rounds to 4 decimal places
+- `parse_filing(filepath)` → list of transaction dicts (reads file, extracts XML, parses non-derivative transactions)
+- `filter_transactions(df, codes=['P','S'])` → filtered DataFrame
+- `summarize_by_month(df)` → groups by month + transaction_code, rounds to 2 decimal places
 
-Python and R tests use **the same inline fixture** (not the CSV) so they can cross-validate the translation:
-
-```python
-# Python fixture shape
-{'firm_id': ['F001','F001','F002','F002'], 'year': [2020,2021,2020,2021],
- 'revenue': [2_000_000, 3_000_000, 500_000, 600_000],
- 'cost':    [1_200_000, 1_800_000, 350_000, 420_000],
- 'assets':  [4_000_000, 5_000_000, 800_000, 900_000]}
-```
+Python and R tests use **the same minimal filing fixture** (not the real data files) so they can cross-validate the translation. The fixture is a minimal `<ownershipDocument>` XML embedded in a fake SEC-DOCUMENT envelope with one sale transaction (1000 shares at $25.50).
 
 ## Environment (KLC Context)
 
-The lab runs on the Kellogg Linux Cluster via Singularity. Participants use a single mamba environment (`~/copilot_dir/envs/python-virtual-env`) with Python 3.12, R, pandas, pytest, tidyverse, and testthat. The `ai_agent_container` module wraps AI tool invocations on the cluster.
+The lab runs on the Kellogg Linux Cluster via Singularity. Participants use a single mamba environment (`~/copilot_dir/envs/edgar-env`) with Python 3.12, R, pandas, pytest, xml2, tidyverse, and testthat. The `ai_agent_container` module wraps AI tool invocations on the cluster.
 
 Participants maintain **two simultaneous SSH connections** to KLC:
 - **Terminal A** — runs the AI CLI session (`ai_agent_container`) and stays open throughout the lab
 - **Terminal B** — runs commands like `python`, `pytest`, `git`, `cat`, etc. without interrupting the AI session
+
+## EDGAR Data
+
+The data lives at `/kellogg/data/EDGAR/4/2003/` on KLC — approximately 324,000 Form 4 filing text files. Each file contains:
+- An SEC-DOCUMENT header with issuer and reporting-owner metadata
+- An embedded `<ownershipDocument>` XML block with transaction details
+- Two schema variants: X0101 (older, `nonDerivativeSecurity` elements) and X0201 (newer, `nonDerivativeTable/nonDerivativeTransaction`)
+
+The starter script processes the first 500 files (sorted alphabetically) and produces an 18-row monthly summary of P (purchase) and S (sale) transactions.
