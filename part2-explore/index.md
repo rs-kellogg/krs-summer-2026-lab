@@ -28,22 +28,27 @@ This section teaches the habit of **asking the AI to read and describe data befo
 
 ## Starting State
 
+:::{important}
+**You are in `edgar-scratch`** — your from-scratch repo. The AI agent should be running from `~/copilot_dir/repos/edgar-scratch`.
+
 ```text
-/kellogg/data/EDGAR/4/2003/    ← 324,000 raw SEC filing text files
-starter-code/                  ← empty (no Python code yet)
+edgar-scratch/                 ← empty (one initial commit, no code)
+/kellogg/data/EDGAR/4/2003/   ← 324,000 raw SEC filing text files (read-only)
 ```
+:::
 
 ## Ending State
 
 ```text
-starter-code/
-├── edgar_analysis.py          ← built step-by-step in Step 3
-└── output/
-    └── insider_summary.csv    ← written by your script
+edgar-scratch/
+└── starter-code/
+    ├── edgar_analysis.py      ← built step-by-step in Step 3
+    └── output/
+        └── insider_summary.csv  ← written by your script
 ```
 
 :::{note}
-**If you're short on time or want to skip directly to code quality work:** a pre-built version of `edgar_analysis.py` is already in the repo. You can skip to [Part 3 · Improve the Python](../part2-python/index.md) and treat it as your starting point.
+**If you're short on time or want to skip directly to code quality work:** a pre-built version of `edgar_analysis.py` is already in `edgar-improve`. You can switch to that repo and start at [Part 3 · Improve the Python](../part2-python/index.md).
 
 That said, building it yourself in Part 2 gives you a much deeper understanding of both the data and the iterative AI workflow. We recommend starting here if this is your first time working with EDGAR data.
 :::

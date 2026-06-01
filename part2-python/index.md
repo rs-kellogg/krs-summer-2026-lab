@@ -1,5 +1,33 @@
 # Part 3 · Improve the Python
 
+:::{important}
+## 🔀 Switch Repos Before Starting Part 3
+
+Part 3 uses **`edgar-improve`** — the repo that starts with the pre-built `edgar_analysis.py`. If you've been working in `edgar-scratch` for Parts 1 and 2, switch now.
+
+**In Terminal B:**
+```bash
+cd ~/copilot_dir/repos/edgar-improve
+git log --oneline   # should show: "chore: initial commit with EDGAR starter code"
+```
+
+**In Terminal A — stop the current agent and restart it in `edgar-improve`:**
+
+```bash
+# Stop current agent: Ctrl+C  (Claude Code)  or  /exit  (Copilot CLI)
+
+# Then restart:
+cd ~/copilot_dir/repos/edgar-improve
+ai_agent_container -a claude ~/copilot_dir/      # Claude Code
+# or
+ai_agent_container -a copilot ~/copilot_dir/     # Copilot CLI
+```
+
+All Terminal B commands for Parts 3 and 4 run from `~/copilot_dir/repos/edgar-improve`.
+:::
+
+---
+
 ## Goal
 
 In this part, you will iteratively improve `starter-code/edgar_analysis.py` using four focused AI interactions — without changing what the script *does*.
@@ -25,21 +53,23 @@ By the end of Part 3, your script will:
 ## Starting State
 
 ```text
-starter-code/
-├── edgar_analysis.py              ← flat starter script
-└── output/
-    └── insider_summary.csv        ← written by the script
+edgar-improve/
+└── starter-code/
+    ├── edgar_analysis.py              ← flat starter script (your starting point)
+    └── output/
+        └── insider_summary.csv        ← written by the script
 ```
 
 ## Ending State
 
 ```text
-starter-code/
-├── edgar_analysis.py              ← improved: logging + functions + argparse CLI
-├── output/
-│   └── insider_summary.csv
-└── tests/
-    └── test_edgar_analysis.py     ← new
+edgar-improve/
+└── starter-code/
+    ├── edgar_analysis.py              ← improved: logging + functions + argparse CLI
+    ├── output/
+    │   └── insider_summary.csv
+    └── tests/
+        └── test_edgar_analysis.py     ← new
 ```
 
 With the default settings (`N_FILES=500`), the finished Python script should still produce the same 18-row monthly summary of `P` and `S` transactions for 2003.

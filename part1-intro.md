@@ -36,17 +36,21 @@ Throughout this lab, we'll use AI to reach four goals:
 
 Both tools work from your terminal. You give them context (a file, an error message, a question) and they respond with code, explanations, or suggestions.
 
+:::{note}
+**You are currently in `edgar-scratch`** — your from-scratch repo. The AI agent was started there in Setup step 8. There's no code here yet; that's the point. Your first interactions with the AI will be about *understanding* the data, not writing code.
+:::
+
 ::::{tab-set}
 
 :::{tab-item} Claude Code CLI
 Claude Code works as a full interactive agent. Start it in your project directory:
 
 ```bash
-# From the project root
+# From edgar-scratch
 claude
 
 # Or give it an initial task
-claude "read starter-code/edgar_analysis.py and explain what it does"
+claude "look at 2-3 files in /kellogg/data/EDGAR/4/2003/ and tell me what kind of data this is"
 ```
 
 Claude Code can read, edit, and create files directly — ask it to make changes and it will do so.
@@ -65,29 +69,31 @@ In interactive mode, you can paste code, ask follow-up questions, and iterate.
 
 ::::
 
-:::{admonition} 💬 Prompt — Explain the EDGAR script
+:::{admonition} 💬 Prompt — Explore the EDGAR data
 :class: tip
 Open your AI tool and try this first prompt:
 
 ```
-Read starter-code/edgar_analysis.py and give me a brief explanation of:
-1. What SEC EDGAR Form 4 filings are
-2. What this script extracts from them
-3. What output file it produces
-4. Any obvious code quality issues you notice, without fixing them yet
+Look at 3 files in /kellogg/data/EDGAR/4/2003/ — pick ones with different
+filenames. For each file, briefly describe:
+1. What format the file is in
+2. What kind of information it seems to contain
+3. What fields or data points look extractable
+
+Don't write any code yet. Just describe what you see.
 ```
 :::
 
 :::{note}
-A good answer should explain that Form 4 filings disclose insider transactions such as open-market purchases (`P`) and sales (`S`), and that the script:
+A good answer should notice:
 
-- reads SEC filing text files from `/kellogg/data/EDGAR/4/2003`
-- extracts the embedded `<ownershipDocument>` XML
-- pulls issuer and reporting-owner metadata plus non-derivative transactions
-- filters to transaction codes `P` and `S`
-- summarizes insider buy/sell activity by month
+- The files are SEC Form 4 filings — insider trading disclosures
+- Each file has a plain-text header (SEC-DOCUMENT metadata), then an embedded XML block (`<ownershipDocument>`)
+- The XML contains: issuer name and CIK, reporting owner name and role (director/officer), and a table of transactions (shares, price, date, transaction code)
+- Transaction codes P (purchase), S (sale), A (award/grant), and others are present
+- There are variations in XML structure across files
 
-It should also notice problems like hardcoded paths, `print()` instead of logging, no functions, and no CLI.
+This mental model is what you'll build on throughout Part 2.
 :::
 
 ---

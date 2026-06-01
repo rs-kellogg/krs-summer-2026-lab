@@ -2,7 +2,16 @@
 
 ## What You Built
 
-Starting from a working-but-messy Python script, you used iterative AI interaction to produce:
+You worked in two separate repositories, each with its own story:
+
+### `edgar-scratch` — built from nothing
+
+| Artifact | What it demonstrates |
+|----------|---------------------|
+| `starter-code/edgar_analysis.py` | A pipeline you built step by step with AI, understanding every line |
+| Git history with 5+ commits | Incremental construction — each commit adds one working capability |
+
+### `edgar-improve` — inherited code, made better
 
 | Artifact | What it demonstrates |
 |----------|---------------------|
@@ -10,7 +19,7 @@ Starting from a working-but-messy Python script, you used iterative AI interacti
 | `tests/test_edgar_analysis.py` | Unit tests as a ground-truth contract |
 | `edgar_analysis.R` | AI-assisted language translation |
 | `tests/test_edgar_analysis.R` | Cross-language validation |
-| Git history with 5+ commits | Incremental version control |
+| Git history with 5+ commits | Incremental improvement — each commit is one focused change |
 
 ---
 
@@ -86,21 +95,36 @@ Extract logic into named functions. Replace hardcoded paths and magic numbers wi
 
 ---
 
-## Your Git Log Should Look Like This
+## Your Git Logs Should Look Like This
+
+**`edgar-scratch`** — built step by step:
 
 ```
-git log --oneline
+git -C ~/copilot_dir/repos/edgar-scratch log --oneline
 
-a3f1c2e feat: add optional multiprocessing with --workers argument
-b7d9e4a feat: align R EDGAR pipeline with Python output
-c2a8f01 test: add R testthat suite for EDGAR pipeline
-d4e3b77 feat: add initial R translation of EDGAR pipeline
-e6f5c22 feat: add argparse CLI to EDGAR pipeline
-f8a7d33 feat: refactor EDGAR pipeline and add pytest tests
-g1b2c44 feat: replace print with structured logging
-h0c3d55 chore: improve EDGAR extractor before quality work
-i9d4e66 feat: build EDGAR extractor pipeline from scratch
-j1b5f77 chore: initial single-file EDGAR reader
+f8a7d33 feat: build EDGAR extractor pipeline from scratch
+e6f5c22 feat: filter to P/S, summarize, save CSV (N_FILES=500)
+d4e3b77 feat: build DataFrame with month column
+c2a8f01 feat: process multiple EDGAR filings, handle parse errors
+b7d9e4a feat: extract non-derivative transactions from single filing
+a3f1c2e chore: initial single-file EDGAR reader
+0c3d551 chore: initial empty commit — from-scratch track
+```
+
+**`edgar-improve`** — inherited code, improved:
+
+```
+git -C ~/copilot_dir/repos/edgar-improve log --oneline
+
+h9e2b44 feat: add optional multiprocessing with --workers argument
+g1b2c44 feat: align R EDGAR pipeline with Python output
+f0c3d55 test: add R testthat suite for EDGAR pipeline
+e9d4e66 feat: add initial R translation of EDGAR pipeline
+d8c5f77 feat: add argparse CLI to EDGAR pipeline
+c7b6a88 feat: refactor EDGAR pipeline and add pytest tests
+b6a7d99 feat: replace print with structured logging
+a5f8e00 chore: add EDGAR starter script before improvements
+0b4c111 chore: initial commit with EDGAR starter code
 ```
 
 ---
