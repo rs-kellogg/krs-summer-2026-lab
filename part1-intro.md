@@ -4,9 +4,9 @@
 
 > **Don't ask for everything at once.**
 
-When people first use AI coding tools, they try to write one enormous prompt: *"Write me a well-tested, well-logged, modular Python script that reads firm data, computes financial metrics, filters it, summarizes by year, and accepts command-line arguments."*
+When people first use AI coding tools, they often try one giant prompt: *"Rewrite this script into a robust, well-tested, well-logged, modular Python and R pipeline with a CLI and perfect XML parsing."*
 
-The AI will produce something. It will look plausible. And it will be hard to trust, hard to debug, and hard to learn from.
+The AI will produce something. It may even look polished. But it will be hard to trust, hard to debug, and hard to learn from.
 
 Instead, this lab practices a different workflow:
 
@@ -15,7 +15,7 @@ Instead, this lab practices a different workflow:
 3. **Verify each step** before moving to the next
 4. **Build up trust incrementally**
 
-This is closer to how experienced developers actually work with AI tools.
+This is much closer to how experienced developers actually work with AI tools.
 
 ---
 
@@ -36,30 +36,31 @@ Throughout this lab, we'll use AI to reach four goals:
 
 Both tools work from your terminal. You give them context (a file, an error message, a question) and they respond with code, explanations, or suggestions.
 
+:::{note}
+**You are currently in `edgar-scratch`** — your from-scratch repo. The AI agent was started there in Setup step 8. There's no code here yet; that's the point. Your first interactions with the AI will be about *understanding* the data, not writing code.
+:::
+
 ::::{tab-set}
 
 :::{tab-item} Claude Code CLI
 Claude Code works as a full interactive agent. Start it in your project directory:
 
 ```bash
-# From the project root
+# From edgar-scratch
 claude
 
 # Or give it an initial task
-claude "look at starter-code/firm_analysis.py and tell me what it does"
+claude "look at 2-3 files in /kellogg/data/EDGAR/4/2003/ and tell me what kind of data this is"
 ```
 
 Claude Code can read, edit, and create files directly — ask it to make changes and it will do so.
 :::
 
 :::{tab-item} GitHub Copilot CLI
-The most natural way to use Copilot CLI for this lab is the `suggest` and `explain` commands, or by opening an interactive session:
+The most natural way to use Copilot CLI for this lab is to open an interactive session:
 
 ```bash
-# Ask a question about a file
-gh copilot suggest -t shell "add logging to firm_analysis.py"
-
-# Or start an interactive session (recommended for this lab)
+# Start an interactive session (recommended for this lab)
 gh copilot chat
 ```
 
@@ -68,41 +69,45 @@ In interactive mode, you can paste code, ask follow-up questions, and iterate.
 
 ::::
 
-:::{admonition} 💬 Warm-Up Prompt
+:::{admonition} 💬 Prompt — Explore the EDGAR data
 :class: tip
-Open your AI tool and try this first prompt to orient it to the project:
+Open your AI tool and try this first prompt:
 
 ```
-I have a Python script at starter-code/firm_analysis.py that analyzes firm-level
-financial data. Please read it and give me a brief (3-4 sentence) description of
-what it does, and list any code quality issues you notice without fixing them yet.
+Look at 3 files in /kellogg/data/EDGAR/4/2003/ — pick ones with different
+filenames. For each file, briefly describe:
+1. What format the file is in
+2. What kind of information it seems to contain
+3. What fields or data points look extractable
+
+Don't write any code yet. Just describe what you see.
 ```
 :::
 
 :::{note}
-The AI will describe the script's logic (load CSV → compute metrics → filter → summarize → save) and likely flag:
+A good answer should notice:
 
-- Hardcoded file paths
-- No logging (just `print('done')`)
-- No functions / no modularity
-- No input validation or error handling
-- No tests
+- The files are SEC Form 4 filings — insider trading disclosures
+- Each file has a plain-text header (SEC-DOCUMENT metadata), then an embedded XML block (`<ownershipDocument>`)
+- The XML contains: issuer name and CIK, reporting owner name and role (director/officer), and a table of transactions (shares, price, date, transaction code)
+- Transaction codes P (purchase), S (sale), A (award/grant), and others are present
+- There are variations in XML structure across files
 
-Hold on to this list — we're going to address each item one at a time.
+This mental model is what you'll build on throughout Part 2.
 :::
 
 ---
 
 ## Prompting Tips
 
-Before we dive in, a few habits that make AI coding tools more useful:
+A few habits make AI coding tools much more useful:
 
-- **Give it the file, not a description of the file.** "Read `firm_analysis.py`" is better than "I have a script that..."
-- **One ask per prompt.** If you want logging AND tests AND refactoring, ask for them separately.
-- **Paste error messages verbatim.** Don't summarize them.
-- **Tell it the language/library you want.** "Using Python's `logging` module" is more precise than "add logging."
-- **Ask it to explain before it edits.** "What would you change and why?" before "Make the change."
+- **Give it the file, not just a description.** "Read `starter-code/edgar_analysis.py`" is better than "I have a script..."
+- **One ask per prompt.** If you want logging **and** tests **and** refactoring, ask separately.
+- **Paste errors verbatim.** Don't summarize traceback text.
+- **Name the libraries you want.** "Use Python's `logging` module" is more precise than "add logging."
+- **Ask it to explain before it edits.** Understanding first makes later changes easier to evaluate.
 
 ---
 
-**Next: [Part 2 · Improve the Python](part2-python/index.md) →**
+**Next: [Part 2 · Explore and Extract](part2-explore/index.md) →**

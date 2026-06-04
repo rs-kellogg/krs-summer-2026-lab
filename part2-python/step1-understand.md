@@ -1,68 +1,71 @@
-# Part 2, Step 1 – Understand the Code
+# Part 3, Step 1 – Before You Change Anything, Understand It
 
-## Before You Change Anything, Understand It
+## Slow Down First
 
-A common mistake with AI tools is jumping straight to "fix this" before establishing a shared understanding of what the code does. This step deliberately slows you down.
+A common mistake with AI tools is jumping straight to "fix this" before establishing a shared understanding of what the code does.
 
 If you ask the AI to explain code *before* asking it to change code, you get two benefits:
 
-1. You can catch cases where the AI misunderstands the logic (and correct it before it makes bad edits)
-2. You build a mental model that makes the AI's later changes easier to evaluate
+1. You can catch cases where the AI misunderstands the logic
+2. You build a mental model that makes later changes easier to evaluate
 
 ---
 
 ## Your Prompts
 
-:::{admonition} 💬 Prompt 1 — Explain the script
+:::{admonition} 💬 Prompt 1 — Explain the filing and the script
 :class: tip
 ```
-Read starter-code/firm_analysis.py and give me a plain-English explanation of:
-1. What data it reads and what each column means
-2. What calculations it performs (step by step)
-3. What the output file contains
+Read starter-code/edgar_analysis.py and explain, in plain English:
+
+1. What an SEC EDGAR Form 4 filing is
+2. What metadata this script extracts from each filing
+3. How it handles the two XML schema variants (X0101 and X0201)
+4. What the final CSV summary contains
 ```
 :::
 
-Read the response carefully. Does it match your understanding?
-
-:::{admonition} 💬 Prompt 2 — Identify problems (without fixing them)
+:::{admonition} 💬 Prompt 2 — List code quality issues without fixing them
 :class: tip
 ```
-Now list the code quality issues in firm_analysis.py. Do not fix anything yet —
-just give me a numbered list of problems, and for each one, explain why it's
-a problem in a research computing context (e.g., running on a cluster,
-collaborating with others, reproducing results).
+Now list the code quality issues in starter-code/edgar_analysis.py.
+
+Do not fix anything yet. Give me a numbered list of problems, and for each one,
+explain why it matters in a research computing context (e.g., running on a
+cluster, sharing with collaborators, reproducing results).
 ```
 :::
 
 :::{note}
-The AI should identify most or all of these:
+A strong answer should identify most or all of these issues:
 
-1. **Hardcoded file paths** — breaks when run from a different directory or by a different person
-2. **`print('done')` instead of logging** — provides no useful diagnostic information
-3. **No functions** — the entire script is one flat sequence; nothing is reusable or testable in isolation
-4. **Magic number `1000000`** — unclear what this threshold represents or where it came from
-5. **No error handling** — if the CSV is missing or malformed, you get an unhelpful traceback
-6. **No docstrings or comments** — future-you (or a collaborator) won't know why decisions were made
+1. **Hardcoded `DATA_DIR`** — only works on KLC unless the source code is edited
+2. **Hardcoded `OUTPUT_PATH`** — difficult to rerun the pipeline with a different destination
+3. **Magic number `N_FILES = 500`** — unclear why 500 files are used; hard to change safely
+4. **`print()` instead of logging** — no timestamps, severity levels, or persistent log file
+5. **No functions / no modularity** — parsing, filtering, and summarizing are all tangled together
+6. **Weak error handling** — malformed or incomplete filings can silently drop data
+7. **No `argparse` CLI** — users must edit the source instead of passing parameters at runtime
 
-You don't need to agree with every item on the list. The point is to have a concrete roadmap.
+That's your roadmap for Part 2.
 :::
 
 ---
 
 ## Version Control Checkpoint
 
-Before making any changes, commit the current state so you have a clean baseline to compare against:
+Before making any changes, commit the current state so you have a clean baseline:
 
 ```bash
-git add starter-code/firm_analysis.py
-git commit -m "chore: add starter script before improvements"
+git add starter-code/edgar_analysis.py
+git commit -m "chore: add EDGAR starter script before improvements"
 ```
 
 :::{important}
-- [ ] You can describe in one sentence what `firm_analysis.py` does
-- [ ] You have a list of at least 4 issues the AI identified
-- [ ] You have a clean git commit with the unmodified script
+- [ ] You can explain in one or two sentences what a Form 4 filing is
+- [ ] You can describe what `edgar_analysis.py` extracts and summarizes
+- [ ] You have a list of at least 6 code-quality issues
+- [ ] You created a clean baseline git commit before editing
 :::
 
 ---

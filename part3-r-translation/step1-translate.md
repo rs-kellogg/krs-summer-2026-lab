@@ -1,121 +1,126 @@
-# Part 3, Step 1 – Translate to R
+# Part 4, Step 1 – Translate to R
 
-## Telling the AI You're a Beginner (and Why That Helps)
+## Translate the Same Pipeline, Not a New One
 
-You might be tempted to just say "translate this to R." But if you tell the AI you're not familiar with R, it will:
+The R version should do the same job as the Python version:
 
-- Prefer readable, well-named tidyverse idioms over cryptic base-R one-liners
-- Add comments explaining what each R construct does
-- Be more explicit about package requirements
-
-Always calibrate the output to your level.
+- read EDGAR Form 4 filing text files
+- extract the embedded `<ownershipDocument>` XML
+- handle both XML schema variants (X0101 and X0201)
+- keep only non-derivative `P` and `S` transactions
+- summarize by `month` and `transaction_code`
+- write `starter-code/output/insider_summary_r.csv`
 
 ---
 
 ## Your Prompt
 
-:::{admonition} 💬 Prompt — Translate to R
+:::{admonition} 💬 Prompt — Translate edgar_analysis.py to R
 :class: tip
 ```
-Translate starter-code/firm_analysis.py to R. I am not familiar with R syntax.
-Please:
-- Use tidyverse idioms (dplyr, readr) rather than base R where possible
-- Structure the R code with the same named functions: compute_metrics(),
-  filter_firms(), summarize_by_year(), and main()
-- Add inline comments explaining any R syntax that would be non-obvious to a
-  Python programmer
-- Save the output to starter-code/output/summary_r.csv (different filename so
-  we can compare to the Python output)
-- Add logging using R's message() function for now (we'll improve this later)
+Translate starter-code/edgar_analysis.py to R.
 
-Save the file as starter-code/firm_analysis.R
+Requirements:
+- Use xml2::read_xml() to parse the extracted XML string
+- Use dplyr for data manipulation
+- Use readr::write_csv() for output
+- Use purrr::map_dfr() to iterate over filing files
+- Keep the same function structure:
+    parse_filing(filepath)
+    filter_transactions(df, codes = c("P", "S"))
+    summarize_by_month(df)
+    main()
+- Make parse_filing() handle both nonDerivativeTransaction (X0201)
+  and nonDerivativeSecurity (X0101) elements
+- Write output to starter-code/output/insider_summary_r.csv
+- Guard main() with:
+    if (!interactive() && !exists("SOURCED_FOR_TESTING")) main()
+  so the file is safe to source() from tests
+
+Please add brief comments for Python users who are new to R.
 ```
 :::
 
 :::{note}
-The AI should produce an R script similar to:
+The translated R file should use patterns like these for XML parsing:
 
 ```r
+library(xml2)
 library(dplyr)
 library(readr)
+library(purrr)
+library(stringr)
 
-compute_metrics <- function(df) {
-  df %>%
-    mutate(
-      profit = revenue - cost,
-      profit_margin = profit / revenue,
-      roa = profit / assets,
-      asset_turnover = revenue / assets
-    )
+parse_filing <- function(filepath) {
+  content <- readLines(filepath, warn = FALSE) |> paste(collapse = "\n")
+
+  # Extract the ownershipDocument XML block
+  xml_block <- str_match(content, "(?s)(<ownershipDocument>.*?</ownershipDocument>)")[, 2]
+  if (is.na(xml_block)) return(tibble())
+
+  doc <- tryCatch(read_xml(xml_block), error = function(e) NULL)
+  if (is.null(doc)) return(tibble())
+
+  issuer_name <- xml_text(xml_find_first(doc, ".//issuerName"))
+  issuer_cik  <- xml_text(xml_find_first(doc, ".//issuerCik"))
+  owner_name  <- xml_text(xml_find_first(doc, ".//rptOwnerName"))
+  is_director <- xml_text(xml_find_first(doc, ".//isDirector")) == "1"
+  is_officer  <- xml_text(xml_find_first(doc, ".//isOfficer"))  == "1"
+
+  # X0201 schema uses nonDerivativeTransaction; X0101 uses nonDerivativeSecurity
+  txns <- xml_find_all(doc, ".//nonDerivativeTransaction")
+  if (length(txns) == 0) txns <- xml_find_all(doc, ".//nonDerivativeSecurity")
+
+  # ...extract fields from each transaction node...
 }
 
-filter_firms <- function(df, min_revenue = 1e6) {
-  df %>% filter(revenue > min_revenue)
+filter_transactions <- function(df, codes = c("P", "S")) {
+  filter(df, transaction_code %in% codes)
 }
 
-summarize_by_year <- function(df) {
+summarize_by_month <- function(df) {
   df %>%
-    group_by(year) %>%
+    group_by(month, transaction_code) %>%
     summarise(
-      n_firms = n(),
-      mean_profit_margin = mean(profit_margin),
-      median_profit_margin = median(profit_margin),
-      mean_roa = mean(roa),
-      mean_asset_turnover = mean(asset_turnover),
+      n_transactions = n(),
+      total_shares   = sum(shares, na.rm = TRUE),
+      mean_price     = mean(price_per_share, na.rm = TRUE),
       .groups = "drop"
     ) %>%
-    mutate(across(where(is.double), ~ round(.x, 4)))
+    mutate(mean_price = ifelse(is.nan(mean_price), NA_real_, mean_price)) %>%
+    mutate(across(where(is.numeric), ~ round(.x, 2)))
 }
-
-main <- function() {
-  message("Loading firm data...")
-  df <- read_csv("starter-code/data/firms.csv", show_col_types = FALSE)
-  message(sprintf("Loaded %d rows", nrow(df)))
-
-  df <- compute_metrics(df)
-  df <- filter_firms(df)
-  message(sprintf("After filtering: %d rows", nrow(df)))
-
-  summary_df <- summarize_by_year(df)
-
-  output_path <- "starter-code/output/summary_r.csv"
-  write_csv(summary_df, output_path)
-  message(sprintf("Summary written to %s", output_path))
-}
-
-main()
 ```
+
+Your exact code may differ, but it should use `xml2`, `dplyr`, `readr`, and `purrr` rather than base-R XML or apply loops.
 :::
 
 ---
 
 ## Run It
 
-Before running the R script, tell the agent to use the conda R interpreter — just as you did for Python in Part 2:
-
-![Telling Claude to use conda for R](../images/tell-claude-to-use-conda-with-R.png)
-
-Claude will ask permission before switching interpreters:
-
-![What Claude asks permission for after being told to use conda for R](../images/what-claude-asks-permission-for-after-being-told-to-use-conda-R.png)
-
-The AI may also offer a summary table mapping Python constructs to their R equivalents:
-
-![Summary table providing mappings of Python to R](../images/summary-table-providing-mappings-of-python-to-r.png)
-
 ```bash
-Rscript starter-code/firm_analysis.R
+Rscript starter-code/edgar_analysis.R
 ```
 
-Then compare the two output files:
+Then inspect the output:
 
 ```bash
-cat starter-code/output/summary.csv
-cat starter-code/output/summary_r.csv
+cat starter-code/output/insider_summary_r.csv
 ```
+
+It should have the same five columns as the Python output:
+
+| Column | Description |
+|--------|-------------|
+| `month` | Year-month string (e.g., `2003-06`) |
+| `transaction_code` | `P` (purchase) or `S` (sale) |
+| `n_transactions` | Number of transactions that month |
+| `total_shares` | Total shares transacted |
+| `mean_price` | Average price per share |
 
 :::{warning}
-The numbers may look the same at a glance, but rounding and floating-point behavior can differ in the 4th decimal place. Don't trust visual inspection — that's what the tests in the next step are for.
+At this stage, the R output may differ slightly from Python. That is expected — Step 3 is where you reconcile the two.
 :::
 
 ---
@@ -123,14 +128,15 @@ The numbers may look the same at a glance, but rounding and floating-point behav
 ## Commit
 
 ```bash
-git add starter-code/firm_analysis.R
-git commit -m "feat: add initial R translation of firm_analysis.py"
+git add starter-code/edgar_analysis.R
+git commit -m "feat: add initial R translation of EDGAR pipeline"
 ```
 
 :::{important}
-- [ ] `starter-code/firm_analysis.R` exists and runs without errors
-- [ ] `starter-code/output/summary_r.csv` is created with 5 rows (one per year)
-- [ ] The column names match the Python output
+- [ ] `starter-code/edgar_analysis.R` exists and runs without errors
+- [ ] It uses `xml2`, `dplyr`, `readr`, and `purrr`
+- [ ] It writes `starter-code/output/insider_summary_r.csv`
+- [ ] The file is safe to `source()` from tests (guarded `main()`)
 :::
 
 ---

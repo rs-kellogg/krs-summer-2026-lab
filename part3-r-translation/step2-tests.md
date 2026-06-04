@@ -1,69 +1,135 @@
-# Part 3, Step 2 – Write R Tests
+# Part 4, Step 2 – Write R Tests
 
-## The Contract Test
+## Mirror the Python Contract
 
-The tests you're about to write serve a specific purpose: **verify that the R functions produce the same results as the Python functions on the same input.**
+Your R tests should check the same core behaviors as the Python tests:
 
-To make this possible, you'll use the *exact same small DataFrame* that the Python tests use — just expressed in R syntax. If both test suites pass with the same inputs and expected outputs, the translation is verified.
+1. parsing a minimal Form 4 filing extracts the right transaction
+2. filtering keeps only `P` and `S`
+3. summarizing by month produces correct row counts and totals
+
+Using the **same minimal filing fixture** in both languages makes the cross-language verification direct: if both suites pass with the same inputs, you have strong evidence the logic is equivalent.
 
 ---
 
 ## Your Prompt
 
-:::{admonition} 💬 Prompt — Write R tests
+:::{admonition} 💬 Prompt — Write testthat tests for the R pipeline
 :class: tip
 ```
-Write a testthat test file for starter-code/firm_analysis.R.
+Write testthat tests for starter-code/edgar_analysis.R that mirror the Python
+tests in starter-code/tests/test_edgar_analysis.py.
 
-Use the same test fixture as the Python tests — a small inline DataFrame with
-these exact values:
+Save the file as starter-code/tests/test_edgar_analysis.R.
 
-  firm_id  year  revenue    cost       assets
-  F001     2020  2000000    1200000    4000000
-  F001     2021  3000000    1800000    5000000
-  F002     2020  500000     350000     800000
-  F002     2021  600000     420000     900000
-
-Write tests that verify:
-1. compute_metrics() returns correct profit_margin (F001 2020 should be 0.4)
-2. filter_firms() with min_revenue=1000000 keeps only F001 rows (2 rows)
-3. summarize_by_year() returns 2 rows and n_firms is 1 for each year
-
-Save the file as starter-code/tests/test_firm_analysis.R
+Requirements:
+- Use the same minimal Form 4 XML fixture as the Python tests
+- Test that parse_filing() extracts a sale transaction with:
+    transaction_code == "S"
+    shares == 1000
+    price_per_share == 25.50
+- Test that filter_transactions() keeps only P and S rows
+- Test that summarize_by_month() returns the correct row count and total_shares
+- Source edgar_analysis.R using:
+    SOURCED_FOR_TESTING <- TRUE
+    source("starter-code/edgar_analysis.R")
 ```
 :::
 
 :::{note}
+A good `starter-code/tests/test_edgar_analysis.R` will look something like:
+
 ```r
 library(testthat)
 library(dplyr)
-source("starter-code/firm_analysis.R", local = TRUE)
+library(tibble)
 
-sample_df <- tibble(
-  firm_id = c("F001", "F001", "F002", "F002"),
-  year    = c(2020L, 2021L, 2020L, 2021L),
-  revenue = c(2e6, 3e6, 5e5, 6e5),
-  cost    = c(1.2e6, 1.8e6, 3.5e5, 4.2e5),
-  assets  = c(4e6, 5e6, 8e5, 9e5)
-)
+SOURCED_FOR_TESTING <- TRUE
+source("starter-code/edgar_analysis.R")
 
-test_that("compute_metrics returns correct profit_margin", {
-  result <- compute_metrics(sample_df)
-  expect_equal(result$profit_margin[1], 0.4, tolerance = 1e-4)
+MINIMAL_FILING <- '-----BEGIN PRIVACY-ENHANCED MESSAGE-----
+
+<SEC-DOCUMENT>
+<SEC-HEADER>
+CONFORMED SUBMISSION TYPE: 4
+</SEC-HEADER>
+<DOCUMENT>
+<TEXT>
+<XML>
+<ownershipDocument>
+    <issuer>
+        <issuerCik>0001000015</issuerCik>
+        <issuerName>TEST CORP</issuerName>
+    </issuer>
+    <reportingOwner>
+        <reportingOwnerId>
+            <rptOwnerCik>0001234567</rptOwnerCik>
+            <rptOwnerName>DOE JOHN</rptOwnerName>
+        </reportingOwnerId>
+        <reportingOwnerRelationship>
+            <isDirector>1</isDirector>
+            <isOfficer>0</isOfficer>
+        </reportingOwnerRelationship>
+    </reportingOwner>
+    <nonDerivativeTable>
+        <nonDerivativeTransaction>
+            <transactionDate><value>2003-06-15</value></transactionDate>
+            <transactionCoding>
+                <transactionCode>S</transactionCode>
+            </transactionCoding>
+            <transactionAmounts>
+                <transactionShares><value>1000</value></transactionShares>
+                <transactionPricePerShare><value>25.50</value></transactionPricePerShare>
+                <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+            </transactionAmounts>
+        </nonDerivativeTransaction>
+    </nonDerivativeTable>
+</ownershipDocument>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
+-----END PRIVACY-ENHANCED MESSAGE-----'
+
+
+test_that("parse_filing extracts a sale transaction", {
+  path <- tempfile(fileext = ".txt")
+  writeLines(MINIMAL_FILING, path)
+  rows <- parse_filing(path)
+
+  expect_equal(nrow(rows), 1)
+  expect_equal(rows$transaction_code[[1]], "S")
+  expect_equal(rows$shares[[1]], 1000)
+  expect_equal(rows$price_per_share[[1]], 25.50, tolerance = 1e-6)
 })
 
-test_that("filter_firms removes small firms", {
-  df <- compute_metrics(sample_df)
-  filtered <- filter_firms(df, min_revenue = 1e6)
-  expect_equal(nrow(filtered), 2)
-  expect_true(all(filtered$firm_id == "F001"))
+
+test_that("filter_transactions keeps only P and S", {
+  df <- tibble(
+    transaction_code = c("S", "P", "A", "J"),
+    shares = c(100, 200, 300, 400),
+    price_per_share = c(10, 20, 30, 40)
+  )
+  filtered <- filter_transactions(df)
+
+  expect_equal(filtered$transaction_code, c("S", "P"))
 })
 
-test_that("summarize_by_year returns one row per year", {
-  df <- filter_firms(compute_metrics(sample_df))
-  summary <- summarize_by_year(df)
+
+test_that("summarize_by_month returns correct counts and totals", {
+  df <- tibble(
+    transaction_date = as.Date(c("2003-06-01", "2003-06-15", "2003-07-02")),
+    transaction_code = c("S", "S", "P"),
+    shares = c(100, 150, 200),
+    price_per_share = c(10, 12, 8),
+    month = c("2003-06", "2003-06", "2003-07")
+  )
+  summary <- summarize_by_month(df)
+
   expect_equal(nrow(summary), 2)
-  expect_equal(summary$n_firms, c(1L, 1L))
+  june_s <- filter(summary, month == "2003-06", transaction_code == "S")
+  expect_equal(june_s$n_transactions[[1]], 2)
+  expect_equal(june_s$total_shares[[1]], 250)
 })
 ```
 :::
@@ -73,57 +139,31 @@ test_that("summarize_by_year returns one row per year", {
 ## Run the R Tests
 
 ```bash
-Rscript -e "testthat::test_file('starter-code/tests/test_firm_analysis.R')"
+Rscript -e "testthat::test_file('starter-code/tests/test_edgar_analysis.R')"
 ```
 
-:::{warning}
-**A test will likely fail — this is expected and it's the point of the exercise.**
+Then re-run the Python tests to make sure nothing has drifted:
 
-A common failure is in `summarize_by_year` — the `round()` behavior in R's `mutate(across(...))` can differ from pandas' `.round(4)` in edge cases involving ties or floating-point representation.
-
-You may see something like:
-
+```bash
+PYTHONPATH=starter-code pytest starter-code/tests/ -v
 ```
-── Failure: summarize_by_year returns one row per year ──
-summary$mean_profit_margin[1] not equal to 0.4.
-Actual: 0.4001
-```
-
-**Don't fix it yet** — understanding the failure is the next step.
-:::
-
-## Understanding the Failure
-
-:::{admonition} 💬 Prompt — Diagnose the failure
-:class: tip
-```
-My R test for summarize_by_year() is failing. The Python test expects
-mean_profit_margin for 2020 to be 0.4 (after rounding to 4 decimal places),
-but the R version is returning 0.4001.
-
-Here is the R summarize_by_year function: [paste your function]
-
-What is causing the discrepancy, and how should I fix it?
-```
-:::
 
 ---
 
-## Commit What You Have
-
-Even with a failing test, commit — the test file is valuable:
+## Commit
 
 ```bash
-git add starter-code/tests/test_firm_analysis.R
-git commit -m "test: add R testthat suite (one test failing — to be fixed)"
+git add starter-code/tests/test_edgar_analysis.R
+git commit -m "test: add R testthat suite for EDGAR pipeline"
 ```
 
 :::{important}
-- [ ] `starter-code/tests/test_firm_analysis.R` exists
-- [ ] You've run the tests and seen at least one failure
-- [ ] You understand (conceptually) why the failure occurred
+- [ ] `starter-code/tests/test_edgar_analysis.R` exists
+- [ ] All three R tests pass
+- [ ] All three Python tests still pass
+- [ ] You now have matching test coverage in both languages
 :::
 
 ---
 
-**Next: [Step 3 – Fix & Refactor](step3-fix-refactor.md) →**
+**Next: [Step 3 – Compare Outputs and Fix Divergences](step3-fix-refactor.md) →**

@@ -1,7 +1,7 @@
 version: 1
 
 project:
-  title: AI-Assisted Data Analysis Lab
+  title: AI-Assisted Research Data Lab
   authors:
     - name: Kellogg Research Support
   github: https://github.com/rs-kellogg/krs-summer-2026-lab
@@ -9,14 +9,20 @@ project:
     - file: index
     - file: setup
     - file: part1-intro
-    - title: Part 2 · Improve Python
+    - title: Part 2 · Explore and Extract
+      children:
+        - file: part2-explore/index
+        - file: part2-explore/step1-understand-data
+        - file: part2-explore/step2-discover-quirks
+        - file: part2-explore/step3-build-extractor
+    - title: Part 3 · Improve Python
       children:
         - file: part2-python/index
         - file: part2-python/step1-understand
         - file: part2-python/step2-logging
         - file: part2-python/step3-tests
         - file: part2-python/step4-cli
-    - title: Part 3 · Python → R
+    - title: Part 4 · Python → R
       children:
         - file: part3-r-translation/index
         - file: part3-r-translation/step1-translate

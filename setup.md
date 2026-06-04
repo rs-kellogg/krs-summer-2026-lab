@@ -18,7 +18,7 @@ You will need **two terminal windows connected to KLC** running simultaneously t
 | Terminal | Purpose |
 |----------|---------|
 | **Terminal A — AI session** | Runs the AI CLI (`ai_agent_container`) — this process is long-lived and interactive; you leave it running |
-| **Terminal B — command line** | Runs everything else: `python starter-code/firm_analysis.py`, `pytest`, `git log --oneline`, `cat output/summary.csv`, etc. |
+| **Terminal B — command line** | Runs everything else: `python starter-code/edgar_analysis.py`, `pytest`, `git log --oneline`, `cat output/insider_summary.csv`, etc. |
 
 Open **both** terminals now and SSH into KLC from each:
 
@@ -58,27 +58,43 @@ git clone https://github.com/rs-kellogg/krs-summer-2026-lab.git
 
 ---
 
-### 3. Create Your Working Repository
+### 3. Create Your Two Working Repositories
 
-The cloned repo is the lab guide — your code lives in a separate repo so your work has its own clean git history.
+The cloned repo is the lab guide — your actual code lives in two separate repos, one per track.
+
+:::{important}
+**Why two repos?**
+
+This lab has two distinct tracks:
+
+| Repo | Track | Starting state |
+|------|-------|---------------|
+| **`edgar-scratch`** | Part 2 · Build from scratch | Empty — you write every line of code |
+| **`edgar-improve`** | Parts 3 & 4 · Improve & translate | Pre-loaded with a working-but-messy starter script |
+
+Keeping them separate gives each track its own clean git history and makes it obvious which codebase you are editing at any point.
+:::
+
+**Create `edgar-scratch`** — starts completely empty:
 
 ```bash
 cd ~/copilot_dir/repos
-git init firm-analysis
-cd firm-analysis
+git init edgar-scratch
+cd edgar-scratch
+git commit --allow-empty -m "chore: initial empty commit — from-scratch track"
+cd ..
 ```
 
-Copy the starter code in and make the initial commit:
+**Create `edgar-improve`** — starts with the inherited starter script:
 
 ```bash
+git init edgar-improve
+cd edgar-improve
 cp -r ~/copilot_dir/repos/krs-summer-2026-lab/starter-code .
 git add starter-code
-git commit -m "chore: initial commit with starter code"
+git commit -m "chore: initial commit with EDGAR starter code"
+cd ..
 ```
-
-:::{note}
-All subsequent Terminal B commands in this lab are run from `~/copilot_dir/repos/firm-analysis`.
-:::
 
 ---
 
@@ -96,11 +112,13 @@ source "/hpc/software/mamba/24.3.0/etc/profile.d/mamba.sh"
 Then create the environment with both Python and R:
 
 ```bash
-mamba create --prefix=~/copilot_dir/envs/python-virtual-env \
+mamba create --prefix=~/copilot_dir/envs/edgar-env \
     python=3.12 \
     r-base \
     r-tidyverse \
     r-testthat \
+    r-xml2 \
+    r-purrr \
     r-optparse \
     pandas pytest \
     --yes
@@ -109,7 +127,7 @@ mamba create --prefix=~/copilot_dir/envs/python-virtual-env \
 Activate it:
 
 ```bash
-conda activate ~/copilot_dir/envs/python-virtual-env
+conda activate ~/copilot_dir/envs/edgar-env
 ```
 
 Confirm both Python and R are available:
@@ -128,17 +146,28 @@ The AI agent runs inside a Singularity container on KLC. The container bind-moun
 
 ### 5. Verify the Starter Script Runs
 
+In `edgar-improve`, confirm the pre-loaded script works before any modifications:
+
 ```bash
-python starter-code/firm_analysis.py
-# Expected: "done" printed, and starter-code/output/summary.csv created
+cd ~/copilot_dir/repos/edgar-improve
+python starter-code/edgar_analysis.py
+# Expected: "done" printed, and starter-code/output/insider_summary.csv created
 ```
+
+Your `edgar-scratch` repo intentionally has no code yet — that's what Part 2 is for.
 
 ---
 
 ### 6. Confirm Version Control
 
+Check that both repos have a clean initial commit:
+
 ```bash
-git log --oneline
+cd ~/copilot_dir/repos/edgar-scratch && git log --oneline
+# Expected: one empty initial commit
+
+cd ~/copilot_dir/repos/edgar-improve && git log --oneline
+# Expected: one commit with starter-code/
 ```
 
 ---
@@ -198,10 +227,10 @@ On KLC, AI tools are run inside a **Singularity container** using the `ai_agent_
 module load ai-agent-container
 ```
 
-**Change into your working repository, then start the agent:**
+**Change into your `edgar-scratch` repository, then start the agent:**
 
 ```bash
-cd ~/copilot_dir/repos/firm-analysis
+cd ~/copilot_dir/repos/edgar-scratch
 ```
 
 ```bash
@@ -318,12 +347,13 @@ You may be asked whether to stay logged in. Select the option that suits your wo
 Before moving on, confirm you have:
 
 - [ ] You are logged in to KLC via SSH in both terminals
-- [ ] `~/copilot_dir/repos/firm-analysis` exists with `starter-code/` inside it (Terminal B)
-- [ ] `git log --oneline` in `firm-analysis` shows your initial commit (Terminal B)
-- [ ] `~/copilot_dir/envs/python-virtual-env` exists and is active (Terminal B)
+- [ ] `~/copilot_dir/repos/edgar-scratch` exists with one empty initial commit (Terminal B)
+- [ ] `~/copilot_dir/repos/edgar-improve` exists with `starter-code/` inside it (Terminal B)
+- [ ] `git log --oneline` in each repo shows the expected initial commit (Terminal B)
+- [ ] `~/copilot_dir/envs/edgar-env` exists and is active (Terminal B)
 - [ ] `python --version` shows 3.12.x and `Rscript --version` works (Terminal B)
-- [ ] `starter-code/output/summary.csv` was created when you ran `firm_analysis.py` (Terminal B)
-- [ ] Your AI tool is installed and running via `ai_agent_container` (Terminal A)
+- [ ] `edgar-improve/starter-code/output/insider_summary.csv` was created when you ran `edgar_analysis.py` (Terminal B)
+- [ ] Your AI tool is installed and running via `ai_agent_container` from `edgar-scratch` (Terminal A)
 :::
 
 ---

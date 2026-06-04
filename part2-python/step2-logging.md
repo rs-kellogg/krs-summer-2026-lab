@@ -1,138 +1,98 @@
-# Part 2, Step 2 – Add Logging
+# Part 3, Step 2 – Add Logging
 
-## Why Logging Matters on a Cluster
+## Why Logging Matters Here
 
-When you run a script interactively and it takes 10 seconds, `print('done')` is fine.
+When you run a script against hundreds of real SEC filings, `print('done')` is not enough.
 
-When you submit a job to a SLURM queue and it runs overnight, `print('done')` is useless. You want to know:
+You want to know:
 
-- When did each stage start and finish?
-- How many rows were loaded? How many were filtered out?
-- Did anything unexpected happen mid-run?
+- how many files were processed
+- how many filings produced parse errors
+- how many transactions were extracted
+- how many rows remained after filtering to `P` and `S`
+- where the final CSV was written and how many rows it contains
 
-Python's built-in `logging` module solves this. It lets you:
-
-- Set severity levels (`DEBUG`, `INFO`, `WARNING`, `ERROR`)
-- Write logs to a file *and* stdout simultaneously
-- Include timestamps automatically
+Python's built-in `logging` module gives you timestamps, severity levels, and much clearer progress reporting. When you submit this script as a SLURM job overnight, those log lines are what tell you whether it succeeded.
 
 ---
 
 ## Your Prompt
 
-:::{admonition} 💬 Prompt — Add logging
+:::{admonition} 💬 Prompt — Replace print statements with logging
 :class: tip
 ```
-Modify starter-code/firm_analysis.py to use Python's logging module instead of
-print statements. Requirements:
-- Use logging.basicConfig to write logs to both stdout and a file called
-  firm_analysis.log in the same directory as the script
-- Log level INFO for normal progress messages (e.g., "Loaded 250 rows",
-  "After filtering: 183 firms remain", "Summary written to ...")
-- Log level DEBUG for detailed diagnostic information (e.g., column names,
-  data types, shape before and after each operation)
-- Include timestamps in the log format
-- Replace the print('done') with a meaningful final log message
-Do not change any of the calculations or the output file format.
+Modify starter-code/edgar_analysis.py to replace print() statements with Python's
+logging module.
+
+Requirements:
+- Use logging.basicConfig with INFO-level logging
+- Log messages at INFO level should include:
+  - "Processing N_FILES files from DATA_DIR"
+  - "Extracted X transactions"
+  - "Parse errors: Y files skipped"
+  - "After filtering to P/S: Z rows"
+  - "Summary written to OUTPUT_PATH (N rows)"
+- Keep the existing behavior and output CSV format unchanged
+- Do not refactor into functions yet
 ```
 :::
 
 :::{note}
-The AI should produce something like:
+What matters is the **shape of the logging**, not the exact implementation.
 
-```python
-import logging
-import pandas as pd
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.FileHandler("firm_analysis.log"),
-        logging.StreamHandler()
-    ]
-)
-logger = logging.getLogger(__name__)
-
-def main():
-    logger.info("Loading firm data from starter-code/data/firms.csv")
-    df = pd.read_csv('starter-code/data/firms.csv')
-    logger.info(f"Loaded {len(df)} rows with columns: {list(df.columns)}")
-
-    logger.debug("Computing financial metrics")
-    df['profit'] = df['revenue'] - df['cost']
-    df['profit_margin'] = df['profit'] / df['revenue']
-    df['roa'] = df['profit'] / df['assets']
-    df['asset_turnover'] = df['revenue'] / df['assets']
-
-    pre_filter = len(df)
-    df = df[df['revenue'] > 1000000]
-    logger.info(f"Filtered to firms with revenue > $1M: {pre_filter} → {len(df)} rows")
-
-    summary = df.groupby('year').agg(
-        n_firms=('firm_id', 'count'),
-        mean_profit_margin=('profit_margin', 'mean'),
-        median_profit_margin=('profit_margin', 'median'),
-        mean_roa=('roa', 'mean'),
-        mean_asset_turnover=('asset_turnover', 'mean')
-    ).reset_index()
-    summary = summary.round(4)
-
-    output_path = 'starter-code/output/summary.csv'
-    summary.to_csv(output_path, index=False)
-    logger.info(f"Summary written to {output_path} ({len(summary)} rows)")
-
-if __name__ == "__main__":
-    main()
-```
-
-Your version may differ in details. What matters is that `logging.basicConfig` is configured with both a `FileHandler` and a `StreamHandler`, and INFO messages report row counts and file paths.
-
-Before applying changes, Claude will show you exactly which lines it intends to modify:
-
-![Example of Claude showing what lines will change](../images/example-of-claude-showing-what-lines-will-change.png)
-:::
-
----
-
-## Run It and Read the Logs
-
-```bash
-python starter-code/firm_analysis.py
-cat firm_analysis.log
-```
-
-You should see timestamped entries like:
+Your INFO messages should look like:
 
 ```
-2026-05-15 14:02:31 [INFO] Loading firm data from starter-code/data/firms.csv
-2026-05-15 14:02:31 [INFO] Loaded 250 rows with columns: ['firm_id', 'year', ...]
-2026-05-15 14:02:31 [INFO] Filtered to firms with revenue > $1M: 250 → 183 rows
-2026-05-15 14:02:31 [INFO] Summary written to starter-code/output/summary.csv (5 rows)
+2026-07-15 14:02:31,145 INFO Processing 500 files from /kellogg/data/EDGAR/4/2003
+2026-07-15 14:02:55,012 INFO Extracted 539 transactions
+2026-07-15 14:02:55,013 INFO Parse errors: 135 files skipped
+2026-07-15 14:02:55,021 INFO After filtering to P/S: 334 rows
+2026-07-15 14:02:55,025 INFO Summary written to starter-code/output/insider_summary.csv (18 rows)
 ```
+
+Your exact counts will depend on how many filings parse successfully.
 
 :::{warning}
-If the AI wrapped the main logic in an `if __name__ == '__main__':` block, great — that's correct Python style and important for testability in Step 3.
+If the AI wraps the main logic in an `if __name__ == '__main__':` block, that is correct — it's important for testability in Step 3.
 
-If it didn't, ask: *"Please wrap the main logic in an `if __name__ == '__main__':` block."*
+If it doesn't, ask: *"Please wrap the main logic in an `if __name__ == '__main__':` block."*
+:::
 :::
 
 ---
 
-## Commit This Improvement
+## Run It
+
+From the repo root:
 
 ```bash
-git add starter-code/firm_analysis.py
-git commit -m "feat: replace print with structured logging (INFO + DEBUG)"
+python starter-code/edgar_analysis.py
+```
+
+Then verify the output is still correct:
+
+```bash
+cat starter-code/output/insider_summary.csv
+```
+
+The CSV content should be unchanged. Only the console output will look different.
+
+---
+
+## Commit
+
+```bash
+git add starter-code/edgar_analysis.py
+git commit -m "feat: replace print with structured logging"
 ```
 
 :::{important}
-- [ ] Running the script produces timestamped log output on the terminal
-- [ ] A `firm_analysis.log` file is created
-- [ ] The `output/summary.csv` file is identical to before (same content)
-- [ ] The change is committed to git
+- [ ] Running the script now prints timestamped INFO messages
+- [ ] The CSV output is still `starter-code/output/insider_summary.csv`
+- [ ] The summary content is unchanged from before
+- [ ] The logging change is committed to git
 :::
 
 ---
 
-**Next: [Step 3 – Add Unit Tests](step3-tests.md) →**
+**Next: [Step 3 – Refactor and Test](step3-tests.md) →**
