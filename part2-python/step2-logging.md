@@ -16,6 +16,13 @@ Python's built-in `logging` module gives you timestamps, severity levels, and mu
 
 ---
 
+:::{admonition} 🗣️ Discussion — What would you want in a log?
+:class: seealso
+If this script ran overnight as a SLURM job and you came back to a finished run the next morning, what would you want to be able to know just from the output? What would you want to see in a log file?
+:::
+
+---
+
 ## Your Prompt
 
 :::{admonition} 💬 Prompt — Replace print statements with logging

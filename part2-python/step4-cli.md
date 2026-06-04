@@ -6,6 +6,11 @@ Right now the script only works with one baked-in dataset, one output path, and 
 
 That is fine for a starter exercise, but not for a reusable research pipeline. A command-line interface lets you rerun the same code against different years, subsets, or output paths without editing the source file — which is exactly what you need on a cluster where you might run the same pipeline across many different directories.
 
+:::{admonition} 🗣️ Discussion — How would a collaborator run this on different data?
+:class: seealso
+Right now, if a collaborator wanted to run this pipeline against 2004 data instead of 2003, what would they have to do?
+:::
+
 ---
 
 ## Your Prompt
