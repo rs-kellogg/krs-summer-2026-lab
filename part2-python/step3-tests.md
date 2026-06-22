@@ -13,6 +13,13 @@ This is the key move that makes the later Python-to-R translation trustworthy. I
 
 ---
 
+:::{admonition} 🗣️ Discussion — What's most likely to break silently?
+:class: seealso
+Before writing any tests: what behavior in this script is most likely to break silently — without throwing an error or exception? What would "wrong but not crashing" look like here?
+:::
+
+---
+
 ## The Strategic Ask
 
 :::{admonition} 💬 Prompt — Refactor into functions and add pytest tests

@@ -30,6 +30,11 @@ Throughout this lab, we'll use AI to reach four goals:
 | **Version control** | Commit each meaningful change | You can always roll back, and you have a record of what changed |
 | **Modular / configurable** | No hardcoded paths or magic numbers | Code you can reuse without editing the source |
 
+:::{admonition} 🗣️ Discussion — Where do you already do this?
+:class: seealso
+Which of these four practices do you already use in your own research code? Which do you skip most often — and why?
+:::
+
 ---
 
 ## Tool Orientation

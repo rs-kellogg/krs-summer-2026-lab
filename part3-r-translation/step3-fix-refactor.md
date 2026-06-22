@@ -82,6 +82,11 @@ Common Python-vs-R gotchas in this lab:
 These are exactly the kind of subtle cross-language issues that tests and output comparison reveal.
 :::
 
+:::{admonition} 🗣️ Discussion — What can tests catch, and what can't they?
+:class: seealso
+Both the Python and R pipelines pass their unit tests, but produce different numbers from the real data. What does that tell you about what unit tests can and can't catch?
+:::
+
 ---
 
 ## Re-Run Everything

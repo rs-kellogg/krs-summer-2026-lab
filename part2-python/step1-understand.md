@@ -50,6 +50,11 @@ A strong answer should identify most or all of these issues:
 That's your roadmap for Part 2.
 :::
 
+:::{admonition} 🗣️ Discussion — Have you seen these before?
+:class: seealso
+Of these 7 issues, which ones have you run into in your own research code — or inherited from a collaborator? Which were hardest to track down as a bug?
+:::
+
 ---
 
 ## Version Control Checkpoint
