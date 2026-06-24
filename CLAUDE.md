@@ -77,9 +77,13 @@ Python and R tests use the same minimal filing fixture — a minimal `<ownership
 | Checkpoints | `:::{important}` with `- [ ]` checkboxes | End-of-step verification |
 | Warnings | `:::{warning}` | Common mistakes or gotchas |
 | Collapsible sections | `:::{dropdown} <title>` | Optional/supplemental content |
-| Tabbed content | `::::{tab-set}` + `:::{tab-item} <label>` | Claude Code vs. Copilot CLI variants |
+| Tabbed content | `::::{tab-set}` + `:::{tab-item} <label>` | Three variants: "CLI Tools", "Claude.ai Chat", and (optionally) "GitHub Copilot CLI" |
+| Chat callouts | `:::{admonition} Chat interface — <title>` + `:class: seealso` | Chat-specific alternatives to run/verify sections |
+| Sample data | `:::{dropdown} Sample filing data — for chat interface users` | Embedded EDGAR filing excerpts for chat users |
 
 Prompt admonitions always use `💬` and follow the pattern `💬 Prompt — <action phrase>` or `💬 Prompt <N> — <action phrase>`.
+
+Do **not** nest `:::{admonition}` blocks inside `:::{tab-item}` blocks — sphinx-design does not render them reliably. Instead, place the CLI `:::{admonition} 💬 Prompt` block as usual, then follow it with a `:::{admonition} Chat interface — <title>` `:class: seealso` block for the chat variant.
 
 Images live in `images/` with kebab-case names prefixed by tool: `github-copilot-cli-*` for Copilot, `claude-*` or `claude-cli-*` for Claude Code.
 

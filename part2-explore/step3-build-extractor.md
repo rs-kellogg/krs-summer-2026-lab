@@ -1,5 +1,14 @@
 # Part 2, Step 3 – Build the Extractor, One Step at a Time
 
+:::{admonition} Chat interface — how to use this step
+:class: seealso
+The five prompts below are for generating code. They work as-is in a chat interface — just send each prompt and copy the code you receive.
+
+For the **"Run it and verify"** sections: if you have Python installed locally, save the generated code to `edgar_analysis.py` and run it. If not, ask the AI to trace through the code and predict the output — look for a "Chat interface" note after each run section.
+
+For **git commits**: save your working code to a local file after each step instead.
+:::
+
 ## One Prompt, One Working Step
 
 You now know what the data looks like and where the edge cases are. Time to write code.
@@ -69,7 +78,12 @@ Director: True
 Officer:  True
 ```
 
-If it works, commit:
+:::{admonition} Chat interface — verify without running
+:class: seealso
+Ask: *"Based on this code, what would it print when run on a file with issuer META GROUP INC and owner RUBIN HOWARD A who is both a director and officer?"*
+:::
+
+If you have Python locally, run it and verify — or save the code and move on:
 
 ```bash
 git add starter-code/edgar_analysis.py
@@ -130,7 +144,12 @@ Expected output — 5 stock sales by Howard Rubin:
 2003-06-09 | S | 2500 | 3.78
 ```
 
-Commit:
+:::{admonition} Chat interface — verify without running
+:class: seealso
+Ask: *"Given this code, trace through what it would print for a nonDerivativeSecurity element with code S, 3100 shares, and price 3.8."*
+:::
+
+Commit (or save to file):
 
 ```bash
 git add starter-code/edgar_analysis.py
@@ -186,7 +205,12 @@ root = ET.fromstring(xml_str)
 Try implementing it. You should see the skip rate drop significantly. Whether you include this fix in the final script is your choice — the reference version in the repo skips those files, but recovering them is a good improvement to make in Part 3.
 :::
 
-Run and verify the counts. Commit:
+:::{admonition} Chat interface — verify without running
+:class: seealso
+Ask: *"Trace through the error handling logic in this code. What happens when `re.search` finds no XML block? What happens when `ET.fromstring` raises a `ParseError`? Does the loop continue or crash?"*
+:::
+
+Run and verify the counts (or save and move on):
 
 ```bash
 git add starter-code/edgar_analysis.py
@@ -235,7 +259,12 @@ dtype: int64
 Notice that `S` (sales) are the most common non-derivative transactions — more insiders are selling than buying. This is typical for 2003, which was the beginning of a market recovery after the dot-com bust.
 :::
 
-Run and verify. Commit:
+:::{admonition} Chat interface — verify without running
+:class: seealso
+Ask: *"After this code runs, what columns will the DataFrame have? What will `transaction_code` value_counts look like — which codes would you expect to be most common in 2003 insider trading data?"*
+:::
+
+Run and verify (or save and move on):
 
 ```bash
 git add starter-code/edgar_analysis.py
@@ -318,7 +347,14 @@ month,transaction_code,n_transactions,total_shares,mean_price
 
 Notice the pattern: more sells than buys in most months, especially in Q4 as the market recovered from the 2001–2002 downturn.
 
-Final commit:
+:::{admonition} Chat interface — verify without running
+:class: seealso
+Ask: *"What will the output CSV look like? How many rows should there be if we processed 500 files from 2003? What would the month and transaction_code columns contain?"*
+
+The reference output has 18 rows — monthly P and S totals across Jan–Dec 2003.
+:::
+
+Final commit (or save your completed script):
 
 ```bash
 git add starter-code/edgar_analysis.py starter-code/output/

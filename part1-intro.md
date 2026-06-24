@@ -72,6 +72,19 @@ gh copilot chat
 In interactive mode, you can paste code, ask follow-up questions, and iterate.
 :::
 
+:::{tab-item} Claude.ai Chat
+Go to [claude.ai](https://claude.ai) and open a new conversation. No startup command is needed.
+
+To establish shared context at the start of your session:
+
+```
+I'm working through a hands-on data exercise using real SEC EDGAR Form 4
+insider-trading filings. I'll be pasting file contents and asking you to help
+me understand the data, write Python code, and eventually translate it to R.
+Please work with me one step at a time — I'll verify each step before moving on.
+```
+:::
+
 ::::
 
 :::{admonition} 💬 Prompt — Explore the EDGAR data

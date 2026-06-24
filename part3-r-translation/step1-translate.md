@@ -109,6 +109,13 @@ Then inspect the output:
 cat starter-code/output/insider_summary_r.csv
 ```
 
+:::{admonition} Chat interface — verify without running
+:class: seealso
+Paste the generated `edgar_analysis.R` back and ask: *"Does `parse_filing()` handle both the X0201 schema (`nonDerivativeTransaction`) and the X0101 schema (`nonDerivativeSecurity`)? Trace through what happens for each case."*
+
+Also check: *"Is `main()` guarded by `if (!interactive() && !exists('SOURCED_FOR_TESTING'))`? Why does that matter for the R tests in Step 2?"*
+:::
+
 It should have the same five columns as the Python output:
 
 | Column | Description |

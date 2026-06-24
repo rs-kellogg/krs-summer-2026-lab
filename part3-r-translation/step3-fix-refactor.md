@@ -22,6 +22,15 @@ cat starter-code/output/insider_summary.csv
 cat starter-code/output/insider_summary_r.csv
 ```
 
+:::{admonition} Chat interface — verify without running
+:class: seealso
+Paste both `edgar_analysis.py` and `edgar_analysis.R` into the conversation and ask:
+
+*"Compare how Python and R handle these three things: (1) stripping whitespace from XML text values, (2) NaN vs NA for missing prices when written to CSV, and (3) rounding to 2 decimal places. Would the outputs match row-for-row, or are there likely differences?"*
+
+Use the answer to guide which fixes to apply before proceeding.
+:::
+
 With the defaults, both should match this reference:
 
 ```text

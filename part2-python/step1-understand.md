@@ -1,5 +1,10 @@
 # Part 3, Step 1 – Before You Change Anything, Understand It
 
+:::{admonition} Chat interface — paste the starter code first
+:class: seealso
+Before using any prompts on this page, paste the full contents of `starter-code/edgar_analysis.py` into your chat conversation. You can find it in the lab repository at `starter-code/edgar_analysis.py`. Send it with a brief note: *"Here is the script I'll be working with."* Then proceed with the prompts below.
+:::
+
 ## Slow Down First
 
 A common mistake with AI tools is jumping straight to "fix this" before establishing a shared understanding of what the code does.
