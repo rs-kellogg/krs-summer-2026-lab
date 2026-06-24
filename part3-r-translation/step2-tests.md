@@ -138,6 +138,8 @@ test_that("summarize_by_month returns correct counts and totals", {
 
 ## Run the R Tests
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 ```bash
 Rscript -e "testthat::test_file('starter-code/tests/test_edgar_analysis.R')"
 ```
@@ -147,13 +149,13 @@ Then re-run the Python tests to make sure nothing has drifted:
 ```bash
 PYTHONPATH=starter-code pytest starter-code/tests/ -v
 ```
-
-:::{admonition} Chat interface — verify without running
-:class: seealso
+:::
+:::{tab-item} Chat Interface
 Paste the generated `test_edgar_analysis.R` back and ask: *"Trace through `test_that('parse_filing extracts a sale transaction', ...)`. What does `parse_filing()` return for the MINIMAL_FILING? Do the three `expect_equal` assertions pass?"*
 
 Then compare the R test fixture to the Python `MINIMAL_FILING` string — they should be identical. Ask: *"Do the Python and R tests use the same fixture? Why does that matter for cross-language validation?"*
 :::
+::::
 
 ---
 

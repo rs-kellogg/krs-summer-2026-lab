@@ -177,6 +177,8 @@ def test_summarize_by_month_counts():
 **Before asking the AI to run the tests**, remind it to use the Python interpreter from the conda environment you set up. This is the first time the agent will execute Python code, so it needs to know which interpreter to use.
 :::
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 From the repo root:
 
 ```bash
@@ -197,15 +199,15 @@ Then rerun the full script to confirm behavior is unchanged:
 python starter-code/edgar_analysis.py
 cat starter-code/output/insider_summary.csv
 ```
-
-:::{admonition} Chat interface — verify without running
-:class: seealso
+:::
+:::{tab-item} Chat Interface
 Paste the generated `test_edgar_analysis.py` back into the conversation and ask:
 
 *"Trace through `test_parse_filing_extracts_sale` step by step. What does `tmp_path` provide? What does `parse_filing` return for the MINIMAL_FILING fixture? Do all three assertions pass?"*
 
 Then ask the same for the other two tests. This is a slower substitute for running pytest, but it builds the same mental model.
 :::
+::::
 
 :::{warning}
 If pytest can't import `edgar_analysis`, make sure you're using the `PYTHONPATH=starter-code` prefix or run from the `starter-code/` directory.

@@ -102,8 +102,10 @@ ctionAmounts>    </nonDerivativeSecurity></ownershipDocument>
 
 ## Your Prompts
 
-:::{admonition} 💬 Prompt 1 — Sample broadly for structural variation
-:class: tip
+::::{tab-set}
+:::{tab-item} CLI Tools
+💬 **Prompt 1 — Sample broadly for structural variation**
+
 ```
 Look at 8–10 files in /kellogg/data/EDGAR/4/2003/, choosing files with
 different issuer CIK numbers from the filenames.
@@ -112,13 +114,24 @@ Focus on the XML structure inside each file. What structural differences
 do you notice between files? Are they all organized the same way?
 ```
 :::
+:::{tab-item} Chat Interface
+💬 **Prompt 1 — Compare two XML schemas**
 
-:::{admonition} Chat interface — compare two XML schemas
-:class: seealso
-Copy **Sample Filing 1** (from Step 1's dropdown) and **Sample Filing 3** (from the dropdown above). Send both to your chat with this message:
+Copy **Sample Filing 1** (from Step 1's dropdown) and **Sample Filing 3** (from the dropdown above). Paste both at the end of this message:
 
-*"Here are two real SEC EDGAR Form 4 filings. Focus on the XML structure. What structural differences do you notice? Are the non-derivative transactions organized the same way in both files? [paste Sample Filing 1] [paste Sample Filing 3]"*
+```
+Here are two real SEC EDGAR Form 4 filings. Focus on the XML structure
+inside each one. What structural differences do you notice? Are the
+non-derivative transactions organized the same way in both files?
+
+[paste Sample Filing 1 here]
+
+---
+
+[paste Sample Filing 3 here]
+```
 :::
+::::
 
 :::{note}
 A thorough answer will discover at least two important structural differences:
@@ -142,8 +155,10 @@ Both schemas have the same logical structure — they just use different element
 
 ---
 
-:::{admonition} 💬 Prompt 2 — Find files that break standard XML parsing
-:class: tip
+::::{tab-set}
+:::{tab-item} CLI Tools
+💬 **Prompt 2 — Find files that break standard XML parsing**
+
 ```
 Try to parse the XML from this file using Python's xml.etree.ElementTree:
 /kellogg/data/EDGAR/4/2003/1000180_3_0001242648-03-000002.txt
@@ -152,15 +167,23 @@ What error do you get? Look at the raw file around the error location.
 Why does it fail, and what would be needed to fix it?
 ```
 :::
+:::{tab-item} Chat Interface
+💬 **Prompt 2 — Understand the malformed XML problem**
 
-:::{admonition} Chat interface — understand the malformed XML problem
-:class: seealso
-Copy **Sample Filing 4** from the dropdown above and send it with this message:
+Copy **Sample Filing 4** from the dropdown above and paste it at the end of this message:
 
-*"Here is a real SEC EDGAR Form 4 filing. If I tried to parse the XML inside it using Python's `xml.etree.ElementTree`, what error would I get and why? Look carefully at the structure of the XML content. What would be needed to fix it? [paste Sample Filing 4]"*
+```
+Here is a real SEC EDGAR Form 4 filing. If I tried to parse the XML
+inside it using Python's xml.etree.ElementTree, what error would I
+get and why? Look carefully at the structure of the XML content.
+What would be needed to fix it?
+
+[paste Sample Filing 4 here]
+```
 :::
+::::
 
-:::{note}
+::::{note}
 This is the most important quirk in the dataset.
 
 **What happens:** `ET.fromstring()` raises:
@@ -187,12 +210,14 @@ The starter script (`edgar_analysis.py`) in the repo uses the simpler approach �
 
 If you want to recover those ~20% of filings, add `.replace('\n', ' ')` before the `ET.fromstring()` call in Step 3. The tests and expected output in the repo use the "skip" approach as the baseline.
 :::
-:::
+::::
 
 ---
 
-:::{admonition} 💬 Prompt 3 — Probe for missing and zero-value fields
-:class: tip
+::::{tab-set}
+:::{tab-item} CLI Tools
+💬 **Prompt 3 — Probe for missing and zero-value fields**
+
 ```
 Look at several filings and focus on the price and shares fields inside
 <transactionAmounts>.
@@ -204,10 +229,10 @@ Are these fields always populated? What values do you see for:
 What should our parser do when price is missing or zero?
 ```
 :::
+:::{tab-item} Chat Interface
+💬 **Prompt 3 — Understand missing price fields**
 
-:::{admonition} Chat interface — understand missing price fields
-:class: seealso
-No file needed for this one — send this prompt directly:
+No file needed — send this prompt directly:
 
 ```
 In SEC EDGAR Form 4 filings, the price field inside <transactionAmounts>
@@ -218,6 +243,7 @@ is not always populated. Based on what you know about Form 4 transaction types:
 - What should a data parser do when the price field is blank?
 ```
 :::
+::::
 
 :::{note}
 Price fields are commonly blank or zero in:

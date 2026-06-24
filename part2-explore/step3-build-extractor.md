@@ -64,6 +64,8 @@ print(f'Officer:  {is_officer}')
 ```
 :::
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 Run it and verify:
 
 ```bash
@@ -77,13 +79,13 @@ Owner:    RUBIN HOWARD A
 Director: True
 Officer:  True
 ```
-
-:::{admonition} Chat interface — verify without running
-:class: seealso
+:::
+:::{tab-item} Chat Interface
 Ask: *"Based on this code, what would it print when run on a file with issuer META GROUP INC and owner RUBIN HOWARD A who is both a director and officer?"*
 :::
+::::
 
-If you have Python locally, run it and verify — or save the code and move on:
+If you have Python locally, run it and verify. Then commit (or save to file):
 
 ```bash
 git add starter-code/edgar_analysis.py
@@ -129,6 +131,8 @@ Now is a good time to ask the AI about the schema difference:
 The AI should suggest checking for X0201 first, then falling back to X0101 — which is exactly what the final script does.
 :::
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 Run it:
 
 ```bash
@@ -143,11 +147,11 @@ Expected output — 5 stock sales by Howard Rubin:
 2003-06-09 | S | 1900 | 3.76
 2003-06-09 | S | 2500 | 3.78
 ```
-
-:::{admonition} Chat interface — verify without running
-:class: seealso
-Ask: *"Given this code, trace through what it would print for a nonDerivativeSecurity element with code S, 3100 shares, and price 3.8."*
 :::
+:::{tab-item} Chat Interface
+Ask: *"Given this code, trace through what it would print for a `nonDerivativeSecurity` element with code S, 3100 shares, and price 3.8."*
+:::
+::::
 
 Commit (or save to file):
 
@@ -210,7 +214,20 @@ Try implementing it. You should see the skip rate drop significantly. Whether yo
 Ask: *"Trace through the error handling logic in this code. What happens when `re.search` finds no XML block? What happens when `ET.fromstring` raises a `ParseError`? Does the loop continue or crash?"*
 :::
 
-Run and verify the counts (or save and move on):
+::::{tab-set}
+:::{tab-item} CLI Tools
+Run and verify the counts:
+
+```bash
+python starter-code/edgar_analysis.py
+```
+:::
+:::{tab-item} Chat Interface
+Ask: *"Trace through the error handling logic in this code. What happens when `re.search` finds no XML block? What happens when `ET.fromstring` raises a `ParseError`? Does the loop continue or crash?"*
+:::
+::::
+
+Commit (or save to file):
 
 ```bash
 git add starter-code/edgar_analysis.py
@@ -264,7 +281,20 @@ Notice that `S` (sales) are the most common non-derivative transactions — more
 Ask: *"After this code runs, what columns will the DataFrame have? What will `transaction_code` value_counts look like — which codes would you expect to be most common in 2003 insider trading data?"*
 :::
 
-Run and verify (or save and move on):
+::::{tab-set}
+:::{tab-item} CLI Tools
+Run and verify:
+
+```bash
+python starter-code/edgar_analysis.py
+```
+:::
+:::{tab-item} Chat Interface
+Ask: *"After this code runs, what columns will the DataFrame have? What will `transaction_code` value_counts look like — which codes would you expect to be most common in 2003 insider trading data?"*
+:::
+::::
+
+Commit (or save to file):
 
 ```bash
 git add starter-code/edgar_analysis.py
@@ -354,7 +384,23 @@ Ask: *"What will the output CSV look like? How many rows should there be if we p
 The reference output has 18 rows — monthly P and S totals across Jan–Dec 2003.
 :::
 
-Final commit (or save your completed script):
+::::{tab-set}
+:::{tab-item} CLI Tools
+Run the final script and inspect the output:
+
+```bash
+python starter-code/edgar_analysis.py
+cat starter-code/output/insider_summary.csv
+```
+:::
+:::{tab-item} Chat Interface
+Ask: *"What will the output CSV look like? How many rows should there be if we processed 500 files from 2003? What would the month and transaction_code columns contain?"*
+
+The reference output has 18 rows — monthly P and S totals across Jan–Dec 2003.
+:::
+::::
+
+Commit (or save your completed script):
 
 ```bash
 git add starter-code/edgar_analysis.py starter-code/output/

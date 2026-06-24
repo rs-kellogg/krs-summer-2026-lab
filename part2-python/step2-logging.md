@@ -70,6 +70,8 @@ If it doesn't, ask: *"Please wrap the main logic in an `if __name__ == '__main__
 
 ## Run It
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 From the repo root:
 
 ```bash
@@ -83,13 +85,13 @@ cat starter-code/output/insider_summary.csv
 ```
 
 The CSV content should be unchanged. Only the console output will look different.
-
-:::{admonition} Chat interface — verify without running
-:class: seealso
+:::
+:::{tab-item} Chat Interface
 Ask: *"Based on the updated script, write out exactly what the five INFO log lines would look like when processing 500 files, assuming 135 parse errors and 539 transactions extracted. Use the timestamp format from `logging.basicConfig`."*
 
 Then check that the code still writes `starter-code/output/insider_summary.csv` with the same groupby logic as before.
 :::
+::::
 
 ---
 

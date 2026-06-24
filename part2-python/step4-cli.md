@@ -66,19 +66,21 @@ INFO File limit:     500
 
 ## Verify the Defaults
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 First, run with no arguments — behavior should be identical to before:
 
 ```bash
 python starter-code/edgar_analysis.py
 cat starter-code/output/insider_summary.csv
 ```
-
-:::{admonition} Chat interface — verify without running
-:class: seealso
+:::
+:::{tab-item} Chat Interface
 Ask: *"Trace through `parse_args()`. What are the default values for each argument? If I run the script with no arguments, do `args.data_dir`, `args.output`, and `args.n_files` match the original hardcoded constants?"*
 
-Then check that the `main()` function uses `args.data_dir`, `args.output`, and `args.n_files` rather than the old constants.
+Then check that `main()` uses `args.data_dir`, `args.output`, and `args.n_files` rather than the old constants.
 :::
+::::
 
 With the defaults (`--n-files 500`), you should get this 18-row summary:
 

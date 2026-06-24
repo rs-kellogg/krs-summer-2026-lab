@@ -171,8 +171,10 @@ REPORTING-OWNER:
 
 ## Your Prompts
 
-:::{admonition} 💬 Prompt 1 — Describe a single Form 4 filing
-:class: tip
+::::{tab-set}
+:::{tab-item} CLI Tools
+💬 **Prompt 1 — Describe a single Form 4 filing**
+
 ```
 Read the file /kellogg/data/EDGAR/4/2003/1000015_2_0001233883-03-000002.txt
 and explain to me:
@@ -183,13 +185,23 @@ and explain to me:
 4. The overall structure of the file — what are the major sections?
 ```
 :::
+:::{tab-item} Chat Interface
+💬 **Prompt 1 — Describe a single Form 4 filing**
 
-:::{admonition} Chat interface — using this prompt
-:class: seealso
-Copy **Sample Filing 1** from the dropdown above and send it with this message:
+Copy **Sample Filing 1** from the dropdown above and paste it at the end of this message:
 
-*"Here is a real SEC EDGAR Form 4 filing. Please explain: (1) what kind of document this is and why it's filed with the SEC, (2) who filed it and who it's about, (3) what transaction(s) are reported and what they tell us about the insider's activity, (4) the overall structure of the file. [paste Sample Filing 1]"*
+```
+Here is a real SEC EDGAR Form 4 filing. Please explain:
+
+1. What kind of document this is and why it's filed with the SEC
+2. Who filed it and who it's about
+3. What transaction(s) are reported and what they tell us about the insider's activity
+4. The overall structure of the file — what are the major sections?
+
+[paste Sample Filing 1 here]
+```
 :::
+::::
 
 :::{note}
 A good response will explain that:
@@ -205,8 +217,10 @@ The transactions are "Disposed" (code `D`) and type `S` (open-market sale) — t
 
 ---
 
-:::{admonition} 💬 Prompt 2 — Compare with a different filing type
-:class: tip
+::::{tab-set}
+:::{tab-item} CLI Tools
+💬 **Prompt 2 — Compare with a different filing type**
+
 ```
 Now read /kellogg/data/EDGAR/4/2003/1000015_4_0001259692-03-000016.txt
 
@@ -214,13 +228,20 @@ How does this differ from the previous file? What type of transaction
 is being reported, and what does it mean?
 ```
 :::
+:::{tab-item} Chat Interface
+💬 **Prompt 2 — Compare with a different filing type**
 
-:::{admonition} Chat interface — using this prompt
-:class: seealso
-Copy **Sample Filing 2** from the dropdown above and send it with this message:
+Copy **Sample Filing 2** from the dropdown above and paste it at the end of this message:
 
-*"Here is a second Form 4 filing from the same company. How does this differ from the first filing? What type of transaction is being reported, and what does it mean? [paste Sample Filing 2]"*
+```
+Here is a second Form 4 filing from the same company. How does this
+differ from the first filing? What type of transaction is being
+reported, and what does it mean?
+
+[paste Sample Filing 2 here]
+```
 :::
+::::
 
 :::{note}
 A good response will identify key differences:
