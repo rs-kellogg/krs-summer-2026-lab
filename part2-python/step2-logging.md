@@ -25,6 +25,8 @@ If this script ran overnight as a SLURM job and you came back to a finished run 
 
 ## Your Prompt
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt — Replace print statements with logging
 :class: tip
 ```
@@ -43,8 +45,29 @@ Requirements:
 - Do not refactor into functions yet
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt — Replace print statements with logging
+:class: tip
+```
+Modify the script above to replace print() statements with Python's logging module.
 
-:::{note}
+Requirements:
+- Use logging.basicConfig with INFO-level logging
+- Log messages at INFO level should include:
+  - "Processing N_FILES files from DATA_DIR"
+  - "Extracted X transactions"
+  - "Parse errors: Y files skipped"
+  - "After filtering to P/S: Z rows"
+  - "Summary written to OUTPUT_PATH (N rows)"
+- Keep the existing behavior and output CSV format unchanged
+- Do not refactor into functions yet
+```
+:::
+::::
+:::::
+
+::::{note}
 What matters is the **shape of the logging**, not the exact implementation.
 
 Your INFO messages should look like:
@@ -64,12 +87,14 @@ If the AI wraps the main logic in an `if __name__ == '__main__':` block, that is
 
 If it doesn't, ask: *"Please wrap the main logic in an `if __name__ == '__main__':` block."*
 :::
-:::
+::::
 
 ---
 
 ## Run It
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 From the repo root:
 
 ```bash
@@ -83,6 +108,13 @@ cat starter-code/output/insider_summary.csv
 ```
 
 The CSV content should be unchanged. Only the console output will look different.
+:::
+:::{tab-item} Chat Interface
+Ask: *"Based on the updated script, write out exactly what the five INFO log lines would look like when processing 500 files, assuming 135 parse errors and 539 transactions extracted. Use the timestamp format from `logging.basicConfig`."*
+
+Then check that the code still writes `starter-code/output/insider_summary.csv` with the same groupby logic as before.
+:::
+::::
 
 ---
 

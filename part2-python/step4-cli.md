@@ -15,6 +15,8 @@ Right now, if a collaborator wanted to run this pipeline against 2004 data inste
 
 ## Your Prompt
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt — Add argparse command-line arguments
 :class: tip
 ```
@@ -33,6 +35,28 @@ Requirements:
 - Log the chosen values at INFO level at startup
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt — Add argparse command-line arguments
+:class: tip
+```
+Add argparse to the script above so it accepts:
+
+  --data-dir PATH   Path to the directory of EDGAR filing text files
+                    (default: /kellogg/data/EDGAR/4/2003)
+  --output PATH     Path to the output CSV
+                    (default: starter-code/output/insider_summary.csv)
+  --n-files N       Number of files to process (default: 500, type=int)
+
+Requirements:
+- Keep the defaults equal to the current hardcoded values
+- Preserve existing behavior when the script is run with no arguments
+- Use the CLI values inside main()
+- Log the chosen values at INFO level at startup
+```
+:::
+::::
+:::::
 
 :::{note}
 A typical implementation adds a `parse_args()` function and replaces the hardcoded constants with `args.data_dir`, `args.output`, and `args.n_files`:
@@ -66,12 +90,21 @@ INFO File limit:     500
 
 ## Verify the Defaults
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 First, run with no arguments — behavior should be identical to before:
 
 ```bash
 python starter-code/edgar_analysis.py
 cat starter-code/output/insider_summary.csv
 ```
+:::
+:::{tab-item} Chat Interface
+Ask: *"Trace through `parse_args()`. What are the default values for each argument? If I run the script with no arguments, do `args.data_dir`, `args.output`, and `args.n_files` match the original hardcoded constants?"*
+
+Then check that `main()` uses `args.data_dir`, `args.output`, and `args.n_files` rather than the old constants.
+:::
+::::
 
 With the defaults (`--n-files 500`), you should get this 18-row summary:
 

@@ -10,8 +10,169 @@ AI coding assistants are excellent at this. Give one a raw file and ask what it 
 
 ---
 
+:::{dropdown} Sample filing data — for chat interface users
+**Sample Filing 1** — X0101 schema, five open-market sales (use for Prompts 1 and 3)
+
+```text
+-----BEGIN PRIVACY-ENHANCED MESSAGE-----
+
+<SEC-DOCUMENT>
+<SEC-HEADER>
+ACCESSION NUMBER:		0001233883-03-000002
+CONFORMED SUBMISSION TYPE:	4
+FILED AS OF DATE:		20030613
+ISSUER:
+	COMPANY DATA:
+		CONFORMED NAME:			META GROUP INC
+		CENTRAL INDEX KEY:		0001000015
+REPORTING-OWNER:
+	OWNER DATA:
+		COMPANY CONFORMED NAME:	RUBIN HOWARD A
+		CENTRAL INDEX KEY:	0000912093
+</SEC-HEADER>
+<DOCUMENT>
+<TEXT>
+<XML>
+<ownershipDocument>
+    <schemaVersion>X0101</schemaVersion>
+    <issuer>
+        <issuerCik>0001000015</issuerCik>
+        <issuerName>META GROUP INC</issuerName>
+        <issuerTradingSymbol>METG</issuerTradingSymbol>
+    </issuer>
+    <reportingOwner>
+        <reportingOwnerId>
+            <rptOwnerCik>0000912093</rptOwnerCik>
+            <rptOwnerName>RUBIN HOWARD A</rptOwnerName>
+        </reportingOwnerId>
+        <reportingOwnerRelationship>
+            <isDirector>1</isDirector>
+            <isOfficer>1</isOfficer>
+            <officerTitle>Exec VP</officerTitle>
+        </reportingOwnerRelationship>
+    </reportingOwner>
+    <nonDerivativeSecurity>
+        <securityTitle><value>Common Stock</value></securityTitle>
+        <transactionDate><value>2003-06-09</value></transactionDate>
+        <transactionCoding><transactionCode>S</transactionCode></transactionCoding>
+        <transactionAmounts>
+            <transactionShares><value>3100</value></transactionShares>
+            <transactionValue><value>3.8</value></transactionValue>
+            <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+        </transactionAmounts>
+    </nonDerivativeSecurity>
+    <nonDerivativeSecurity>
+        <securityTitle><value>Common Stock</value></securityTitle>
+        <transactionDate><value>2003-06-09</value></transactionDate>
+        <transactionCoding><transactionCode>S</transactionCode></transactionCoding>
+        <transactionAmounts>
+            <transactionShares><value>3500</value></transactionShares>
+            <transactionValue><value>4</value></transactionValue>
+            <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+        </transactionAmounts>
+    </nonDerivativeSecurity>
+    <nonDerivativeSecurity>
+        <securityTitle><value>Common Stock</value></securityTitle>
+        <transactionDate><value>2003-06-09</value></transactionDate>
+        <transactionCoding><transactionCode>S</transactionCode></transactionCoding>
+        <transactionAmounts>
+            <transactionShares><value>2500</value></transactionShares>
+            <transactionValue><value>3.75</value></transactionValue>
+            <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+        </transactionAmounts>
+    </nonDerivativeSecurity>
+    <nonDerivativeSecurity>
+        <securityTitle><value>Common Stock</value></securityTitle>
+        <transactionDate><value>2003-06-09</value></transactionDate>
+        <transactionCoding><transactionCode>S</transactionCode></transactionCoding>
+        <transactionAmounts>
+            <transactionShares><value>1900</value></transactionShares>
+            <transactionValue><value>3.76</value></transactionValue>
+            <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+        </transactionAmounts>
+    </nonDerivativeSecurity>
+    <nonDerivativeSecurity>
+        <securityTitle><value>Common Stock</value></securityTitle>
+        <transactionDate><value>2003-06-09</value></transactionDate>
+        <transactionCoding><transactionCode>S</transactionCode></transactionCoding>
+        <transactionAmounts>
+            <transactionShares><value>2500</value></transactionShares>
+            <transactionValue><value>3.78</value></transactionValue>
+            <transactionAcquiredDisposedCode><value>D</value></transactionAcquiredDisposedCode>
+        </transactionAmounts>
+    </nonDerivativeSecurity>
+</ownershipDocument>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
+-----END PRIVACY-ENHANCED MESSAGE-----
+```
+
+**Sample Filing 2** — derivative transaction only (use for Prompt 2)
+
+```text
+-----BEGIN PRIVACY-ENHANCED MESSAGE-----
+
+<SEC-DOCUMENT>
+<SEC-HEADER>
+ACCESSION NUMBER:		0001259692-03-000016
+CONFORMED SUBMISSION TYPE:	4
+FILED AS OF DATE:		20030801
+ISSUER:
+	COMPANY DATA:
+		CONFORMED NAME:			META GROUP INC
+		CENTRAL INDEX KEY:		0001000015
+REPORTING-OWNER:
+	OWNER DATA:
+		COMPANY CONFORMED NAME:	SALDUTTI FRANCIS J
+		CENTRAL INDEX KEY:	0001259692
+</SEC-HEADER>
+<DOCUMENT>
+<TEXT>
+<XML>
+<ownershipDocument>
+    <schemaVersion>X0201</schemaVersion>
+    <issuer>
+        <issuerCik>0001000015</issuerCik>
+        <issuerName>META GROUP INC</issuerName>
+    </issuer>
+    <reportingOwner>
+        <reportingOwnerId>
+            <rptOwnerCik>0001259692</rptOwnerCik>
+            <rptOwnerName>SALDUTTI FRANCIS J</rptOwnerName>
+        </reportingOwnerId>
+        <reportingOwnerRelationship>
+            <isDirector>1</isDirector>
+            <isOfficer>0</isOfficer>
+        </reportingOwnerRelationship>
+    </reportingOwner>
+    <derivativeTable>
+        <derivativeTransaction>
+            <securityTitle><value>Non-Qualified Stock Option</value></securityTitle>
+            <conversionOrExercisePrice><value>5.90</value></conversionOrExercisePrice>
+            <transactionDate><value>2003-07-28</value></transactionDate>
+            <transactionCoding><transactionCode>A</transactionCode></transactionCoding>
+            <transactionAmounts>
+                <transactionShares><value>7500</value></transactionShares>
+                <transactionAcquiredDisposedCode><value>A</value></transactionAcquiredDisposedCode>
+            </transactionAmounts>
+            <expirationDate><value>2013-07-28</value></expirationDate>
+        </derivativeTransaction>
+    </derivativeTable>
+</ownershipDocument>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
+-----END PRIVACY-ENHANCED MESSAGE-----
+```
+:::
+
 ## Your Prompts
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt 1 — Describe a single Form 4 filing
 :class: tip
 ```
@@ -24,6 +185,25 @@ and explain to me:
 4. The overall structure of the file — what are the major sections?
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 1 — Describe a single Form 4 filing
+:class: tip
+Copy **Sample Filing 1** from the dropdown above and paste it at the end of this message:
+
+```
+Here is a real SEC EDGAR Form 4 filing. Please explain:
+
+1. What kind of document this is and why it's filed with the SEC
+2. Who filed it and who it's about
+3. What transaction(s) are reported and what they tell us about the insider's activity
+4. The overall structure of the file — what are the major sections?
+
+[paste Sample Filing 1 here]
+```
+:::
+::::
+:::::
 
 :::{note}
 A good response will explain that:
@@ -39,6 +219,8 @@ The transactions are "Disposed" (code `D`) and type `S` (open-market sale) — t
 
 ---
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt 2 — Compare with a different filing type
 :class: tip
 ```
@@ -48,6 +230,22 @@ How does this differ from the previous file? What type of transaction
 is being reported, and what does it mean?
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 2 — Compare with a different filing type
+:class: tip
+Copy **Sample Filing 2** from the dropdown above and paste it at the end of this message:
+
+```
+Here is a second Form 4 filing from the same company. How does this
+differ from the first filing? What type of transaction is being
+reported, and what does it mean?
+
+[paste Sample Filing 2 here]
+```
+:::
+::::
+:::::
 
 :::{note}
 A good response will identify key differences:

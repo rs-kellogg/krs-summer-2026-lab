@@ -8,8 +8,102 @@ This step systematically probes the EDGAR data for structural variation and fail
 
 ---
 
+:::{dropdown} Sample filing data — for chat interface users
+**Sample Filing 3** — X0201 schema, `nonDerivativeTable` (compare with Sample Filing 1 from Step 1)
+
+```text
+-----BEGIN PRIVACY-ENHANCED MESSAGE-----
+
+<SEC-DOCUMENT>
+<SEC-HEADER>
+CONFORMED SUBMISSION TYPE:	4
+FILED AS OF DATE:		20030901
+ISSUER:
+	COMPANY DATA:
+		CONFORMED NAME:		ACME CORP
+		CENTRAL INDEX KEY:	0001100200
+REPORTING-OWNER:
+	OWNER DATA:
+		COMPANY CONFORMED NAME:	SMITH JANE A
+		CENTRAL INDEX KEY:	0001100201
+</SEC-HEADER>
+<DOCUMENT>
+<TEXT>
+<XML>
+<ownershipDocument>
+    <schemaVersion>X0201</schemaVersion>
+    <issuer>
+        <issuerCik>0001100200</issuerCik>
+        <issuerName>ACME CORP</issuerName>
+    </issuer>
+    <reportingOwner>
+        <reportingOwnerId>
+            <rptOwnerCik>0001100201</rptOwnerCik>
+            <rptOwnerName>SMITH JANE A</rptOwnerName>
+        </reportingOwnerId>
+        <reportingOwnerRelationship>
+            <isDirector>0</isDirector>
+            <isOfficer>1</isOfficer>
+            <officerTitle>Chief Financial Officer</officerTitle>
+        </reportingOwnerRelationship>
+    </reportingOwner>
+    <nonDerivativeTable>
+        <nonDerivativeTransaction>
+            <securityTitle><value>Common Stock</value></securityTitle>
+            <transactionDate><value>2003-08-15</value></transactionDate>
+            <transactionCoding><transactionCode>P</transactionCode></transactionCoding>
+            <transactionAmounts>
+                <transactionShares><value>500</value></transactionShares>
+                <transactionPricePerShare><value>12.50</value></transactionPricePerShare>
+                <transactionAcquiredDisposedCode><value>A</value></transactionAcquiredDisposedCode>
+            </transactionAmounts>
+        </nonDerivativeTransaction>
+    </nonDerivativeTable>
+</ownershipDocument>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
+-----END PRIVACY-ENHANCED MESSAGE-----
+```
+
+**Sample Filing 4** — hard-wrapped XML (element names split across lines at ~80 characters)
+
+```text
+-----BEGIN PRIVACY-ENHANCED MESSAGE-----
+
+<SEC-DOCUMENT>
+<SEC-HEADER>
+CONFORMED SUBMISSION TYPE:	4
+FILED AS OF DATE:		20030612
+</SEC-HEADER>
+<DOCUMENT>
+<TEXT>
+<XML>
+<ownershipDocument>    <schemaVersion>X0101</schemaVersion>    <issuer>        <issuerCi
+k>0001000180</issuerCik>        <issuerName>GLOBAL INDUSTRIES LTD</issuerName>    </iss
+uer>    <reportingOwner>        <reportingOwnerId>            <rptOwnerCik>000108142</rp
+tOwnerCik>            <rptOwnerName>DOE JAMES E</rptOwnerName>        </reportingOwnerI
+d>        <reportingOwnerRelationship>            <isDirector>1</isDirector>            
+<isOfficer>0</isOfficer>        </reportingOwnerRelationship>    </reportingOwner>    <n
+onDerivativeSecurity>        <securityTitle><value>Common Stock</value></securityTitle> 
+       <transactionDate><value>2003-06-10</value></transactionDate>        <transactionC
+oding>            <transactionCode>S</transactionCode>        </transactionCoding>      
+  <transactionAmounts>            <transactionShares><value>2000</value></transactionSha
+res>            <transactionValue><value>8.50</value></transactionValue>        </transa
+ctionAmounts>    </nonDerivativeSecurity></ownershipDocument>
+</XML>
+</TEXT>
+</DOCUMENT>
+</SEC-DOCUMENT>
+-----END PRIVACY-ENHANCED MESSAGE-----
+```
+:::
+
 ## Your Prompts
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt 1 — Sample broadly for structural variation
 :class: tip
 ```
@@ -20,6 +114,26 @@ Focus on the XML structure inside each file. What structural differences
 do you notice between files? Are they all organized the same way?
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 1 — Compare two XML schemas
+:class: tip
+Copy **Sample Filing 1** (from Step 1's dropdown) and **Sample Filing 3** (from the dropdown above). Paste both at the end of this message:
+
+```
+Here are two real SEC EDGAR Form 4 filings. Focus on the XML structure
+inside each one. What structural differences do you notice? Are the
+non-derivative transactions organized the same way in both files?
+
+[paste Sample Filing 1 here]
+
+---
+
+[paste Sample Filing 3 here]
+```
+:::
+::::
+:::::
 
 :::{note}
 A thorough answer will discover at least two important structural differences:
@@ -43,6 +157,8 @@ Both schemas have the same logical structure — they just use different element
 
 ---
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt 2 — Find files that break standard XML parsing
 :class: tip
 ```
@@ -53,8 +169,25 @@ What error do you get? Look at the raw file around the error location.
 Why does it fail, and what would be needed to fix it?
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 2 — Understand the malformed XML problem
+:class: tip
+Copy **Sample Filing 4** from the dropdown above and paste it at the end of this message:
 
-:::{note}
+```
+Here is a real SEC EDGAR Form 4 filing. If I tried to parse the XML
+inside it using Python's xml.etree.ElementTree, what error would I
+get and why? Look carefully at the structure of the XML content.
+What would be needed to fix it?
+
+[paste Sample Filing 4 here]
+```
+:::
+::::
+:::::
+
+::::{note}
 This is the most important quirk in the dataset.
 
 **What happens:** `ET.fromstring()` raises:
@@ -81,10 +214,12 @@ The starter script (`edgar_analysis.py`) in the repo uses the simpler approach �
 
 If you want to recover those ~20% of filings, add `.replace('\n', ' ')` before the `ET.fromstring()` call in Step 3. The tests and expected output in the repo use the "skip" approach as the baseline.
 :::
-:::
+::::
 
 ---
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt 3 — Probe for missing and zero-value fields
 :class: tip
 ```
@@ -98,6 +233,23 @@ Are these fields always populated? What values do you see for:
 What should our parser do when price is missing or zero?
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 3 — Understand missing price fields
+:class: tip
+No file needed — send this prompt directly:
+
+```
+In SEC EDGAR Form 4 filings, the price field inside <transactionAmounts>
+is not always populated. Based on what you know about Form 4 transaction types:
+
+- When would a transaction with code 'A' (award/grant) have a missing or zero price?
+- When would an 'S' or 'P' (open-market trade) have a missing price?
+- What should a data parser do when the price field is blank?
+```
+:::
+::::
+:::::
 
 :::{note}
 Price fields are commonly blank or zero in:

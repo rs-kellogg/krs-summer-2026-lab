@@ -1,5 +1,19 @@
 # Part 1 · Introduction: Iterative AI Collaboration
 
+## The Workflow
+
+Every part of this lab follows the same five-step sequence. Understanding it up front helps you see why each exercise is structured the way it is.
+
+| Step | What you do | Where in the lab |
+|------|-------------|-----------------|
+| **1. Read** | Ask the AI to describe the raw data — format, structure, fields. Don't write any code yet. | Part 2A, Steps 1–2 |
+| **2. Discover** | Sample broadly. Find the edge cases: schema variants, malformed files, missing values. Before you design a parser, know what will break it. | Part 2A, Step 2 |
+| **3. Build** | Write the pipeline one working step at a time. Run it. Verify the output. Then the next step. | Part 2A, Step 3 |
+| **4. Improve** | Add the practices that make code production-ready: logging, tests, a CLI. | Part 2B, Steps 1–4 |
+| **5. Translate** | Port to another language and confirm the two implementations agree on the same data. | Part 3, Steps 1–3 |
+
+---
+
 ## The One Rule
 
 > **Don't ask for everything at once.**
@@ -70,6 +84,19 @@ gh copilot chat
 ```
 
 In interactive mode, you can paste code, ask follow-up questions, and iterate.
+:::
+
+:::{tab-item} Claude.ai Chat
+Go to [claude.ai](https://claude.ai) and open a new conversation. No startup command is needed.
+
+To establish shared context at the start of your session:
+
+```
+I'm working through a hands-on data exercise using real SEC EDGAR Form 4
+insider-trading filings. I'll be pasting file contents and asking you to help
+me understand the data, write Python code, and eventually translate it to R.
+Please work with me one step at a time — I'll verify each step before moving on.
+```
 :::
 
 ::::

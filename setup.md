@@ -9,6 +9,15 @@ Complete these steps **before the lab starts** if possible. If not, work through
 :align: left
 :::
 
+:::{note}
+**Using a chat interface instead of a CLI tool?** No setup required. Go to [claude.ai](https://claude.ai) and start a new conversation — no SSH, no cluster access, no software installation needed.
+
+- For **Track A (Explore)**, sample filing data is embedded directly in the lab so you can paste it into chat instead of reading live files on the cluster.
+- For **Track B (Improve)**, paste the contents of `starter-code/edgar_analysis.py` at the start of your conversation when the first step tells you to.
+
+**[Skip to Part 1 →](part1-intro.md)**
+:::
+
 ---
 
 ## Open Two SSH Connections to KLC

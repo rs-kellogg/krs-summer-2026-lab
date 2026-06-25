@@ -22,6 +22,8 @@ Before writing any tests: what behavior in this script is most likely to break s
 
 ## The Strategic Ask
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt — Refactor into functions and add pytest tests
 :class: tip
 ```
@@ -54,8 +56,44 @@ Please do two things:
    if __name__ == '__main__': so the script is importable.
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt — Refactor into functions and add pytest tests
+:class: tip
+```
+I need to add unit tests to the script above, but the logic is currently
+in one flat script.
 
-:::{note}
+Please do two things:
+
+1. Refactor the script into these three functions:
+   - parse_filing(filepath) -> list of dicts
+     Reads one EDGAR filing, extracts the ownershipDocument XML,
+     returns a list of non-derivative transaction records.
+   - filter_transactions(df, codes=['P', 'S']) -> DataFrame
+     Keeps only rows whose transaction_code is in codes.
+   - summarize_by_month(df) -> DataFrame
+     Groups by month and transaction_code, computes n_transactions,
+     total_shares, and mean_price, rounded to 2 decimal places.
+
+2. Keep the script behavior the same when run normally:
+   - still reads files from DATA_DIR
+   - still filters to P and S by default
+   - still writes starter-code/output/insider_summary.csv
+
+3. Write pytest tests at starter-code/tests/test_edgar_analysis.py that test
+   each function. For parse_filing(), use pytest's tmp_path fixture to write a
+   minimal filing to a temporary file. For the other functions, use small
+   inline DataFrames.
+
+4. Put all execution logic in a main() function guarded by
+   if __name__ == '__main__': so the script is importable.
+```
+:::
+::::
+:::::
+
+::::{note}
 **Refactored `edgar_analysis.py`** should expose three functions:
 
 ```python
@@ -72,8 +110,7 @@ def summarize_by_month(df):
     ...
 ```
 
-**`test_edgar_analysis.py`** should look roughly like this:
-
+:::{dropdown} What test_edgar_analysis.py should look like
 ```python
 import pandas as pd
 import pytest
@@ -168,6 +205,7 @@ def test_summarize_by_month_counts():
     assert june_s['total_shares'].iloc[0] == 250.0
 ```
 :::
+::::
 
 ---
 
@@ -177,6 +215,8 @@ def test_summarize_by_month_counts():
 **Before asking the AI to run the tests**, remind it to use the Python interpreter from the conda environment you set up. This is the first time the agent will execute Python code, so it needs to know which interpreter to use.
 :::
 
+::::{tab-set}
+:::{tab-item} CLI Tools
 From the repo root:
 
 ```bash
@@ -197,6 +237,15 @@ Then rerun the full script to confirm behavior is unchanged:
 python starter-code/edgar_analysis.py
 cat starter-code/output/insider_summary.csv
 ```
+:::
+:::{tab-item} Chat Interface
+Paste the generated `test_edgar_analysis.py` back into the conversation and ask:
+
+*"Trace through `test_parse_filing_extracts_sale` step by step. What does `tmp_path` provide? What does `parse_filing` return for the MINIMAL_FILING fixture? Do all three assertions pass?"*
+
+Then ask the same for the other two tests. This is a slower substitute for running pytest, but it builds the same mental model.
+:::
+::::
 
 :::{warning}
 If pytest can't import `edgar_analysis`, make sure you're using the `PYTHONPATH=starter-code` prefix or run from the `starter-code/` directory.
