@@ -25,6 +25,8 @@ If this script ran overnight as a SLURM job and you came back to a finished run 
 
 ## Your Prompt
 
+:::::{tab-set}
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt — Replace print statements with logging
 :class: tip
 ```
@@ -43,6 +45,27 @@ Requirements:
 - Do not refactor into functions yet
 ```
 :::
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt — Replace print statements with logging
+:class: tip
+```
+Modify the script above to replace print() statements with Python's logging module.
+
+Requirements:
+- Use logging.basicConfig with INFO-level logging
+- Log messages at INFO level should include:
+  - "Processing N_FILES files from DATA_DIR"
+  - "Extracted X transactions"
+  - "Parse errors: Y files skipped"
+  - "After filtering to P/S: Z rows"
+  - "Summary written to OUTPUT_PATH (N rows)"
+- Keep the existing behavior and output CSV format unchanged
+- Do not refactor into functions yet
+```
+:::
+::::
+:::::
 
 ::::{note}
 What matters is the **shape of the logging**, not the exact implementation.
