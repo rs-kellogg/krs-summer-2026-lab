@@ -102,10 +102,10 @@ ctionAmounts>    </nonDerivativeSecurity></ownershipDocument>
 
 ## Your Prompts
 
-::::{tab-set}
-:::{tab-item} CLI Tools
-💬 **Prompt 1 — Sample broadly for structural variation**
-
+:::::{tab-set}
+::::{tab-item} CLI Tools
+:::{admonition} 💬 Prompt 1 — Sample broadly for structural variation
+:class: tip
 ```
 Look at 8–10 files in /kellogg/data/EDGAR/4/2003/, choosing files with
 different issuer CIK numbers from the filenames.
@@ -114,9 +114,10 @@ Focus on the XML structure inside each file. What structural differences
 do you notice between files? Are they all organized the same way?
 ```
 :::
-:::{tab-item} Chat Interface
-💬 **Prompt 1 — Compare two XML schemas**
-
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 1 — Compare two XML schemas
+:class: tip
 Copy **Sample Filing 1** (from Step 1's dropdown) and **Sample Filing 3** (from the dropdown above). Paste both at the end of this message:
 
 ```
@@ -132,6 +133,7 @@ non-derivative transactions organized the same way in both files?
 ```
 :::
 ::::
+:::::
 
 :::{note}
 A thorough answer will discover at least two important structural differences:
@@ -155,10 +157,10 @@ Both schemas have the same logical structure — they just use different element
 
 ---
 
-::::{tab-set}
-:::{tab-item} CLI Tools
-💬 **Prompt 2 — Find files that break standard XML parsing**
-
+:::::{tab-set}
+::::{tab-item} CLI Tools
+:::{admonition} 💬 Prompt 2 — Find files that break standard XML parsing
+:class: tip
 ```
 Try to parse the XML from this file using Python's xml.etree.ElementTree:
 /kellogg/data/EDGAR/4/2003/1000180_3_0001242648-03-000002.txt
@@ -167,9 +169,10 @@ What error do you get? Look at the raw file around the error location.
 Why does it fail, and what would be needed to fix it?
 ```
 :::
-:::{tab-item} Chat Interface
-💬 **Prompt 2 — Understand the malformed XML problem**
-
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 2 — Understand the malformed XML problem
+:class: tip
 Copy **Sample Filing 4** from the dropdown above and paste it at the end of this message:
 
 ```
@@ -182,6 +185,7 @@ What would be needed to fix it?
 ```
 :::
 ::::
+:::::
 
 ::::{note}
 This is the most important quirk in the dataset.
@@ -214,10 +218,10 @@ If you want to recover those ~20% of filings, add `.replace('\n', ' ')` before t
 
 ---
 
-::::{tab-set}
-:::{tab-item} CLI Tools
-💬 **Prompt 3 — Probe for missing and zero-value fields**
-
+:::::{tab-set}
+::::{tab-item} CLI Tools
+:::{admonition} 💬 Prompt 3 — Probe for missing and zero-value fields
+:class: tip
 ```
 Look at several filings and focus on the price and shares fields inside
 <transactionAmounts>.
@@ -229,9 +233,10 @@ Are these fields always populated? What values do you see for:
 What should our parser do when price is missing or zero?
 ```
 :::
-:::{tab-item} Chat Interface
-💬 **Prompt 3 — Understand missing price fields**
-
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 3 — Understand missing price fields
+:class: tip
 No file needed — send this prompt directly:
 
 ```
@@ -244,6 +249,7 @@ is not always populated. Based on what you know about Form 4 transaction types:
 ```
 :::
 ::::
+:::::
 
 :::{note}
 Price fields are commonly blank or zero in:

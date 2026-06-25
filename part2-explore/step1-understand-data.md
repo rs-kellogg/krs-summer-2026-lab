@@ -171,10 +171,10 @@ REPORTING-OWNER:
 
 ## Your Prompts
 
-::::{tab-set}
-:::{tab-item} CLI Tools
-💬 **Prompt 1 — Describe a single Form 4 filing**
-
+:::::{tab-set}
+::::{tab-item} CLI Tools
+:::{admonition} 💬 Prompt 1 — Describe a single Form 4 filing
+:class: tip
 ```
 Read the file /kellogg/data/EDGAR/4/2003/1000015_2_0001233883-03-000002.txt
 and explain to me:
@@ -185,9 +185,10 @@ and explain to me:
 4. The overall structure of the file — what are the major sections?
 ```
 :::
-:::{tab-item} Chat Interface
-💬 **Prompt 1 — Describe a single Form 4 filing**
-
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 1 — Describe a single Form 4 filing
+:class: tip
 Copy **Sample Filing 1** from the dropdown above and paste it at the end of this message:
 
 ```
@@ -202,6 +203,7 @@ Here is a real SEC EDGAR Form 4 filing. Please explain:
 ```
 :::
 ::::
+:::::
 
 :::{note}
 A good response will explain that:
@@ -217,10 +219,10 @@ The transactions are "Disposed" (code `D`) and type `S` (open-market sale) — t
 
 ---
 
-::::{tab-set}
-:::{tab-item} CLI Tools
-💬 **Prompt 2 — Compare with a different filing type**
-
+:::::{tab-set}
+::::{tab-item} CLI Tools
+:::{admonition} 💬 Prompt 2 — Compare with a different filing type
+:class: tip
 ```
 Now read /kellogg/data/EDGAR/4/2003/1000015_4_0001259692-03-000016.txt
 
@@ -228,9 +230,10 @@ How does this differ from the previous file? What type of transaction
 is being reported, and what does it mean?
 ```
 :::
-:::{tab-item} Chat Interface
-💬 **Prompt 2 — Compare with a different filing type**
-
+::::
+::::{tab-item} Chat Interface
+:::{admonition} 💬 Prompt 2 — Compare with a different filing type
+:class: tip
 Copy **Sample Filing 2** from the dropdown above and paste it at the end of this message:
 
 ```
@@ -242,6 +245,7 @@ reported, and what does it mean?
 ```
 :::
 ::::
+:::::
 
 :::{note}
 A good response will identify key differences:
