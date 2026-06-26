@@ -33,6 +33,7 @@ project:
 
 site:
   template: book-theme
+  favicon: favicon.ico
   options:
     logo: logo.png
     style: custom.css
