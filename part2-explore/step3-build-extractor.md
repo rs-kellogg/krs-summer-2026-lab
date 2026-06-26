@@ -65,6 +65,9 @@ print(f'Officer:  {is_officer}')
 :::
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Ask: *"Based on this code, what would it print when run on a file with issuer META GROUP INC and owner RUBIN HOWARD A who is both a director and officer?"*
+:::
 :::{tab-item} CLI Tools
 Run it and verify:
 
@@ -79,9 +82,6 @@ Owner:    RUBIN HOWARD A
 Director: True
 Officer:  True
 ```
-:::
-:::{tab-item} Chat Interface
-Ask: *"Based on this code, what would it print when run on a file with issuer META GROUP INC and owner RUBIN HOWARD A who is both a director and officer?"*
 :::
 ::::
 
@@ -132,6 +132,9 @@ The AI should suggest checking for X0201 first, then falling back to X0101 — w
 :::
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Ask: *"Given this code, trace through what it would print for a `nonDerivativeSecurity` element with code S, 3100 shares, and price 3.8."*
+:::
 :::{tab-item} CLI Tools
 Run it:
 
@@ -147,9 +150,6 @@ Expected output — 5 stock sales by Howard Rubin:
 2003-06-09 | S | 1900 | 3.76
 2003-06-09 | S | 2500 | 3.78
 ```
-:::
-:::{tab-item} Chat Interface
-Ask: *"Given this code, trace through what it would print for a `nonDerivativeSecurity` element with code S, 3100 shares, and price 3.8."*
 :::
 ::::
 
@@ -215,15 +215,15 @@ Ask: *"Trace through the error handling logic in this code. What happens when `r
 :::
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Ask: *"Trace through the error handling logic in this code. What happens when `re.search` finds no XML block? What happens when `ET.fromstring` raises a `ParseError`? Does the loop continue or crash?"*
+:::
 :::{tab-item} CLI Tools
 Run and verify the counts:
 
 ```bash
 python starter-code/edgar_analysis.py
 ```
-:::
-:::{tab-item} Chat Interface
-Ask: *"Trace through the error handling logic in this code. What happens when `re.search` finds no XML block? What happens when `ET.fromstring` raises a `ParseError`? Does the loop continue or crash?"*
 :::
 ::::
 
@@ -282,15 +282,15 @@ Ask: *"After this code runs, what columns will the DataFrame have? What will `tr
 :::
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Ask: *"After this code runs, what columns will the DataFrame have? What will `transaction_code` value_counts look like — which codes would you expect to be most common in 2003 insider trading data?"*
+:::
 :::{tab-item} CLI Tools
 Run and verify:
 
 ```bash
 python starter-code/edgar_analysis.py
 ```
-:::
-:::{tab-item} Chat Interface
-Ask: *"After this code runs, what columns will the DataFrame have? What will `transaction_code` value_counts look like — which codes would you expect to be most common in 2003 insider trading data?"*
 :::
 ::::
 
@@ -385,6 +385,11 @@ The reference output has 18 rows — monthly P and S totals across Jan–Dec 200
 :::
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Ask: *"What will the output CSV look like? How many rows should there be if we processed 500 files from 2003? What would the month and transaction_code columns contain?"*
+
+The reference output has 18 rows — monthly P and S totals across Jan–Dec 2003.
+:::
 :::{tab-item} CLI Tools
 Run the final script and inspect the output:
 
@@ -392,11 +397,6 @@ Run the final script and inspect the output:
 python starter-code/edgar_analysis.py
 cat starter-code/output/insider_summary.csv
 ```
-:::
-:::{tab-item} Chat Interface
-Ask: *"What will the output CSV look like? How many rows should there be if we processed 500 files from 2003? What would the month and transaction_code columns contain?"*
-
-The reference output has 18 rows — monthly P and S totals across Jan–Dec 2003.
 :::
 ::::
 

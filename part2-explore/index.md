@@ -1,56 +1,30 @@
-# Part 2 · Explore and Extract
+# Example: Explore the Data
 
-## Goal
+## What You're Doing and Why
 
-In this part, you start from **nothing but a directory of raw SEC filings** and use AI to build a working data pipeline from scratch.
+You start from nothing but a directory of raw SEC filings and use AI to build a working data pipeline from scratch.
 
-Most data analysis projects in research begin this way: you have a dataset you've never seen before, no code, and a research question. The AI coding assistant is most powerful when you treat it as a thinking partner for that exploration — not just a code generator.
+Most research data projects begin this way: you have a dataset you've never seen before, no code, and a research question. The first instinct is often to start writing a parser immediately — but that means making assumptions before you know what the data actually contains. Those assumptions become bugs.
 
-By the end of Part 2, you will have:
+This example teaches a different habit: **ask the AI to read and describe the data before writing a single line of code.** Then probe it for edge cases. Then build incrementally, one working step at a time.
 
-- a working mental model of EDGAR Form 4 data and its structure
-- a documented list of data quirks to watch out for
-- a complete Python extraction script (`edgar_analysis.py`) that you built step by step
+By the end, you will have:
 
-## Why "Look Before You Code"
-
-When you skip straight to writing a parser, you make assumptions. Those assumptions become bugs. The EDGAR data in particular has several non-obvious quirks that will silently corrupt your output if you don't know about them.
-
-This section teaches the habit of **asking the AI to read and describe data before asking it to write code for that data**.
+- a working mental model of EDGAR Form 4 data, its structure, and its quirks
+- a complete Python extraction script you built step by step, understanding every piece
 
 ## The Three Steps
 
 | Step | What you do | What you produce |
 |------|-------------|-----------------|
-| [Step 1 – Understand the data](step1-understand-data.md) | Read raw files with AI, understand Form 4 structure | A mental model + proposed column schema |
-| [Step 2 – Discover the quirks](step2-discover-quirks.md) | Ask AI to probe for edge cases and failure modes | A documented list of gotchas |
-| [Step 3 – Build the extractor](step3-build-extractor.md) | 5 iterative prompts, each adding one capability | `starter-code/edgar_analysis.py` |
-
-## Starting State
-
-:::{important}
-**You are in `edgar-scratch`** — your from-scratch repo. The AI agent should be running from `~/copilot_dir/repos/edgar-scratch`.
-
-```text
-edgar-scratch/                 ← empty (one initial commit, no code)
-/kellogg/data/EDGAR/4/2003/   ← 324,000 raw SEC filing text files (read-only)
-```
-:::
-
-## Ending State
-
-```text
-edgar-scratch/
-└── starter-code/
-    ├── edgar_analysis.py      ← built step-by-step in Step 3
-    └── output/
-        └── insider_summary.csv  ← written by your script
-```
+| [Step 1 – Understand the data](step1-understand-data.md) | Read raw files with AI — no code yet | A mental model of Form 4 structure and fields |
+| [Step 2 – Discover the quirks](step2-discover-quirks.md) | Probe for edge cases, schema variants, and failure modes | A clear picture of what will break a naive parser |
+| [Step 3 – Build the extractor](step3-build-extractor.md) | Five incremental prompts, each adding one capability | A complete `starter-code/edgar_analysis.py` |
 
 :::{note}
-**If you're short on time or want to skip directly to code quality work:** a pre-built version of `edgar_analysis.py` is already in `edgar-improve`. You can switch to that repo and start at [Part 3 · Improve the Python](../part2-python/index.md).
+**Jumping directly to this example?** Chat interface users will find sample EDGAR filing data embedded in each step — no KLC access needed. CLI users should start with an empty repo (`edgar-scratch`) and the data at `/kellogg/data/EDGAR/4/2003/` on KLC.
 
-That said, building it yourself in Part 2 gives you a much deeper understanding of both the data and the iterative AI workflow. We recommend starting here if this is your first time working with EDGAR data.
+**Want to skip to the code quality examples?** A pre-built version of `edgar_analysis.py` is the starting point for [Example: Improve a Script](../part2-python/index.md). You can go there directly — though building it yourself here gives you a deeper understanding of both the data and the iterative AI workflow.
 :::
 
 ---

@@ -1,104 +1,83 @@
 # AI-Assisted Research Data Lab
 
-**Using Copilot CLI & Claude Code to build better research pipelines**
+## Why This Lab Exists
 
-## About This Lab
+Research scripts usually start simple: read some files, extract what you need, write a CSV. But as projects grow, the same patterns cause the same problems.
 
-This is a **90-minute hands-on lab** where you will use AI coding assistants — [GitHub Copilot CLI](https://githubnext.com/projects/copilot-cli) and [Claude Code CLI](https://docs.anthropic.com/en/docs/claude-code) — to develop and improve a data analysis pipeline.
+**Sound familiar?**
 
-The central idea: **AI tools are most powerful when used interactively and iteratively**, not when you dump all your requirements into a single prompt and hope for the best.
+- The script runs on your laptop but breaks on the Linux cluster because the path is hardcoded
+- You submitted a SLURM job overnight and woke up to `print('done')` — no timestamps, no error count, no indication of what actually ran
+- You want to rerun on 2004 data but changing one value requires editing the source file
+- A collaborator asks "what happens if a filing is malformed?" and the honest answer is "...it probably just skips it?"
+- You translated the pipeline to R and the numbers don't quite match — and you're not sure which version is right
 
-By the end of this lab, you will have practiced using AI to:
+These are not exotic problems. They are the normal condition of research code — and they all have straightforward fixes.
 
-- 📋 **Add structured logging** so you know what your pipeline is doing on a remote cluster
-- 🧪 **Write unit tests** that verify your code is correct — and catch bugs introduced by translation
-- 🔄 **Translate Python to R** (or vice versa) with confidence, using tests as a safety net
-- 🧱 **Refactor hardcoded scripts** into modular, configurable pipelines
-
----
-
-## Two Tracks, One Lab
-
-This lab covers two complementary skills. You'll work through both in sequence, using separate git repositories so each has its own history.
-
-::::{grid} 2
-
-:::{grid-item-card} 🔬 Track A · Build from Scratch
-**Repo: `edgar-scratch`** (starts empty)
-
-Parts 2 · Explore and Extract
-
-You have raw EDGAR data and no code. You use AI as a thinking partner to understand the data, discover its quirks, and build a working pipeline iteratively — one prompt, one working step at a time.
-:::
-
-:::{grid-item-card} 🛠 Track B · Improve Inherited Code
-**Repo: `edgar-improve`** (pre-loaded starter script)
-
-Parts 3 · Improve Python, 4 · Python → R
-
-You inherit a working-but-messy script. You use AI to add logging, write unit tests, refactor into functions, add a CLI, and translate to R.
-:::
-
-::::
+**This lab teaches four of them, using real data and AI tools you can use today.**
 
 ---
 
-## What You'll Build
+## The Four Pillars
 
-You start with **two repos**:
+| Pillar | The problem it solves | What you'll build |
+|--------|----------------------|-------------------|
+| **Logging** | "The job ran — but what actually happened?" | Replace `print()` with timestamped log lines that tell you exactly what processed, what failed, and where output went |
+| **Testing** | "I changed something and I'm not sure it still works" | Write pytest tests that catch silent failures and let you refactor or translate with confidence |
+| **Abstraction** | "I can't reuse this without editing the source" | Refactor flat scripts into named functions with clean inputs, outputs, and documented contracts |
+| **Automation** | "Every time I run this I have to edit the file" | Add a CLI so the script is configurable at runtime — path, file count, output destination — without touching source code |
 
-- **`edgar-scratch`** — completely empty
-- **`edgar-improve`** — contains this working but messy Python script:
-
-```python
-# edgar_analysis.py  (your starting point — it works, but...)
-import os
-import re
-import xml.etree.ElementTree as ET
-import pandas as pd
-
-DATA_DIR = '/kellogg/data/EDGAR/4/2003'
-OUTPUT_PATH = 'starter-code/output/insider_summary.csv'
-N_FILES = 500
-
-files = sorted(os.listdir(DATA_DIR))[:N_FILES]
-
-records = []
-
-# ... parse filings, extract transactions, summarize by month ...
-
-summary.to_csv(OUTPUT_PATH, index=False)
-print('done')
-```
-
-You end up with:
-
-- **`edgar-scratch`**: a complete extraction pipeline you wrote from scratch, built step by step with AI guidance
-- **`edgar-improve`**: **two well-tested, well-logged, modular, configurable pipelines — one in Python, one in R — that parse EDGAR insider trading data and summarize buy/sell activity.**
+Each pillar is one focused AI interaction: one prompt, one improvement, one commit. You'll practice asking an AI tool to make a specific, bounded change — then verify the result before moving on.
 
 ---
 
-## Lab Timeline
+## The Data
 
-| Time | Section | Repo |
-|------|---------|------|
-| 0:00 – 0:10 | [Setup & Orientation](setup.md) | *(setup)* |
-| 0:10 – 0:25 | [Part 1 · Introduction](part1-intro.md) | `edgar-scratch` |
-| 0:25 – 0:55 | [Part 2 · Explore and Extract](part2-explore/index.md) | `edgar-scratch` |
-| 0:55 – 1:15 | [Part 3 · Improve the Python](part2-python/index.md) | `edgar-improve` ← switch here |
-| 1:15 – 1:30 | [Part 4 · Python → R](part3-r-translation/index.md) *(or take-home)* | `edgar-improve` |
-| *(optional)* | [Bonus · Parallelization](part4-bonus.md) | `edgar-improve` |
-| last 5 min | [Wrap-Up](wrap-up.md) | — |
+You'll work with real **SEC EDGAR Form 4** filings — insider trading disclosures that every corporate officer, director, and major shareholder must file when they buy or sell company stock.
+
+The dataset lives on the **Kellogg Linux Cluster (KLC)** at `/kellogg/data/EDGAR/4/2003/` — about 324,000 plain-text filing files from 2003, each containing an embedded XML block with transaction details.
+
+This is a realistic research dataset: messy, inconsistent, partially malformed, and large enough that you can't inspect every file by hand. It's exactly the kind of data where logging, testing, abstraction, and automation pay off most.
+
+---
+
+## The Examples
+
+The lab is organized as self-contained examples. Work through them in order, or jump directly to the skill most relevant to your own work.
+
+**Example: Explore the Data** — use AI to understand a dataset you've never seen before, discover its quirks, and build a working parser step by step.
+
+| Step | What you do |
+|------|-------------|
+| [Understand the data](part2-explore/step1-understand-data.md) | Read raw files with AI — don't write code yet |
+| [Discover the quirks](part2-explore/step2-discover-quirks.md) | Find schema variants, malformed files, missing fields before building |
+| [Build the extractor](part2-explore/step3-build-extractor.md) | Five incremental prompts, each adding one capability |
+
+**Example: Improve a Script** — take a working-but-messy inherited script and apply all four pillars, one focused step at a time.
+
+| Step | Pillar | What you do |
+|------|--------|-------------|
+| [Understand the starter code](part2-python/step1-understand.md) | — | Read and critique before changing anything |
+| [Add logging](part2-python/step2-logging.md) | **Logging** | Replace `print()` with structured log output |
+| [Add tests](part2-python/step3-tests.md) | **Testing** + **Abstraction** | Refactor into functions, write pytest tests |
+| [Add a CLI](part2-python/step4-cli.md) | **Automation** | Make the script configurable at runtime |
+
+**Bonus**
+
+| | |
+|---|---|
+| [Translate to R](part3-r-translation/index.md) | Port the Python pipeline to R; use tests to verify the two implementations agree |
+| [Parallelization](part4-bonus.md) | Speed up the pipeline with multiprocessing |
 
 ---
 
 ## How to Use This Book
 
-Each page uses the same four block types:
+Each page uses four block types:
 
 :::{admonition} 💬 Prompt — Try this in your AI tool
 :class: tip
-These are the exact prompts to paste into Copilot CLI or Claude Code.
+These are the exact prompts to paste into your AI tool.
 :::
 
 :::{note}
@@ -106,14 +85,14 @@ These explain what the AI should produce and what to look for.
 :::
 
 :::{important}
-- [ ] These are your checkpoints for each step.
+- [ ] These are your checkpoints — verify before moving on.
 :::
 
 :::{warning}
-These flag common mistakes, gotchas, and things to verify before moving on.
+These flag common mistakes and gotchas.
 :::
 
-This lab is designed to be followed **step by step**. Don't skip straight to "make it perfect." Ask the AI to help with one improvement at a time, run the code, inspect the results, and commit each meaningful change.
+Prompts appear in two tabs: **Chat Interface** (claude.ai or similar — open in a browser tab alongside your text editor) and **CLI Tools** (Claude Code or GitHub Copilot CLI running on KLC). The chat tab is shown first; pick whichever matches your setup.
 
 ---
 

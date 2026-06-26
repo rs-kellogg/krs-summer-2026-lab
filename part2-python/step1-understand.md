@@ -127,19 +127,6 @@ If you ask the AI to explain code *before* asking it to change code, you get two
 ## Your Prompts
 
 :::::{tab-set}
-::::{tab-item} CLI Tools
-:::{admonition} 💬 Prompt 1 — Explain the filing and the script
-:class: tip
-```
-Read starter-code/edgar_analysis.py and explain, in plain English:
-
-1. What an SEC EDGAR Form 4 filing is
-2. What metadata this script extracts from each filing
-3. How it handles the two XML schema variants (X0101 and X0201)
-4. What the final CSV summary contains
-```
-:::
-::::
 ::::{tab-item} Chat Interface
 :::{admonition} 💬 Prompt 1 — Explain the filing and the script
 :class: tip
@@ -153,14 +140,27 @@ Using the script I just pasted, explain in plain English:
 ```
 :::
 ::::
+::::{tab-item} CLI Tools
+:::{admonition} 💬 Prompt 1 — Explain the filing and the script
+:class: tip
+```
+Read starter-code/edgar_analysis.py and explain, in plain English:
+
+1. What an SEC EDGAR Form 4 filing is
+2. What metadata this script extracts from each filing
+3. How it handles the two XML schema variants (X0101 and X0201)
+4. What the final CSV summary contains
+```
+:::
+::::
 :::::
 
 :::::{tab-set}
-::::{tab-item} CLI Tools
+::::{tab-item} Chat Interface
 :::{admonition} 💬 Prompt 2 — List code quality issues without fixing them
 :class: tip
 ```
-Now list the code quality issues in starter-code/edgar_analysis.py.
+Now list the code quality issues in the script above.
 
 Do not fix anything yet. Give me a numbered list of problems, and for each one,
 explain why it matters in a research computing context (e.g., running on a
@@ -168,11 +168,11 @@ cluster, sharing with collaborators, reproducing results).
 ```
 :::
 ::::
-::::{tab-item} Chat Interface
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt 2 — List code quality issues without fixing them
 :class: tip
 ```
-Now list the code quality issues in the script above.
+Now list the code quality issues in starter-code/edgar_analysis.py.
 
 Do not fix anything yet. Give me a numbered list of problems, and for each one,
 explain why it matters in a research computing context (e.g., running on a

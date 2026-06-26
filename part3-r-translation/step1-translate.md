@@ -100,6 +100,11 @@ Your exact code may differ, but it should use `xml2`, `dplyr`, `readr`, and `pur
 ## Run It
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Paste the generated `edgar_analysis.R` back and ask: *"Does `parse_filing()` handle both the X0201 schema (`nonDerivativeTransaction`) and the X0101 schema (`nonDerivativeSecurity`)? Trace through what happens for each case."*
+
+Also check: *"Is `main()` guarded by `if (!interactive() && !exists('SOURCED_FOR_TESTING'))`? Why does that matter for the R tests in Step 2?"*
+:::
 :::{tab-item} CLI Tools
 ```bash
 Rscript starter-code/edgar_analysis.R
@@ -110,11 +115,6 @@ Then inspect the output:
 ```bash
 cat starter-code/output/insider_summary_r.csv
 ```
-:::
-:::{tab-item} Chat Interface
-Paste the generated `edgar_analysis.R` back and ask: *"Does `parse_filing()` handle both the X0201 schema (`nonDerivativeTransaction`) and the X0101 schema (`nonDerivativeSecurity`)? Trace through what happens for each case."*
-
-Also check: *"Is `main()` guarded by `if (!interactive() && !exists('SOURCED_FOR_TESTING'))`? Why does that matter for the R tests in Step 2?"*
 :::
 ::::
 
