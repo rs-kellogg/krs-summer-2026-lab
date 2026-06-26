@@ -1,4 +1,4 @@
-# Part 3, Step 1 – Before You Change Anything, Understand It
+# Step 1 – Before You Change Anything, Understand It
 
 :::{dropdown} starter-code/edgar_analysis.py — the script you'll be improving
 ```python
@@ -193,7 +193,7 @@ A strong answer should identify most or all of these issues:
 6. **Weak error handling** — malformed or incomplete filings can silently drop data
 7. **No `argparse` CLI** — users must edit the source instead of passing parameters at runtime
 
-That's your roadmap for Part 2.
+That's your roadmap for this example.
 :::
 
 :::{admonition} 🗣️ Discussion — Have you seen these before?

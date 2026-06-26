@@ -1,4 +1,4 @@
-# Part 3, Step 3 – Refactor and Test
+# Step 3 – Refactor and Test
 
 ## Why Refactor Before Testing?
 

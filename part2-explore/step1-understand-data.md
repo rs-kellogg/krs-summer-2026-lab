@@ -1,4 +1,4 @@
-# Part 2, Step 1 – Understand the Data Before You Write Any Code
+# Step 1 – Understand the Data Before You Write Any Code
 
 ## Start by Reading, Not Coding
 

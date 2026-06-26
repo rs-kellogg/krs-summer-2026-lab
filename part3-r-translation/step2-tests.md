@@ -1,4 +1,4 @@
-# Part 4, Step 2 – Write R Tests
+# Step 2 – Write R Tests
 
 ## Mirror the Python Contract
 

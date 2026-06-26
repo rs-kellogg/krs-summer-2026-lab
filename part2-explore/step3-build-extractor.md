@@ -1,4 +1,4 @@
-# Part 2, Step 3 – Build the Extractor, One Step at a Time
+# Step 3 – Build the Extractor, One Step at a Time
 
 :::{admonition} Chat interface — how to use this step
 :class: seealso
@@ -206,7 +206,7 @@ xml_str = xml_match.group().replace('\n', ' ')
 root = ET.fromstring(xml_str)
 ```
 
-Try implementing it. You should see the skip rate drop significantly. Whether you include this fix in the final script is your choice — the reference version in the repo skips those files, but recovering them is a good improvement to make in Part 3.
+Try implementing it. You should see the skip rate drop significantly. Whether you include this fix in the final script is your choice — the reference version in the repo skips those files, but recovering them is a good improvement to make in the Improve example.
 :::
 
 :::{admonition} Chat interface — verify without running
@@ -425,7 +425,7 @@ Notice what made this possible:
 - **You found the quirks before they became bugs** (Step 2) — you knew about dual schemas and wrapped XML before writing the parser
 - **You built incrementally** — each prompt had a clear, verifiable output before you moved on
 
-The script works. But look at it now: hardcoded paths, `print()` instead of logging, no functions, no CLI, no tests. Those are the exact issues you'll fix in Part 3.
+The script works. But look at it now: hardcoded paths, `print()` instead of logging, no functions, no CLI, no tests. Those are the exact issues you'll fix in the Improve example.
 
 ---
 
@@ -439,4 +439,4 @@ The script works. But look at it now: hardcoded paths, `print()` instead of logg
 
 ---
 
-**Next: [Part 3 · Improve the Python](../part2-python/index.md) →**
+**Next: [Example: Improve a Script](../part2-python/index.md) →**

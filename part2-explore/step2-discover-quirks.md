@@ -1,4 +1,4 @@
-# Part 2, Step 2 – Discover the Quirks Before You Build
+# Step 2 – Discover the Quirks Before You Build
 
 ## Find the Surprises Early
 

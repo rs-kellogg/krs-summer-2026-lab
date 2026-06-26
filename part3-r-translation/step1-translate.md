@@ -1,4 +1,4 @@
-# Part 4, Step 1 – Translate to R
+# Step 1 – Translate to R
 
 ## Translate the Same Pipeline, Not a New One
 

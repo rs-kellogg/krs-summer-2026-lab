@@ -1,4 +1,4 @@
-# Part 1 · Introduction: Iterative AI Collaboration
+# Introduction: Building Trustworthy Research Code
 
 ## The Workflow
 
@@ -16,50 +16,34 @@ The examples in this lab follow the same five-step sequence. Understanding it up
 
 ## The One Rule
 
-> **Don't ask for everything at once.**
+> **One change at a time. Run it. Verify it. Then commit.**
 
-When people first use AI coding tools, they often try one giant prompt: *"Rewrite this script into a robust, well-tested, well-logged, modular Python and R pipeline with a CLI and perfect XML parsing."*
+The most common mistake when improving a script — with or without AI — is trying to fix everything at once: add logging, refactor into functions, write tests, add a CLI, all in one pass.
 
-The AI will produce something. It may even look polished. But it will be hard to trust, hard to debug, and hard to learn from.
+The result is a script that may look better but is harder to trust, harder to debug, and harder to learn from. If something breaks, you don't know which change caused it.
 
-Instead, this lab practices a different workflow:
+Instead, this lab practices a different discipline:
 
 1. **Start with working code** (even if messy)
-2. **Ask the AI one thing at a time** — understand it, improve it, test it
-3. **Verify each step** before moving to the next
-4. **Build up trust incrementally**
+2. **Make one improvement at a time** — understand it, apply it, verify it
+3. **Run the script and confirm behavior is unchanged** before moving on
+4. **Commit each change** so you always have a known-good state to return to
 
-This is much closer to how experienced developers actually work with AI tools.
-
----
-
-## The Four Pillars
-
-Every improvement in this lab targets one of four practices that separate research scripts that work-once from pipelines that are trustworthy and reusable.
-
-| Pillar | What it means | Why it matters on KLC |
-|--------|--------------|----------------------|
-| **Logging** | Use `logging`, not `print()` — with timestamps and severity levels | When a SLURM job runs overnight, log lines are the only record of what happened, what failed, and why |
-| **Testing** | Isolated tests for individual functions with a fixed fixture | Tests are a contract — they let you refactor or translate to R with confidence that behavior hasn't changed |
-| **Abstraction** | Named functions with clear inputs and outputs; no magic numbers | Flat scripts are hard to test and impossible to import; functions are both |
-| **Automation** | No hardcoded paths — use a CLI or config instead | A pipeline you have to edit before every run is a pipeline that will be edited incorrectly |
+AI coding assistants — Claude, GitHub Copilot — are useful at every step for generating code, explaining unfamiliar patterns, and catching mistakes. But they work best when your asks are focused and you verify the result yourself before moving on.
 
 :::{note}
-**Version control** underpins all four — commit after each improvement so you can always roll back to a known-good state. The examples in this lab include a commit step after every change.
-:::
-
-:::{admonition} 🗣️ Discussion — Where do you already do this?
-:class: seealso
-Which of these four practices do you already use in your own research code? Which do you skip most often — and why? Have you ever been burned by the absence of one of them?
+**Version control** is what makes this discipline work. Each example in this lab ends with a commit. If a later step breaks something, you always have a known-good state to return to — and a clear record of what changed.
 :::
 
 ---
 
-## Tool Orientation
+## AI Coding Assistants
 
-You give the AI context — a file, an error message, a question — and it responds with code, explanations, or suggestions. The workflow throughout this lab is the same regardless of which tool you use:
+AI coding assistants are available throughout this lab as a resource. Use them to generate boilerplate, explain unfamiliar library APIs, debug error messages, or ask "why does this work?" — anything that accelerates the task at hand.
 
-> **Open file → send prompt → copy or apply the result → run or commit → repeat**
+The core workflow is the same regardless of which tool you use:
+
+> **Open file → make the change (with or without AI help) → run or commit → repeat**
 
 ::::{tab-set}
 
@@ -128,21 +112,21 @@ A good answer should notice:
 - Transaction codes P (purchase), S (sale), A (award/grant), and others are present
 - There are variations in XML structure across files
 
-This mental model is what you'll build on throughout Part 2.
+This mental model is what you'll build on throughout the Explore example.
 :::
 
 ---
 
-## Prompting Tips
+## Getting the Most Out of AI Assistants
 
-A few habits make AI coding tools much more useful:
+A few habits make AI tools more effective when you use them:
 
 - **Give it the file, not just a description.** "Read `starter-code/edgar_analysis.py`" is better than "I have a script..."
-- **One ask per prompt.** If you want logging **and** tests **and** refactoring, ask separately.
+- **One ask per prompt.** If you want logging **and** tests **and** refactoring, ask separately — the same discipline as doing one change at a time.
 - **Paste errors verbatim.** Don't summarize traceback text.
 - **Name the libraries you want.** "Use Python's `logging` module" is more precise than "add logging."
-- **Ask it to explain before it edits.** Understanding first makes later changes easier to evaluate.
+- **Ask it to explain before it edits.** Understanding the change first makes it much easier to verify the result.
 
 ---
 
-**Next: [Part 2 · Explore and Extract](part2-explore/index.md) →**
+**Next: [Example: Explore the Data](part2-explore/index.md) →**

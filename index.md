@@ -1,4 +1,4 @@
-# AI-Assisted Research Data Lab
+# Kellogg Research Computing Lab
 
 ## Why This Lab Exists
 
@@ -14,7 +14,7 @@ Research scripts usually start simple: read some files, extract what you need, w
 
 These are not exotic problems. They are the normal condition of research code — and they all have straightforward fixes.
 
-**This lab teaches four of them, using real data and AI tools you can use today.**
+**This lab gives you hands-on practice with four of them, working on real data on KLC.** AI coding assistants (Claude, GitHub Copilot) are available throughout as a resource — but the skills you're building are yours.
 
 ---
 
@@ -27,7 +27,12 @@ These are not exotic problems. They are the normal condition of research code �
 | **Abstraction** | "I can't reuse this without editing the source" | Refactor flat scripts into named functions with clean inputs, outputs, and documented contracts |
 | **Automation** | "Every time I run this I have to edit the file" | Add a CLI so the script is configurable at runtime — path, file count, output destination — without touching source code |
 
-Each pillar is one focused AI interaction: one prompt, one improvement, one commit. You'll practice asking an AI tool to make a specific, bounded change — then verify the result before moving on.
+Each pillar is one focused step: one bounded change, run to verify it works, then committed to version control. AI coding assistants are available to help generate and explain code at each step — but the discipline of making one change at a time and verifying the result is the core skill.
+
+:::{admonition} 🗣️ Discussion — Where do you already do this?
+:class: seealso
+Which of these four practices do you already use in your own research code? Which do you skip most often — and why? Have you ever been burned by the absence of one of them?
+:::
 
 ---
 
@@ -45,7 +50,7 @@ This is a realistic research dataset: messy, inconsistent, partially malformed, 
 
 The lab is organized as self-contained examples. Work through them in order, or jump directly to the skill most relevant to your own work.
 
-**Example: Explore the Data** — use AI to understand a dataset you've never seen before, discover its quirks, and build a working parser step by step.
+**Example: Explore the Data** — start from raw KLC data and no code; understand the dataset, discover its quirks, and build a working parser step by step.
 
 | Step | What you do |
 |------|-------------|
