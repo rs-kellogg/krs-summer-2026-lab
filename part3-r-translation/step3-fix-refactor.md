@@ -1,4 +1,4 @@
-# Part 4, Step 3 – Compare Outputs and Fix Divergences
+# Step 3 – Compare Outputs and Fix Divergences
 
 ## Now Verify the Translation End-to-End
 
@@ -11,6 +11,13 @@ Both scripts should produce the same 18 monthly rows when run against the same 5
 ## Run Both Scripts
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Paste both `edgar_analysis.py` and `edgar_analysis.R` into the conversation and ask:
+
+*"Compare how Python and R handle these three things: (1) stripping whitespace from XML text values, (2) NaN vs NA for missing prices when written to CSV, and (3) rounding to 2 decimal places. Would the outputs match row-for-row, or are there likely differences?"*
+
+Use the answer to guide which fixes to apply before proceeding.
+:::
 :::{tab-item} CLI Tools
 ```bash
 python starter-code/edgar_analysis.py
@@ -23,13 +30,6 @@ Then compare the outputs side by side:
 cat starter-code/output/insider_summary.csv
 cat starter-code/output/insider_summary_r.csv
 ```
-:::
-:::{tab-item} Chat Interface
-Paste both `edgar_analysis.py` and `edgar_analysis.R` into the conversation and ask:
-
-*"Compare how Python and R handle these three things: (1) stripping whitespace from XML text values, (2) NaN vs NA for missing prices when written to CSV, and (3) rounding to 2 decimal places. Would the outputs match row-for-row, or are there likely differences?"*
-
-Use the answer to guide which fixes to apply before proceeding.
 :::
 ::::
 

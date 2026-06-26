@@ -1,4 +1,4 @@
-# Part 3, Step 2 – Add Logging
+# Step 2 – Add Logging
 
 ## Why Logging Matters Here
 
@@ -26,12 +26,11 @@ If this script ran overnight as a SLURM job and you came back to a finished run 
 ## Your Prompt
 
 :::::{tab-set}
-::::{tab-item} CLI Tools
+::::{tab-item} Chat Interface
 :::{admonition} 💬 Prompt — Replace print statements with logging
 :class: tip
 ```
-Modify starter-code/edgar_analysis.py to replace print() statements with Python's
-logging module.
+Modify the script above to replace print() statements with Python's logging module.
 
 Requirements:
 - Use logging.basicConfig with INFO-level logging
@@ -46,11 +45,12 @@ Requirements:
 ```
 :::
 ::::
-::::{tab-item} Chat Interface
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt — Replace print statements with logging
 :class: tip
 ```
-Modify the script above to replace print() statements with Python's logging module.
+Modify starter-code/edgar_analysis.py to replace print() statements with Python's
+logging module.
 
 Requirements:
 - Use logging.basicConfig with INFO-level logging
@@ -94,6 +94,11 @@ If it doesn't, ask: *"Please wrap the main logic in an `if __name__ == '__main__
 ## Run It
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Ask: *"Based on the updated script, write out exactly what the five INFO log lines would look like when processing 500 files, assuming 135 parse errors and 539 transactions extracted. Use the timestamp format from `logging.basicConfig`."*
+
+Then check that the code still writes `starter-code/output/insider_summary.csv` with the same groupby logic as before.
+:::
 :::{tab-item} CLI Tools
 From the repo root:
 
@@ -108,11 +113,6 @@ cat starter-code/output/insider_summary.csv
 ```
 
 The CSV content should be unchanged. Only the console output will look different.
-:::
-:::{tab-item} Chat Interface
-Ask: *"Based on the updated script, write out exactly what the five INFO log lines would look like when processing 500 files, assuming 135 parse errors and 539 transactions extracted. Use the timestamp format from `logging.basicConfig`."*
-
-Then check that the code still writes `starter-code/output/insider_summary.csv` with the same groupby logic as before.
 :::
 ::::
 

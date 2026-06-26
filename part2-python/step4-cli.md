@@ -1,4 +1,4 @@
-# Part 3, Step 4 – Add a CLI
+# Step 4 – Add a CLI
 
 ## Why a CLI Matters
 
@@ -16,11 +16,11 @@ Right now, if a collaborator wanted to run this pipeline against 2004 data inste
 ## Your Prompt
 
 :::::{tab-set}
-::::{tab-item} CLI Tools
+::::{tab-item} Chat Interface
 :::{admonition} 💬 Prompt — Add argparse command-line arguments
 :class: tip
 ```
-Add argparse to starter-code/edgar_analysis.py so the script accepts:
+Add argparse to the script above so it accepts:
 
   --data-dir PATH   Path to the directory of EDGAR filing text files
                     (default: /kellogg/data/EDGAR/4/2003)
@@ -36,11 +36,11 @@ Requirements:
 ```
 :::
 ::::
-::::{tab-item} Chat Interface
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt — Add argparse command-line arguments
 :class: tip
 ```
-Add argparse to the script above so it accepts:
+Add argparse to starter-code/edgar_analysis.py so the script accepts:
 
   --data-dir PATH   Path to the directory of EDGAR filing text files
                     (default: /kellogg/data/EDGAR/4/2003)
@@ -91,6 +91,11 @@ INFO File limit:     500
 ## Verify the Defaults
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Ask: *"Trace through `parse_args()`. What are the default values for each argument? If I run the script with no arguments, do `args.data_dir`, `args.output`, and `args.n_files` match the original hardcoded constants?"*
+
+Then check that `main()` uses `args.data_dir`, `args.output`, and `args.n_files` rather than the old constants.
+:::
 :::{tab-item} CLI Tools
 First, run with no arguments — behavior should be identical to before:
 
@@ -98,11 +103,6 @@ First, run with no arguments — behavior should be identical to before:
 python starter-code/edgar_analysis.py
 cat starter-code/output/insider_summary.csv
 ```
-:::
-:::{tab-item} Chat Interface
-Ask: *"Trace through `parse_args()`. What are the default values for each argument? If I run the script with no arguments, do `args.data_dir`, `args.output`, and `args.n_files` match the original hardcoded constants?"*
-
-Then check that `main()` uses `args.data_dir`, `args.output`, and `args.n_files` rather than the old constants.
 :::
 ::::
 
@@ -164,4 +164,4 @@ git commit -m "feat: add argparse CLI to EDGAR pipeline"
 
 ---
 
-**Next: [Part 4 · Python → R](../part3-r-translation/index.md) →**
+**Next: [Bonus: Translate to R](../part3-r-translation/index.md) →**

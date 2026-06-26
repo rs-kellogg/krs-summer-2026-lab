@@ -1,7 +1,7 @@
 # Bonus · Parallelization
 
 :::{note}
-This section is optional and designed for participants who finish Part 3 early, or as a take-home exercise.
+This section is optional and designed for participants who finish the Improve example early, or as a take-home exercise.
 :::
 
 ## The Scenario

@@ -12,10 +12,10 @@ Complete these steps **before the lab starts** if possible. If not, work through
 :::{note}
 **Using a chat interface instead of a CLI tool?** No setup required. Go to [claude.ai](https://claude.ai) and start a new conversation — no SSH, no cluster access, no software installation needed.
 
-- For **Track A (Explore)**, sample filing data is embedded directly in the lab so you can paste it into chat instead of reading live files on the cluster.
-- For **Track B (Improve)**, paste the contents of `starter-code/edgar_analysis.py` at the start of your conversation when the first step tells you to.
+- For **Example: Explore the Data**, sample filing data is embedded directly in each step so you can paste it into chat instead of reading live files on the cluster.
+- For **Example: Improve a Script**, paste the contents of `starter-code/edgar_analysis.py` at the start of your conversation when the first step tells you to.
 
-**[Skip to Part 1 →](part1-intro.md)**
+**[Skip to the Introduction →](part1-intro.md)**
 :::
 
 ---
@@ -26,8 +26,8 @@ You will need **two terminal windows connected to KLC** running simultaneously t
 
 | Terminal | Purpose |
 |----------|---------|
-| **Terminal A — AI session** | Runs the AI CLI (`ai_agent_container`) — this process is long-lived and interactive; you leave it running |
-| **Terminal B — command line** | Runs everything else: `python starter-code/edgar_analysis.py`, `pytest`, `git log --oneline`, `cat output/insider_summary.csv`, etc. |
+| **Terminal A — AI tool** | Runs the AI CLI (`ai_agent_container`) — this process is long-lived and interactive; you leave it running |
+| **Terminal B — your work** | Runs everything else: `python starter-code/edgar_analysis.py`, `pytest`, `git log --oneline`, `cat output/insider_summary.csv`, etc. |
 
 Open **both** terminals now and SSH into KLC from each:
 
@@ -38,7 +38,7 @@ ssh <netid>@klc0402.quest.northwestern.edu
 Replace `<netid>` with your Northwestern NetID.
 
 :::{tip}
-A common workflow pattern: ask the AI in Terminal A to make a change, then switch to Terminal B to run the code and inspect the result — without interrupting the AI session.
+The core pattern throughout this lab: make a change (in Terminal A or a chat window), then switch to Terminal B to run the code and inspect the result before moving on.
 :::
 
 ---
@@ -76,10 +76,10 @@ The cloned repo is the lab guide — your actual code lives in two separate repo
 
 This lab has two distinct tracks:
 
-| Repo | Track | Starting state |
-|------|-------|---------------|
-| **`edgar-scratch`** | Part 2 · Build from scratch | Empty — you write every line of code |
-| **`edgar-improve`** | Parts 3 & 4 · Improve & translate | Pre-loaded with a working-but-messy starter script |
+| Repo | Example | Starting state |
+|------|---------|---------------|
+| **`edgar-scratch`** | Example: Explore the Data | Empty — you write every line of code |
+| **`edgar-improve`** | Example: Improve a Script | Pre-loaded with a working-but-messy starter script |
 
 Keeping them separate gives each track its own clean git history and makes it obvious which codebase you are editing at any point.
 :::
@@ -163,7 +163,7 @@ python starter-code/edgar_analysis.py
 # Expected: "done" printed, and starter-code/output/insider_summary.csv created
 ```
 
-Your `edgar-scratch` repo intentionally has no code yet — that's what Part 2 is for.
+Your `edgar-scratch` repo intentionally has no code yet — that's what the Explore example is for.
 
 ---
 
@@ -367,5 +367,5 @@ Before moving on, confirm you have:
 
 ---
 
-**Next: [Part 1 · Introduction](part1-intro.md) →**
+**Next: [Introduction](part1-intro.md) →**
 

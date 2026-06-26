@@ -1,4 +1,4 @@
-# Part 3, Step 3 – Refactor and Test
+# Step 3 – Refactor and Test
 
 ## Why Refactor Before Testing?
 
@@ -23,12 +23,12 @@ Before writing any tests: what behavior in this script is most likely to break s
 ## The Strategic Ask
 
 :::::{tab-set}
-::::{tab-item} CLI Tools
+::::{tab-item} Chat Interface
 :::{admonition} 💬 Prompt — Refactor into functions and add pytest tests
 :class: tip
 ```
-I need to add unit tests to starter-code/edgar_analysis.py, but the logic is
-currently in one flat script.
+I need to add unit tests to the script above, but the logic is currently
+in one flat script.
 
 Please do two things:
 
@@ -57,12 +57,12 @@ Please do two things:
 ```
 :::
 ::::
-::::{tab-item} Chat Interface
+::::{tab-item} CLI Tools
 :::{admonition} 💬 Prompt — Refactor into functions and add pytest tests
 :class: tip
 ```
-I need to add unit tests to the script above, but the logic is currently
-in one flat script.
+I need to add unit tests to starter-code/edgar_analysis.py, but the logic is
+currently in one flat script.
 
 Please do two things:
 
@@ -216,6 +216,13 @@ def test_summarize_by_month_counts():
 :::
 
 ::::{tab-set}
+:::{tab-item} Chat Interface
+Paste the generated `test_edgar_analysis.py` back into the conversation and ask:
+
+*"Trace through `test_parse_filing_extracts_sale` step by step. What does `tmp_path` provide? What does `parse_filing` return for the MINIMAL_FILING fixture? Do all three assertions pass?"*
+
+Then ask the same for the other two tests. This is a slower substitute for running pytest, but it builds the same mental model.
+:::
 :::{tab-item} CLI Tools
 From the repo root:
 
@@ -237,13 +244,6 @@ Then rerun the full script to confirm behavior is unchanged:
 python starter-code/edgar_analysis.py
 cat starter-code/output/insider_summary.csv
 ```
-:::
-:::{tab-item} Chat Interface
-Paste the generated `test_edgar_analysis.py` back into the conversation and ask:
-
-*"Trace through `test_parse_filing_extracts_sale` step by step. What does `tmp_path` provide? What does `parse_filing` return for the MINIMAL_FILING fixture? Do all three assertions pass?"*
-
-Then ask the same for the other two tests. This is a slower substitute for running pytest, but it builds the same mental model.
 :::
 ::::
 
