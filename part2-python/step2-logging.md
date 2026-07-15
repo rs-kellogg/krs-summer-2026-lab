@@ -100,19 +100,31 @@ Ask: *"Based on the updated script, write out exactly what the five INFO log lin
 Then check that the code still writes `starter-code/output/insider_summary.csv` with the same groupby logic as before.
 :::
 :::{tab-item} CLI Tools
-From the repo root:
+From the repo root — run the script and capture the log output to a file at the same time:
 
 ```bash
-python starter-code/edgar_analysis.py
+python starter-code/edgar_analysis.py 2>&1 | tee -a logs/edgar_analysis.log
 ```
 
-Then verify the output is still correct:
+`tee -a` writes to `logs/edgar_analysis.log` while still printing to the terminal so you can watch progress live. The `-a` flag appends, so successive runs accumulate a history rather than overwriting.
+
+Create the `logs/` directory first if it doesn't exist:
 
 ```bash
+mkdir -p logs
+python starter-code/edgar_analysis.py 2>&1 | tee -a logs/edgar_analysis.log
+```
+
+Then inspect the log and verify the CSV output is unchanged:
+
+```bash
+cat logs/edgar_analysis.log
 cat starter-code/output/insider_summary.csv
 ```
 
-The CSV content should be unchanged. Only the console output will look different.
+:::{tip}
+`2>&1` redirects stderr to stdout so that both INFO log lines and any unexpected error output are captured together in the log file. Without it, only stdout is piped to `tee` and error messages disappear.
+:::
 :::
 ::::
 
