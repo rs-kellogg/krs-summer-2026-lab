@@ -25,6 +25,55 @@ The script processes the same data throughout — what changes is how trustworth
 **If you're coming from the Explore example:** the script you built there and this starter script do the same thing. You can work through these steps using either one.
 :::
 
+:::{dropdown} Skipping the full setup? Minimum steps to run this example on KLC
+If you haven't completed the full Setup & Orientation, here is everything you need to run this example and nothing more.
+
+**1. SSH into KLC and create a working directory**
+
+```bash
+ssh <netid>@klc0402.quest.northwestern.edu
+mkdir -p ~/krs_summer_lab_2026/envs
+mkdir -p ~/krs_summer_lab_2026/repos
+```
+
+**2. Clone the lab repo and create your working repo**
+
+```bash
+cd ~/krs_summer_lab_2026/repos
+git clone https://github.com/rs-kellogg/krs-summer-2026-lab.git
+
+git init edgar-improve
+cd edgar-improve
+cp -r ~/krs_summer_lab_2026/repos/krs-summer-2026-lab/starter-code .
+git add starter-code
+git commit -m "chore: initial commit with EDGAR starter code"
+```
+
+**3. Create a minimal Python environment**
+
+```bash
+eval "$('/hpc/software/mamba/24.3.0/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+source "/hpc/software/mamba/24.3.0/etc/profile.d/mamba.sh"
+
+mamba create --prefix=~/krs_summer_lab_2026/envs/edgar-env \
+    python=3.12 \
+    pandas pytest \
+    --yes
+
+conda activate ~/krs_summer_lab_2026/envs/edgar-env
+```
+
+**4. Verify the starter script runs**
+
+```bash
+cd ~/krs_summer_lab_2026/repos/edgar-improve
+python starter-code/edgar_analysis.py
+# Expected: script runs and writes starter-code/output/insider_summary.csv
+```
+
+You're ready. Start with [Step 1 – Understand the code](step1-understand.md).
+:::
+
 ---
 
 ## The Four Steps
@@ -43,7 +92,7 @@ The script processes the same data throughout — what changes is how trustworth
 This example uses **`edgar-improve`** — the repo that starts with the pre-built `edgar_analysis.py`.
 
 ```bash
-cd ~/copilot_dir/repos/edgar-improve
+cd ~/krs_summer_lab_2026/repos/edgar-improve
 git log --oneline   # should show: "chore: initial commit with EDGAR starter code"
 ```
 

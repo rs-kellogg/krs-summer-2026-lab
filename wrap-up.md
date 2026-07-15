@@ -100,7 +100,7 @@ Extract logic into named functions. Replace hardcoded paths and magic numbers wi
 **`edgar-scratch`** — built step by step:
 
 ```
-git -C ~/copilot_dir/repos/edgar-scratch log --oneline
+git -C ~/krs_summer_lab_2026/repos/edgar-scratch log --oneline
 
 f8a7d33 feat: build EDGAR extractor pipeline from scratch
 e6f5c22 feat: filter to P/S, summarize, save CSV (N_FILES=500)
@@ -114,7 +114,7 @@ a3f1c2e chore: initial single-file EDGAR reader
 **`edgar-improve`** — inherited code, improved:
 
 ```
-git -C ~/copilot_dir/repos/edgar-improve log --oneline
+git -C ~/krs_summer_lab_2026/repos/edgar-improve log --oneline
 
 h9e2b44 feat: add optional multiprocessing with --workers argument
 g1b2c44 feat: align R EDGAR pipeline with Python output

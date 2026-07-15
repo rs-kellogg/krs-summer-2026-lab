@@ -52,8 +52,8 @@ Do the following steps in **Terminal B**.
 Create a parent folder that will hold both your virtual environment and your code repositories. This structure is required by the `ai_agent_container` module on KLC.
 
 ```bash
-mkdir -p ~/copilot_dir/envs
-mkdir -p ~/copilot_dir/repos
+mkdir -p ~/krs_summer_lab_2026/envs
+mkdir -p ~/krs_summer_lab_2026/repos
 ```
 
 ---
@@ -61,7 +61,7 @@ mkdir -p ~/copilot_dir/repos
 ### 2. Clone the Repository
 
 ```bash
-cd ~/copilot_dir/repos
+cd ~/krs_summer_lab_2026/repos
 git clone https://github.com/rs-kellogg/krs-summer-2026-lab.git
 ```
 
@@ -87,7 +87,7 @@ Keeping them separate gives each track its own clean git history and makes it ob
 **Create `edgar-scratch`** — starts completely empty:
 
 ```bash
-cd ~/copilot_dir/repos
+cd ~/krs_summer_lab_2026/repos
 git init edgar-scratch
 cd edgar-scratch
 git commit --allow-empty -m "chore: initial empty commit — from-scratch track"
@@ -99,7 +99,7 @@ cd ..
 ```bash
 git init edgar-improve
 cd edgar-improve
-cp -r ~/copilot_dir/repos/krs-summer-2026-lab/starter-code .
+cp -r ~/krs_summer_lab_2026/repos/krs-summer-2026-lab/starter-code .
 git add starter-code
 git commit -m "chore: initial commit with EDGAR starter code"
 cd ..
@@ -121,7 +121,7 @@ source "/hpc/software/mamba/24.3.0/etc/profile.d/mamba.sh"
 Then create the environment with both Python and R:
 
 ```bash
-mamba create --prefix=~/copilot_dir/envs/edgar-env \
+mamba create --prefix=~/krs_summer_lab_2026/envs/edgar-env \
     python=3.12 \
     r-base \
     r-tidyverse \
@@ -136,7 +136,7 @@ mamba create --prefix=~/copilot_dir/envs/edgar-env \
 Activate it:
 
 ```bash
-conda activate ~/copilot_dir/envs/edgar-env
+conda activate ~/krs_summer_lab_2026/envs/edgar-env
 ```
 
 Confirm both Python and R are available:
@@ -158,7 +158,7 @@ The AI agent runs inside a Singularity container on KLC. The container bind-moun
 In `edgar-improve`, confirm the pre-loaded script works before any modifications:
 
 ```bash
-cd ~/copilot_dir/repos/edgar-improve
+cd ~/krs_summer_lab_2026/repos/edgar-improve
 python starter-code/edgar_analysis.py
 # Expected: "done" printed, and starter-code/output/insider_summary.csv created
 ```
@@ -172,10 +172,10 @@ Your `edgar-scratch` repo intentionally has no code yet — that's what the Expl
 Check that both repos have a clean initial commit:
 
 ```bash
-cd ~/copilot_dir/repos/edgar-scratch && git log --oneline
+cd ~/krs_summer_lab_2026/repos/edgar-scratch && git log --oneline
 # Expected: one empty initial commit
 
-cd ~/copilot_dir/repos/edgar-improve && git log --oneline
+cd ~/krs_summer_lab_2026/repos/edgar-improve && git log --oneline
 # Expected: one commit with starter-code/
 ```
 
@@ -239,35 +239,35 @@ module load ai-agent-container
 **Change into your `edgar-scratch` repository, then start the agent:**
 
 ```bash
-cd ~/copilot_dir/repos/edgar-scratch
+cd ~/krs_summer_lab_2026/repos/edgar-scratch
 ```
 
 ```bash
 # Claude Code
-ai_agent_container -a claude ~/copilot_dir/
+ai_agent_container -a claude ~/krs_summer_lab_2026/
 ```
 
 ```bash
 # GitHub Copilot CLI
-ai_agent_container -a copilot ~/copilot_dir/
+ai_agent_container -a copilot ~/krs_summer_lab_2026/
 ```
 
 :::{dropdown} Additional options — mount extra directories or pass agent arguments
 **Mount additional directories** (e.g. a shared data directory — append `:ro` for read-only):
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir/ /path/to/shared/data:ro
+ai_agent_container -a claude ~/krs_summer_lab_2026/ /path/to/shared/data:ro
 ```
 
 **Pass arguments directly to the agent** using `--`:
 
 ```bash
-ai_agent_container -a claude ~/copilot_dir/ -- --model claude-opus-4-5
+ai_agent_container -a claude ~/krs_summer_lab_2026/ -- --model claude-opus-4-5
 ```
 :::
 
 :::{note}
-`~/copilot_dir/` is mounted explicitly so the agent can access the virtual environment in `~/copilot_dir/envs/`. This is necessary because Terminal A is a fresh SSH session with no conda activated — the agent cannot auto-detect `$CONDA_PREFIX` here.
+`~/krs_summer_lab_2026/` is mounted explicitly so the agent can access the virtual environment in `~/krs_summer_lab_2026/envs/`. This is necessary because Terminal A is a fresh SSH session with no conda activated — the agent cannot auto-detect `$CONDA_PREFIX` here.
 :::
 
 :::{dropdown} First-Time Login: Claude Code CLI
@@ -356,10 +356,10 @@ You may be asked whether to stay logged in. Select the option that suits your wo
 Before moving on, confirm you have:
 
 - [ ] You are logged in to KLC via SSH in both terminals
-- [ ] `~/copilot_dir/repos/edgar-scratch` exists with one empty initial commit (Terminal B)
-- [ ] `~/copilot_dir/repos/edgar-improve` exists with `starter-code/` inside it (Terminal B)
+- [ ] `~/krs_summer_lab_2026/repos/edgar-scratch` exists with one empty initial commit (Terminal B)
+- [ ] `~/krs_summer_lab_2026/repos/edgar-improve` exists with `starter-code/` inside it (Terminal B)
 - [ ] `git log --oneline` in each repo shows the expected initial commit (Terminal B)
-- [ ] `~/copilot_dir/envs/edgar-env` exists and is active (Terminal B)
+- [ ] `~/krs_summer_lab_2026/envs/edgar-env` exists and is active (Terminal B)
 - [ ] `python --version` shows 3.12.x and `Rscript --version` works (Terminal B)
 - [ ] `edgar-improve/starter-code/output/insider_summary.csv` was created when you ran `edgar_analysis.py` (Terminal B)
 - [ ] Your AI tool is installed and running via `ai_agent_container` from `edgar-scratch` (Terminal A)
